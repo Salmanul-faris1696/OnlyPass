@@ -9,6 +9,7 @@ import Equipments from './Dashboard/Pages/Equipments.tsx';
 import Facilities from './Dashboard/Pages/Facilities.tsx';
 import { Provider } from 'react-redux'
 import { store } from './Dashboard/Redux/store.ts';
+import Form from './Dashboard/Pages/Form.tsx';
 
 
 const router = createBrowserRouter([
@@ -30,8 +31,12 @@ const router = createBrowserRouter([
         path:"/Facilities",
         element:<Facilities/>
       }
-    ]
+    ] , 
   },
+  {
+    path:"/Form",
+    element:<Form/>
+  }
 ]);
 
 

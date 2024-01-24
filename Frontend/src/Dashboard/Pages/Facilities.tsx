@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PiPlusCircle } from 'react-icons/pi';
 import { Table, Input, Button, Switch } from 'antd';
+import { Link } from 'react-router-dom';
 
 const { Search } = Input;
 
@@ -114,12 +115,14 @@ const Facilities: React.FC = () => {
         <div className='m-5 p-6 bg-slate-100 font-bold font-serif text-2xl flex justify-between '>
           <h1>Facilities</h1>
           <div className='bg-black w-fit text-white text-sm flex p-2 rounded-lg hover:shadow-lg'>
+            <Link to={"/Form"}>
             <button className='md:flex md:items-center gap-2 hidden  md:block'>
               <PiPlusCircle size={20} /> New Facilities
             </button>
             <button className=' items-center md:hidden  '>
               <PiPlusCircle size={20} />
             </button>
+            </Link>
           </div>
         </div>
       </div>

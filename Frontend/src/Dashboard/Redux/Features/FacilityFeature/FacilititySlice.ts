@@ -22,9 +22,7 @@ interface FacilitiesSatate {
     description:string;
     images:[string]
   };
-  location : {
-
-  }
+ 
 }
 
 const initialState: FacilitiesSatate = {
@@ -40,19 +38,19 @@ const initialState: FacilitiesSatate = {
     description:"",
     images:[""]
   },
-  location
+  
 }
 
-export const counterSlice = createSlice({
-  name: 'counter',
+export const FacilitySlice = createSlice({
+  name: 'Facility',
   initialState,
   reducers: {
 
   },
 })
 
-export const {} = counterSlice.actions
+export const {} = FacilitySlice.actions
 
 export const selectCount = (state: RootState) => state.counter.value
 
-export default counterSlice.reducer
+export default FacilitySlice.reducer
