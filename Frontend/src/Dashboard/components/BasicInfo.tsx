@@ -1,5 +1,5 @@
-import { PlusOutlined } from '@ant-design/icons';
-import {Checkbox,Form,Input, Radio, Upload} from 'antd';
+import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
+import {Button, Checkbox,Form,Input, Radio, Upload} from 'antd';
 
 const { TextArea } = Input;
 const normFile = (e: any) => {
@@ -74,15 +74,28 @@ const BasicInfo = () => {
                 <Form.Item label="Description">
                     <TextArea name="desc" rows={4} />
                 </Form.Item>
-                
-                <Form.Item label="Images (min.5 Nos)" valuePropName="fileList" getValueFromEvent={normFile}>
-                <Upload  listType="picture-card"  maxCount={5}>
+                <div className=' '>
+                <Form.Item label="Images (min.5 Nos)" labelCol={{ span: 7 }} valuePropName="fileList" getValueFromEvent={normFile}>
+                {/* <Upload  listType="picture-card"  >
                     <button style={{ border: 0, background: 'none' }} type="button">
                     <PlusOutlined />
                     <div style={{ marginTop: 8 }}>Upload</div>
                     </button>
+                </Upload> */}
+
+                <Upload
+                    listType="picture" maxCount={20}
+                    >
+                        <div className='flex items-center gap-3'>
+                        <Button icon={<UploadOutlined />}>Upload</Button>
+                        <h1 className='text-red-600'>(preview size is 16:9)</h1>
+
+                        </div>
                 </Upload>
                 </Form.Item>
+
+                </div>
+                
             </div>
         </div>
    
