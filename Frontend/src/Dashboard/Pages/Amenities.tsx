@@ -28,7 +28,7 @@ const Amenities: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchData();
+    fetchData(); 
   }, []);
 
   

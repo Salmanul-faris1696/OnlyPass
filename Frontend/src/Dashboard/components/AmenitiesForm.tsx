@@ -15,7 +15,7 @@ interface Amenity {
   
 
 const AmenitiesForm = () => {
-//   const data = [
+
 //     {
 //       id: 1,
 //       label: 'Parking',
