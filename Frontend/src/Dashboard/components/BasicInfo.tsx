@@ -14,8 +14,8 @@ const normFile = (e: any) => {
 const BasicInfo = () => {
     
   return (
-    <div className='font-semibold '>
-      <Form onFinish={(values) => console.log({values})} labelCol={{ span: 7 }} wrapperCol={{ span: 25 }} className="max-w-[400px] md:max-w-[500px] ">
+    <div className='font-semibold  '>
+      <Form onFinish={(values) => console.log({values})}  labelCol={{ span: 7 }} wrapperCol={{ span: 25 }} className="max-w-[400px] md:max-w-[500px] f ">
         <div>
             <div>
                 <Form.Item   label="Facility Type :"  className=''>
@@ -42,24 +42,24 @@ const BasicInfo = () => {
             </div>
 
             <div>
-                <Form.Item label="Gym name">
-                    <Input />
+                <Form.Item label="Facility Name">
+                    <Input name='facilityname' />
                 </Form.Item>
 
-                <Form.Item label="Owner Name">
-                    <Input />
+                <Form.Item label="Contact Person  Name">
+                    <Input name='contactPerson' />
                 </Form.Item>
 
                 <Form.Item label="Email Address" className=''>
-                    <Input />
+                    <Input  name="email"/>
                 </Form.Item>
 
                 <Form.Item label=" phone Number "className=''>
-                    <Input  />
+                    <Input  name="pNo" />
                 </Form.Item>
 
                 <Form.Item label="Website url" className=''>
-                    <Input />
+                    <Input name="Url"/>
                 </Form.Item>
 
                 <Form.Item label="Logo" name="logo" valuePropName="fileList" getValueFromEvent={normFile}>
@@ -72,7 +72,7 @@ const BasicInfo = () => {
                 </Form.Item>
 
                 <Form.Item label="Description">
-                    <TextArea rows={4} />
+                    <TextArea name="desc" rows={4} />
                 </Form.Item>
                 
                 <Form.Item label="Images (min.5 Nos)" valuePropName="fileList" getValueFromEvent={normFile}>

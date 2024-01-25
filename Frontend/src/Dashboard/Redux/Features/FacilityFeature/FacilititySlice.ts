@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../../store'
+import Facilities from './../../../Pages/Facilities';
 
 
 enum GENDER  {
@@ -9,7 +10,7 @@ enum GENDER  {
     OTHER = "OTHER"
 }
 
-interface FacilitiesSatate {
+interface FacilitiesState {
   facility: boolean;
   gender?: GENDER;
   basicInfo: {
@@ -20,12 +21,12 @@ interface FacilitiesSatate {
     websiteURL:string;
     logo:string;
     description:string;
-    images:[string]
+    images:string[]
   };
  
 }
 
-const initialState: FacilitiesSatate = {
+const initialState: FacilitiesState = {
   facility: false,
   gender: GENDER.MALE,
   basicInfo: {
@@ -45,11 +46,15 @@ export const FacilitySlice = createSlice({
   name: 'Facility',
   initialState,
   reducers: {
-
+      addData :(state,action) => {
+        console.log({paylod: action.payload});
+        
+        // state = action.payload
+       }
   },
 })
 
-export const {} = FacilitySlice.actions
+export const {addData} = FacilitySlice.actions
 
 export const selectCount = (state: RootState) => state.counter.value
 

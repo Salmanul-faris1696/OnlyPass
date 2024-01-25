@@ -1,27 +1,25 @@
 import React, { useState } from 'react';
 import { Button, message, Steps, theme } from 'antd';
 import BasicInfo from '../components/BasicInfo';
+import Location from '../components/Location';
 
 const steps = [
     {
       title: 'Basic Information',
-      content: 
-      <div className=''>
-        <BasicInfo/>
-        </div>
+      content:  <BasicInfo/>
     },
     {
       title: 'Location',
-      content: 'Second-content',
+      content: <Location/>,
+    },
+    {
+      title: 'Memberships option',
+      content: 'Last-content',
     },
     {
       title: 'Amenities',
       content: 'Last-content',
     },
-    {
-        title: 'Memberships option',
-        content: 'Last-content',
-      },
       {
         title: 'Equipments',
         content: 'Last-content',

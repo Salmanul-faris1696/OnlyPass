@@ -94,16 +94,7 @@ const Facilities: React.FC = () => {
           <Switch defaultChecked onChange={onChange} />
         ),
       },
-    {
-      title: 'Delete',
-      width: 200,
-      key: 'action',
-      render: ( record: FacilityData) => (
-        <Button className='bg-red-600 text-white' onClick={() => handleDelete(record.key)}>
-          Delete
-        </Button>
-      ),
-    },
+    
   ];
 
 
@@ -112,7 +103,7 @@ const Facilities: React.FC = () => {
     <div>
       {/* headerSection */}
       <div className='headerSection mt-24'>
-        <div className='m-5 p-6 bg-slate-100 font-bold font-serif text-2xl flex justify-between '>
+        <div className='m-5 p-6 bg-slate-100 font-bold  text-2xl flex justify-between '>
           <h1>Facilities</h1>
           <div className='bg-black w-fit text-white text-sm flex p-2 rounded-lg hover:shadow-lg'>
             <Link to={"/Form"}>
