@@ -1,7 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
-import type { RootState } from '../../store'
-import Facilities from './../../../Pages/Facilities';
+import { createSlice } from '@reduxjs/toolkit';
+import type { RootState } from '../../store';
 
 
 enum GENDER  {
@@ -48,14 +46,11 @@ export const FacilitySlice = createSlice({
   reducers: {
       addData :(state,action) => {
         console.log({paylod: action.payload});
-        
         // state = action.payload
-       }
+       },
+     
   },
 })
 
 export const {addData} = FacilitySlice.actions
-
-export const selectCount = (state: RootState) => state.counter.value
-
 export default FacilitySlice.reducer

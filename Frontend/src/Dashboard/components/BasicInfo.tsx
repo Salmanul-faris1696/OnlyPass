@@ -1,5 +1,7 @@
 import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
-import {Button, Checkbox,Form,Input, Radio, Upload} from 'antd';
+import { Button, Checkbox, Form, Input, Radio, Upload } from 'antd';
+import { useDispatch } from 'react-redux';
+import { nextButton, prevButton } from '../Redux/Features/ButtonSlice';
 
 const { TextArea } = Input;
 const normFile = (e: any) => {
@@ -13,6 +15,18 @@ const normFile = (e: any) => {
   
 const BasicInfo = () => {
     
+    const dispatch = useDispatch()
+    const handleNext = () => {
+        console.log("next Location");
+        
+        dispatch(nextButton());
+      };
+    
+      const handlePrevious = () => {
+
+        dispatch(prevButton());
+      };
+
   return (
     <div className='font-semibold  '>
       <Form onFinish={(values) => console.log({values})}  labelCol={{ span: 7 }} wrapperCol={{ span: 25 }} className="max-w-[400px] md:max-w-[500px] f ">
@@ -75,33 +89,31 @@ const BasicInfo = () => {
                     <TextArea name="desc" rows={4} />
                 </Form.Item>
                 <div className=' '>
-                <Form.Item label="Images (min.5 Nos)" labelCol={{ span: 7 }} valuePropName="fileList" getValueFromEvent={normFile}>
-                {/* <Upload  listType="picture-card"  >
-                    <button style={{ border: 0, background: 'none' }} type="button">
-                    <PlusOutlined />
-                    <div style={{ marginTop: 8 }}>Upload</div>
-                    </button>
-                </Upload> */}
+                    <Form.Item label="Images (min.5 Nos)" labelCol={{ span: 7 }} valuePropName="fileList" getValueFromEvent={normFile}>
+                        <Upload
+                            listType="picture" maxCount={20}
+                            >
+                                <div className='flex items-center gap-3'>
+                                    <Button icon={<UploadOutlined />}>Upload</Button>
+                                    <h1 className='text-red-600'>(preview size is 16:9)</h1>
 
-                <Upload
-                    listType="picture" maxCount={20}
-                    >
-                        <div className='flex items-center gap-3'>
-                        <Button icon={<UploadOutlined />}>Upload</Button>
-                        <h1 className='text-red-600'>(preview size is 16:9)</h1>
-
-                        </div>
-                </Upload>
-                </Form.Item>
+                                </div>
+                        </Upload>
+                    </Form.Item>
 
                 </div>
-                
             </div>
         </div>
-   
       </Form>
-    
-    
+      <div className='flex gap-3 justify-center'>
+        <Button type='primary' className='bg-blue-600 'onClick={handleNext}>
+                Next
+        </Button>
+        <Button  className='bg-white 'onClick={handlePrevious}>
+              Previous
+        </Button>
+
+      </div>
     </div>
     
   )

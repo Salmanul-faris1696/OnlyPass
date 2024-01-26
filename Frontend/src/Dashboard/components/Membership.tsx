@@ -1,4 +1,6 @@
-import { Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input } from 'antd';
+import { useDispatch } from 'react-redux';
+import { nextButton, prevButton } from '../Redux/Features/ButtonSlice';
 
 const { TextArea } = Input;
 
@@ -35,6 +37,16 @@ const Membership = () => {
       name: 'annualPass',
     },
   ];
+
+  const dispatch = useDispatch()
+    const handleNext = () => {
+        dispatch(nextButton()); 
+      };
+    
+      const handlePrevious = () => {
+        dispatch(prevButton()); 
+      };
+
 
   return (
     <div className="max-w-[500px] mx-auto mt-8">
@@ -79,6 +91,15 @@ const Membership = () => {
 
        
       </Form>
+
+      <div className='flex gap-3 justify-center'>
+        <Button type='primary' className='bg-blue-600 'onClick={handleNext}>
+            Next
+        </Button>
+        <Button  className='bg-white 'onClick={handlePrevious}>
+          Previous
+        </Button>
+      </div>
     </div>
   );
 };
