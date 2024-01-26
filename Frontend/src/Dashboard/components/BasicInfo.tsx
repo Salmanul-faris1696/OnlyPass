@@ -1,7 +1,8 @@
 import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input, Radio, Upload } from 'antd';
 import { useDispatch } from 'react-redux';
-import { nextButton, prevButton } from '../Redux/Features/ButtonSlice';
+import { nextButton, prevButton,  } from '../Redux/Features/ButtonSlice';
+
 
 const { TextArea } = Input;
 const normFile = (e: any) => {
@@ -17,8 +18,7 @@ const BasicInfo = () => {
     
     const dispatch = useDispatch()
     const handleNext = () => {
-        console.log("next Location");
-        
+        // console.log("next Location");
         dispatch(nextButton());
       };
     

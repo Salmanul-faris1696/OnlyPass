@@ -19,9 +19,10 @@ export const buttonSlice = createSlice({
     prevButton: (state) => {
       state.currentStep --;
     },
+   
   },
 });
 
-export const { setCurrentStep, nextButton, prevButton } = buttonSlice.actions;
+export const { setCurrentStep, nextButton, prevButton, } = buttonSlice.actions;
 
 export default buttonSlice.reducer;
