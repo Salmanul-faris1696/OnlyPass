@@ -6,7 +6,6 @@ import BasicInfo from '../components/BasicInfo';
 import EquipmentForm from '../components/EquipmentForm';
 import Location from '../components/Location';
 import Membership from '../components/Membership';
-import Preview from '../components/Preview';
 import { useSelector } from 'react-redux';
 const steps = [
     {
@@ -28,10 +27,11 @@ const steps = [
       {
         title: 'Equipments',
         content: <EquipmentForm/>,
-      },{
-        title: 'Preview',
-        content: <Preview/>,
       },
+      // {
+      //   title: 'Preview',
+      //   content: <Preview/>,
+      // },
   ];
 const Form = () => {
   const setCurrentStep = useSelector((state:any) => state.button?.currentStep || 0);

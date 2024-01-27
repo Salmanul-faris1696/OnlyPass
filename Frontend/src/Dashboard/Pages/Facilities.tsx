@@ -7,25 +7,25 @@ const { Search } = Input;
 
 interface FacilityData {
   key: string;
-  gymName: string;
+  facilityName: string;
   location: string;
 }
 
 const data: FacilityData[] = [
     {
       key: '1',
-      gymName: 'Hulk Fit',
+      facilityName: 'Hulk Fit',
       location: 'ABC',
       
     },
     {
       key: '2',
-      gymName: 'Fit And Style Multi Gym',
+      facilityName: 'Fit And Style Multi Gym',
       location: 'CDE',
     },
     {
       key: '3',
-      gymName: 'Hulk Fit',
+      facilityName: 'Hulk Fit',
       location: 'ABC',
     },
   ];
@@ -40,7 +40,7 @@ const Facilities: React.FC = () => {
     const lowerCasedValue = value.toLowerCase();
     const filtered = data.filter(
       (item) =>
-        item.gymName.toLowerCase().includes(lowerCasedValue) ||
+        item.facilityName.toLowerCase().includes(lowerCasedValue) ||
         item.location.toLowerCase().includes(lowerCasedValue) 
        
     );
@@ -64,18 +64,19 @@ const Facilities: React.FC = () => {
       width: 100,
     },
     {
-      title: 'GYM Name',
-      dataIndex: 'gymName',
-      key: 'gymName',
+      title: 'Facilities',
+      dataIndex: 'facilityName',
+      key: 'facilityName',
       width: 300,
-      render: (text: string) => <a>{text}</a>,
+      render: (text: string, record: FacilityData) => (
+        <Link to={`/FacilitiesDetails/`}>{text}</Link>
+      ),
     },
     {
       title: 'Location',
       dataIndex: 'location',
       key: 'location',
       width: 300,
-      render: (text: string) => <a>{text}</a>,
     },
     {
         title: 'Onlypass',
@@ -131,8 +132,10 @@ const Facilities: React.FC = () => {
       <div>
         <Table
           columns={columns}
+          
           dataSource={filteredData ? filteredData : data}
           pagination={{ pageSize: 10 }}
+          
           className='m-3 p-2 shadow-lg'
         />
       </div>

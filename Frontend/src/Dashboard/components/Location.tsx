@@ -1,6 +1,7 @@
 import { Button, Form, Input, } from 'antd';
 import { useDispatch } from 'react-redux';
 import { nextButton, prevButton } from '../Redux/Features/ButtonSlice';
+import TimeTable from './TimeTable';
 
 
 const { TextArea } = Input;
@@ -39,6 +40,7 @@ const Location = () => {
                 </div>
 
                 <div>
+                  
                   <Form.Item label="Address">
                     <TextArea name="Address" rows={4} />
                   </Form.Item>
@@ -64,6 +66,16 @@ const Location = () => {
             </div>
       
           </Form>
+
+          <div>
+          <div className='font-bold text-lg mb-8'>
+                    <h1>Location</h1>
+                </div>
+                <div>
+                  <TimeTable/>
+                </div>
+
+          </div>
 
           <div className='flex gap-3 justify-center'>
             <Button type='primary' className='bg-blue-600 'onClick={handleNext}>

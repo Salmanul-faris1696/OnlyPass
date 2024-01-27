@@ -1,4 +1,4 @@
-import { Checkbox, CheckboxProps } from "antd"
+import { Checkbox, CheckboxProps, message } from "antd"
 import { useEffect, useState } from "react";
 import { ApiClientPrivate } from "../../utils/axios";
 import { imaageURL } from "../../utils/urls";
@@ -74,15 +74,15 @@ const EquipmentForm = () => {
                 ))}
             </div> 
         </div>
-        <div className='flex gap-5 justify-center'>
-          <Button type='primary' className='bg-blue-600 text-white rounded-md'onClick={handleNext}>
-                Next
-              </Button>
-              <Button  className='bg-white 'onClick={handlePrevious}>
-                  Previous
-                </Button>
+        <div className='flex gap-3 justify-center'>
+        <Button type='primary' className=' 'onClick={() => message.success('Processing complete!')}>
+               Done
+        </Button>
+        <Button  className='bg-white 'onClick={handlePrevious}>
+              Previous
+        </Button>
 
-        </div>
+      </div>
     </div>
   )
 }

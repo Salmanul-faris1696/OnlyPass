@@ -1,5 +1,5 @@
 import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input, Radio, Upload } from 'antd';
+import { Button, Checkbox, Form, Input, Radio, Upload,Select } from 'antd';
 import { useDispatch } from 'react-redux';
 import { nextButton, prevButton,  } from '../Redux/Features/ButtonSlice';
 
@@ -27,12 +27,16 @@ const BasicInfo = () => {
         dispatch(prevButton());
       };
 
+      const handleChange = (value: { value: string; label: React.ReactNode }) => {
+        console.log(value); // { value: "lucy", key: "lucy", label: "Lucy (101)" }
+      };
+
   return (
     <div className='font-semibold  '>
       <Form onFinish={(values) => console.log({values})}  labelCol={{ span: 7 }} wrapperCol={{ span: 25 }} className="max-w-[400px] md:max-w-[500px] f ">
         <div>
             <div>
-                <Form.Item   label="Facility Type :"  className=''>
+                <Form.Item   label="Facility Type :"  className='' required>
                     <Radio.Group>
                         <Radio value="acess"> Access </Radio>
                         <Radio value="pass"> Pass </Radio>
@@ -40,12 +44,38 @@ const BasicInfo = () => {
                 </Form.Item>
             </div>
 
-            <div>
-                <Form.Item label="Gender" name="gender" valuePropName="checked"  labelCol={{ span: 6 }}>
+            <div className=''>
+                <Form.Item label="Gender" name="gender" valuePropName="checked"  labelCol={{ span: 5 }}>
                     <Checkbox>Gents Only</Checkbox>
                     <Checkbox>Ladies Ladies</Checkbox>
                     <Checkbox>Unisex (mixed)</Checkbox>
                 </Form.Item>
+            </div>
+
+            <div className=''>
+                <Form.Item label="Tier" name="tier"  labelCol={{ span: 4 }}>
+                        <Select
+                labelInValue
+                defaultValue={{ value: '', label: 'Select tier' }}
+                style={{ width: 120,  }}
+                onChange={handleChange}
+                options={[
+                {
+                    value: 'Platinium',
+                    label: 'Platinium',
+                },
+                {
+                    value: 'Gold',
+                    label: 'Gold',
+                },
+                {
+                    value: 'Silver',
+                    label: 'Silver',
+                },
+                ]}
+            />
+                </Form.Item>
+
             </div>
 
         </div>
@@ -109,9 +139,7 @@ const BasicInfo = () => {
         <Button type='primary' className='bg-blue-600 'onClick={handleNext}>
                 Next
         </Button>
-        <Button  className='bg-white 'onClick={handlePrevious}>
-              Previous
-        </Button>
+        
 
       </div>
     </div>
