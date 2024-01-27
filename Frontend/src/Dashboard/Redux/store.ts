@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import buttonReducer from '../Redux/Features/ButtonSlice';
-
+import facilityReducer from '../Redux/Features/FacilityFeature/FacilititySlice';
 
 
 export const store = configureStore({
   reducer: {
     button: buttonReducer,
+    facility: facilityReducer
     
   },
 })

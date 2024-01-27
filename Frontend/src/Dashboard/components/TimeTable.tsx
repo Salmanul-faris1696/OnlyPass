@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Table,TimePicker } from 'antd';
+import { Table, Input } from 'antd';
 
 interface TimeData {
   key: number;
@@ -22,11 +22,10 @@ const TimeTable: React.FC = () => {
       dataIndex: 'morningTime',
       key: 'morningTime',
       render: ( record: TimeData) => (
-        <TimePicker
-        value={record.morningTime}
-        onChange={(value:any) => handleTimeChange('morningTime', record.key, value)}
-        format="h:mm A"
-      />
+        <Input
+          value={record.morningTime}
+          onChange={(e) => handleTimeChange('morningTime', record.key, e.target.value)}
+        />
       ),
     },
     {
@@ -34,11 +33,10 @@ const TimeTable: React.FC = () => {
       dataIndex: 'eveningTime',
       key: 'eveningTime',
       render: ( record: TimeData) => (
-        <TimePicker
-        value={record.morningTime}
-        onChange={(value:any) => handleTimeChange('morningTime', record.key, value)}
-        format="h:mm A"
-      />
+        <Input
+          value={record.eveningTime}
+          onChange={(e) => handleTimeChange('eveningTime', record.key, e.target.value)}
+        />
       ),
     },
   ];

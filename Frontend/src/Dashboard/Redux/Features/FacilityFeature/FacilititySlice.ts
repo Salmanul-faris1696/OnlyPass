@@ -9,11 +9,11 @@ enum GENDER  {
 }
 
 interface FacilitiesState {
-  facility: boolean;
+  facility_type: string;
   gender?: GENDER;
   basicInfo: {
-    gymName: string;
-    ownerName:string;
+    facilityName: string;
+    contactPerson:string;
     emailAddress:string;
     phoneNumber:number;
     websiteURL:string;
@@ -25,11 +25,11 @@ interface FacilitiesState {
 }
 
 const initialState: FacilitiesState = {
-  facility: false,
+  facility_type: "",
   gender: GENDER.MALE,
   basicInfo: {
-    gymName: "",
-    ownerName:"",
+    facilityName: "",
+    contactPerson:"",
     emailAddress:"",
     phoneNumber:0,
     websiteURL:"",
@@ -41,16 +41,28 @@ const initialState: FacilitiesState = {
 }
 
 export const FacilitySlice = createSlice({
-  name: 'Facility',
+  name: 'facility',
   initialState,
   reducers: {
       addData :(state,action) => {
-        console.log({paylod: action.payload});
+        state.facility_type = action.payload,
+        state.basicInfo.images = action.payload;
+
+
+
+        // console.log({paylod: action.payload});
         // state = action.payload
+        console.log("playload image : " , state.basicInfo.images);
+        
        },
      
   },
+  
+
 })
+
+
+
 
 export const {addData} = FacilitySlice.actions
 export default FacilitySlice.reducer

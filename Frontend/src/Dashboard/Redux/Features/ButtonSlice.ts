@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 interface ButtonState {
   currentStep: number;
+  formData: any;
 }
 
 export const buttonSlice = createSlice({
@@ -19,10 +20,13 @@ export const buttonSlice = createSlice({
     prevButton: (state) => {
       state.currentStep --;
     },
+    updateFormData: (state, action) => {
+      state.formData = { ...state.formData, ...action.payload };
+    },
    
   },
 });
 
-export const { setCurrentStep, nextButton, prevButton, } = buttonSlice.actions;
+export const { setCurrentStep, nextButton, prevButton,updateFormData} = buttonSlice.actions;
 
 export default buttonSlice.reducer;
