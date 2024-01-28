@@ -69,7 +69,7 @@ const Location = () => {
 
           <div>
           <div className='font-bold text-lg mb-8'>
-                    <h1>Location</h1>
+                    <h1>Time</h1>
                 </div>
                 <div>
                   <TimeTable/>

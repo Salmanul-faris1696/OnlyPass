@@ -7,7 +7,6 @@ import { useState } from 'react';
 import { addData } from '../Redux/Features/FacilityFeature/FacilititySlice';
 
 
-
 const { TextArea } = Input;
 
 
@@ -15,16 +14,10 @@ const BasicInfo = () => {
     
     const dispatch = useDispatch()
     const handleNext = () => {
-        // console.log("next Location");
-        dispatch(nextButton());
-
-    };
     
-      
-    //   const handleChange = (value: { value: string; label: React.ReactNode }) => {
-    //     console.log(value);
-    //   };
-
+          dispatch(nextButton());
+       
+    };
       const [infoData, setInfoData] = useState({})
       const handleInputChange = (e:any) =>{
 console.log("name:",e.target.name, "checked : ",e.target.checked,"value", e.target.value);
@@ -92,11 +85,11 @@ dispatch(addData({[fieldName]: fieldValue}))
       
   return (
     <div className='font-semibold  '>
-      <Form onFinish={(values) => console.log({values})}  onChange={handleInputChange} labelCol={{ span: 7 }} wrapperCol={{ span: 25 }} 
-      className="max-w-[400px] md:max-w-[500px] f ">
+      <Form  onFinish={(values) => console.log("Form submitted with values:", values)}  onChange={handleInputChange} labelCol={{ span: 7 }} wrapperCol={{ span: 25 }} 
+      className="max-w-[400px] md:max-w-[500px]  ">
         <div>
             <div>
-                <Form.Item   label="Facility Type :" className='' name={"Facility_type"} required rules={[{  message: 'Please Select your Type!' }]}>
+                <Form.Item   label="Facility Type :" className='' name={"facilitytype"} required rules={[{  message: 'Please Select your Type!' }]}>
                     <Radio.Group name="Facility_Type"  >
                         <Radio value="acess"> Access </Radio>
                         <Radio value="pass"> Pass </Radio>
@@ -105,12 +98,7 @@ dispatch(addData({[fieldName]: fieldValue}))
             </div>
 
             <div className=''>
-                {/* <Form.Item label="Gender" name="gender" valuePropName="checked"   labelCol={{ span: 5 }}>
-                    <Checkbox name="Gents">Gents Only</Checkbox>
-                    <Checkbox name="Ladies">Ladies Ladies</Checkbox>
-                    <Checkbox name="Unisex">Unisex (mixed)</Checkbox>
-                </Form.Item> */}
-                 <Form.Item   label="Gender :" className='ml-3' labelCol={{span :5}}>
+                 <Form.Item   label="Gender :" className='ml-3'  name={'gender'} required rules={[{  message: 'Please Select your Type!' }]} labelCol={{span :5}}>
                     <Radio.Group name="Gender"  >
                         <Radio value="gents"> Gents </Radio>
                         <Radio value="ladies"> Ladies </Radio>
@@ -121,12 +109,8 @@ dispatch(addData({[fieldName]: fieldValue}))
             </div>
 
             <div className='ml-3'>
-                <Form.Item label="Tier" name="tier"  labelCol={{ span: 4 }}>
-                        <Select 
-                labelInValue
-                defaultValue={{ value: '', label: 'Select tier' }}
-                style={{ width: 120,  }}
-                onChange={handleChange}
+                <Form.Item label="Tier" name="tier" required rules={[{  message: 'Please Select your Tier!' }]} labelCol={{ span: 4 }}>
+                        <Select labelInValue defaultValue={{ value: '', label: 'Select tier' }} style={{ width: 120,  }}onChange={handleChange}
                 options={[
                 {
                     value: 'Platinum',
@@ -157,20 +141,20 @@ dispatch(addData({[fieldName]: fieldValue}))
             </div>
 
             <div>
-                <Form.Item label="Facility Name" name={"facility_Name"} rules={[{ required: true, message: 'Please input!' }]}>
+                <Form.Item label="Facility Name" name={"facility_Name"} rules={[{ required: true, message: 'Please Enter Facilicty name' }]}>
                     <Input   />
                 </Form.Item>
 
-                <Form.Item label="Contact Person Name">
-                    <Input name='contactPerson' />
+                <Form.Item label="Contact Person Name" name={"contact_person"} rules={[{ required: true, message: 'Please Enter Contact person name' }]}>
+                    <Input  />
                 </Form.Item>
 
-                <Form.Item label="Email Address" className=''>
-                    <Input  name="email" />
+                <Form.Item label="Email Address" name={"email"} rules={[{ required: true, message: 'Please Enter Email Address' }]} className=''>
+                    <Input   />
                 </Form.Item>
 
-                <Form.Item label=" phone Number "className=''>
-                    <Input  name="pNo" type='tel' pattern='[0-9]'   />
+                <Form.Item label=" phone Number "  name={"phone_number"} rules={[{ required: true, message: 'Please Enter phone number' }]} className=''>
+                    <Input  type='tel' pattern='[0-9]'   />
                 </Form.Item>
 
                 <Form.Item label="Website url" className=''>
@@ -202,7 +186,8 @@ dispatch(addData({[fieldName]: fieldValue}))
         </div>
       </Form>
       <div className='flex gap-3 justify-center'>
-        <Button type='primary' htmlType='submit' className='bg-blue-600 'onClick={handleNext}>
+        <Button type='primary'  className='bg-blue-600 ' 
+         onClick={handleNext}>
                 Next
         </Button>
         

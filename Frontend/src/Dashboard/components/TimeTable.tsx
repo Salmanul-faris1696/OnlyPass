@@ -65,7 +65,7 @@ const TimeTable: React.FC = () => {
 
   return (
     <div>
-      <Table dataSource={data.length === 0 ? initialData : data} columns={columns} />
+      <Table dataSource={data.length === 0 ? initialData : data} columns={columns} pagination={false}  className='mb-4 rounded-md'/>
     </div>
   );
 };
