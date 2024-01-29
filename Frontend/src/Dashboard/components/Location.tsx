@@ -41,24 +41,24 @@ const Location = () => {
 
                 <div>
                   
-                  <Form.Item label="Address">
-                    <TextArea name="Address" rows={4} />
+                  <Form.Item label="Address" name={"address"} rules={[{required:true , message:"Enter address field"}]}>
+                    <TextArea  rows={4} />
                   </Form.Item>
                     
 
-                  <Form.Item label="Pin Code">
-                    <Input name="pin"/>
+                  <Form.Item label="Pin Code" name={"pin"} rules={[{required:true , message:"enter Pin-number"}]}>
+                    <Input />
                   </Form.Item>
 
                   <Form.Item label="Country"className=''  >
-                    <Input name='country' disabled value={"India"} />
+                    <Input  disabled value={"India"} />
                   </Form.Item>
 
-                  <Form.Item label="State" className=''>
-                    <Input name="state" disabled value={'Kerala'}/>
+                  <Form.Item label="State" className='' >
+                    <Input  disabled value={'Kerala'}/>
                   </Form.Item>
 
-                  <Form.Item label="Map Link" className=''>
+                  <Form.Item label="Map Link"  name ={"map"} rules={[{required:true , message:"mark your latitude and longitude"} ]}>
                       <Input name='mapLink'/>
                   </Form.Item>
                 

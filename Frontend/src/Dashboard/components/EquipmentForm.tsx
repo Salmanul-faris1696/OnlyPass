@@ -2,9 +2,12 @@ import { Checkbox, CheckboxProps, message } from "antd"
 import { useEffect, useState } from "react";
 import { ApiClientPrivate } from "../../utils/axios";
 import { imaageURL } from "../../utils/urls";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { nextButton, prevButton } from '../Redux/Features/ButtonSlice';
 import { Button } from "antd/es/radio";
+import { UseSelector } from "react-redux";
+import { FacilitiesState } from "../Redux/Features/FacilityFeature/FacilititySlice";
+import { useAppSelector } from "../Redux/hooks";
 
 interface Equipment {
     _id: number;
@@ -41,7 +44,33 @@ const EquipmentForm = () => {
         fetchData();
       }, []);
     
-      // console.log('equi' , equipmentsData);
+// get data from redux 
+
+const reduxState = useAppSelector((state) => state.facility)
+
+
+const handleDone = async () => {
+  console.log("done", reduxState);
+  message.success('Processing complete!');
+  
+  try {
+    // create Facility
+    const response = await ApiClientPrivate.post("facilities/create", reduxState, {
+      headers: {
+        'Content-Type': 'application/json', // Use 'application/json' for JSON data
+      },
+    });
+
+    console.log('Facility created successfully:', response.data);
+  } catch (error) {
+    console.error('Error creating facility:', error);
+    // Handle error appropriately
+  }
+}
+
+
+
+
 
     const onChange: CheckboxProps['onChange'] = (e) => {
         console.log(`checked = ${e.target.checked}`);
@@ -75,7 +104,7 @@ const EquipmentForm = () => {
             </div> 
         </div>
         <div className='flex gap-3 justify-center'>
-        <Button type='primary' className=' 'onClick={() => message.success('Processing complete!')}>
+        <Button type='primary' className=' 'onClick={handleDone}>
                Done
         </Button>
         <Button  className='bg-white 'onClick={handlePrevious}>

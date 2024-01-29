@@ -1,152 +1,110 @@
-import React from 'react'
+import { Form, Input } from "antd";
+import { FaEdit } from "react-icons/fa";
 
-import { Space, Table, Tag } from 'antd';
-import type { TableProps } from 'antd';
-import { FiEdit } from 'react-icons/fi';
-
-
-interface DataType {
-  key: number;
-  name: string;
-  data: string | JSX.Element; 
+const data = [
+  {
+    id: 1,
+    label: "Facility Type ",
+    input: "Access",
+  },
+  {
+    id: 2,
+    label: " Facility Gender ",
+    input: "Unisex",
+  },
+  {
+    id: 3,
+    label: "Facility Tier ",
+    input: "Gold",
+  },
+  {
+    id: 4,
+    label: "Facility Name ",
+    input: "Hulk Fit",
+  },
+  {
+    id: 5,
+    label: "Contact Person Name ",
+    input: "Salman",
+  },
+  {
+    id:6 ,
+    label: "Email Address",
+    input: "hulkfit111@gmail.com",
+  },
+  {
+    id:7 ,
+    label: "Phone Number",
+    input: "1234567890",
+  },
+  {
+    id: 8,
+    label: "Website URL",
+    input: "www.hulkfit.com",
+  },
   
-}
-
-const columns: TableProps<DataType>['columns'] = [
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: 'Data',
-    dataIndex: 'data',
-    key: 'data',
-
-  },
   
-
-  {
-    title: 'edit',
-    key: 'edit',
-    render: (_, record) => (
-      <Space size="middle">
-        <a><FiEdit size={20}/></a>
-      </Space>)
-  },
 ];
-
-
-
-const data: DataType[] = [
-  {
-    key: 1,
-    name: 'Facility type',
-    data:"Acess"
-  },
-  {
-    key: 2,
-    name: 'Gender',
-    data:"unisex"
-   
-  },
-  {
-    key:3,
-    name:"Tier",
-    data:"silver"
-  },
-  {
-    key:4,
-    name:"Contact Person name",
-    data:"abcd"
-  },
-  {
-    key:5,
-    name:"Email Address",
-    data:"abcd@gamil.com"
-  },
-  {
-    key:6,
-    name:"phone Number",
-    data:"1236547890"
-  },
-  {
-    key:7,
-    name:"Website url",
-    data:"//link//"
-  },
-  {
-    key:8,
-    name:"Logo",
-    data: <img src="url_to_logo_imaghttps://imgs.search.brave.com/FiqsQ9uVBfHgu_AHZRUB152nOyn4d2l75v-v8YrfDYU/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTMx/NjU5MDQxMS92ZWN0/b3IvbS1sb2dvLWRl/c2lnbi5qcGc_cz02/MTJ4NjEyJnc9MCZr/PTIwJmM9OFI5YWcy/TVNQZ2dGY2NBQ3JP/cU8zOVB1ZlVOMy1q/bkg4QVJUZ2ZaNlY5/Zz0e" alt="Logo" style={{ maxWidth: '50px', maxHeight: '50px' }} />  },
-  {
-    key:9,
-    name:"Description",
-    data:"qwertyuioplkjhgfdsazxcvbnmm,lkjhgfdsaqwertyuiopl"
-  },
-  {
-    key:10,
-    name:"Images",
-    data:" 5 images +"
-  },{
-    key:11,
-    name:"Address",
-    data:"adress of facility "
-  },
-  {
-    key:12,
-    name:"pincode",
-    data:"676503"
-  },
-  {
-    key:13,
-    name:"Country",
-    data:"India"
-  },
-  {
-    key:14,
-    name:"State",
-    data:"Kerala"
-  },
-  {
-    key:15,
-    name:"Map-Link",
-    data:"Latitude , longitude"
-  },
-  {
-    key:16,
-    name:"Tier",
-    data:"silver"
-  },
-  {
-    key:1,
-    name:"Amenities",
-    data:"parking , locker-room , shower , towel , wifi "
-  },
-
-
- 
-];
-
 
 const FacilitiesDetails = () => {
   return (
-    <div>
-        <div className='bg-gray-200 p-3 m-3' >
-
-        <div className=' flex justify-center'>
-            Facility name
+    <div className="md:flex ">
+      <div className="m-3 p-3  bg-gray-200 md:w-[50%]">
+        <div className="basic_info flex justify-between items-center font-semibold">
+          <div>
+            <h1>Basic information</h1>
+          </div>
+          <div>
+            <FaEdit />
+          </div>
         </div>
 
-        <div>
-        <Table columns={columns  }  dataSource= {data}  pagination={{ pageSize: 30 }} />
+        {data.map((item) => (
+          <div key={item.id} className="Basic_info_detail mt-3  flex items-center m-3 p-1">
+            {/* <Form labelCol={{ span: 4 }} wrapperCol={{ span: 3 }}>
+              <div>
+                <div>
+
+                </div>
+              </div>
+              <Form.Item label={item.label} className="">
+                <Input disabled value={item.input} />
+              </Form.Item>
+            </Form> */}
+            <div className="label w-[150px]">
+              <h1>
+                {item.label}
+              </h1>
+
+            </div>
+            <div className="input flex gap-3 items-center"> 
+            :<input type="text" value={item.input} disabled className="border rounded-md p-2 bg-gray-300 w-[300px]"/>
+
+            </div>
+          </div>
+        ))}
+
+        <div className="description md:flex m-3 p-1 items-center">
+          <div className=" md:w-[150px] w-[10px]">
+            <h1>Description:</h1>
+          </div>
+          <div className="md:flex  md:gap-3 ">
+            <textarea name="" value={"Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque maxime consequuntur voluptatem iusto inventore molestiae aspernatur? Non magnam, "}  id="" cols={45} rows={5} className="border rounded-md  p-2 bg-gray-300 md:w-[400px] mt-3 "></textarea>
+            
+          </div>
+        </div>
+
+        <div className="Logo">
+
 
         </div>
-        </div>
-    
+      </div>
+
+      <div className="section-2 bg-gray-200 m-3 p-3 w-[50%]">
+oijojo
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default FacilitiesDetails
+export default FacilitiesDetails;

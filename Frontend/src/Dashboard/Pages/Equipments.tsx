@@ -89,7 +89,7 @@ const Equipments: React.FC = () => {
     try {
       // if (info.file.status === 'done') {
         const imageUrl = info.file;
-        console.log({imageUrl});
+        console.log({"suiii":info});
         
         setNewEquipmentImage(imageUrl);
       // }
