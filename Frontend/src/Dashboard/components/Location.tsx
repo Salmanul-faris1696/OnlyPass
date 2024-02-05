@@ -5,8 +5,14 @@ import { addData } from "../Redux/Features/FacilityFeature/FacilititySlice";
 import { useAppSelector } from "../Redux/hooks";
 import TimeTable from "./TimeTable";
 import './Location.css'
+import axios from "axios";
+import { useState } from "react";
 
 const Location = () => {
+
+  const [pincode, setPincode] = useState('');
+  const [pincodeData, setPincodeData] = useState(null);
+
   const dispatch = useDispatch();
   const handleNext = () => {
     console.log("next membership");
@@ -29,7 +35,6 @@ const Location = () => {
     pin_code: reduxState.pin_code,
     country: "India",
     state: "Kerala",
-    place: reduxState.place,
     latitude_lognitude: reduxState.latitude_longitude,
   });
 
@@ -46,6 +51,37 @@ const Location = () => {
     return;
     // console.log(e.target.value);
   };
+
+  // pincode api fetching : 
+
+
+  
+const getPincodeInfo = async (pin:number) => {
+    try {
+      const response = await axios.get(`https://api.postalpincode.in/pincode/${pin}`);
+      setPincodeData(response.data);
+    } catch (error) {
+      console.error('Error fetching pincode information', error);
+      setPincodeData(null);
+    }
+  };
+
+  const handlePincodeChange = (e:any) => {
+    const newPincode = e.target.value;
+    setPincode(newPincode);
+
+    // Fetch pincode data only if the length is valid (e.g., 6 digits)
+    if (newPincode.length === 6) {
+      getPincodeInfo(newPincode);
+    } else {
+      setPincodeData(null);
+    }
+  };
+
+  console.log("pin",pincodeData);
+  
+
+
   
   return (
     <div>
@@ -68,7 +104,7 @@ const Location = () => {
                 label="Address"
                 name={"address"}
                 className="text-start"
-                // rules={[{ required: true, message: "Enter address field" }]}
+                rules={[{ required: true, message: "Enter address field" }]}
               >
                 <TextArea
                   rows={3}
@@ -77,16 +113,15 @@ const Location = () => {
                 />
               </Form.Item>
               {/* Pin code ...........! */}
-              <Form.Item label="Pin Code" name={"pin_code"}>
+              <Form.Item label="Pin Code" name={"pin_code"} 
+              rules={[{ required: true, message: "Enter pin code" }]}>
                 <Input
                   name="pin_code"
                   type="number"
                   className="w-[100px]"
+                  value={pincode}
+                  onChange={handlePincodeChange}
                 />
-              </Form.Item>
-              {/* Place */}
-              <Form.Item label="Place" className="" name="place">
-                <Input name="place" className="md:w-[350px] " />
               </Form.Item>
               {/* State ............! */}
               <Form.Item label="State" className="" name="state">
@@ -98,7 +133,8 @@ const Location = () => {
                 <Input disabled value="India" name="country" className="md:w-[350px]" />
               </Form.Item>
               {/* Latitude Longitude */}
-              <Form.Item label="Latitude_Longitude" name="latitude_longitude">
+              <Form.Item label="Latitude_Longitude" name="latitude_longitude"
+              rules={[{ required: true, message: "latitude_longitude " }]}>
                 <Input name="latitude_longitude" className="md:w-[350px]" />
               </Form.Item>
             </div>

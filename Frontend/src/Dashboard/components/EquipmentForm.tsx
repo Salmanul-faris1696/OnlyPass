@@ -69,7 +69,7 @@ const EquipmentForm = () => {
 
   const onChange = (checked: boolean, id: string) => {
     console.log("equipment id:", id, { checked });
-      dispatch(addData({equipments: id,}));
+      dispatch(addData({equipments_id: id,}));
   };
 
   return (

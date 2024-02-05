@@ -100,7 +100,6 @@ export interface FacilitiesState {
   images: string[];
   address: string;
   pin_code: string;
-  place: string;
   country: string;
   state: string;
   latitude_longitude: string;
@@ -110,7 +109,7 @@ export interface FacilitiesState {
   threeMonth_pass: string;
   sixMonth_pass: string;
   annual_pass: string;
-  equipments: string[];
+  equipments_id: string[];
 }
 
 const initialState: FacilitiesState = {
@@ -127,7 +126,6 @@ const initialState: FacilitiesState = {
   images: [],
   address: "",
   pin_code: "",
-  place:"",
   state: "",
   country: "",
   latitude_longitude: "",
@@ -137,7 +135,7 @@ const initialState: FacilitiesState = {
   threeMonth_pass: "",
   sixMonth_pass: "",
   annual_pass: "",
-  equipments: [],
+  equipments_id: [],
 };
 
 export const FacilitySlice = createSlice({
@@ -153,7 +151,7 @@ export const FacilitySlice = createSlice({
         keyof FacilitiesState
       >; // Type assertion
       payloadKeys.forEach((key) => {
-        if (key !== "images" && key !== "equipments") {
+        if (key !== "images" && key !== "equipments_id") {
           state[key] = action.payload[key]!;
         }
       });
@@ -161,16 +159,16 @@ export const FacilitySlice = createSlice({
         state.images = state.images.concat(action.payload.images);
       }
 
-      if(action.payload.equipments) {
-      if (!state.equipments.includes(action.payload.equipments)) {
-        console.log(action.payload.equipments);
+      if(action.payload.equipments_id) {
+      if (!state.equipments_id.includes(action.payload.equipments_id)) {
+        console.log(action.payload.equipments_id);
         console.log("not include");
 
-        state.equipments.push(action.payload.equipments);
+        state.equipments_id.push(action.payload.equipments_id);
       } else {
         console.log("include");
-        const index = state.equipments.indexOf(action.payload.equipments);
-        state.equipments.splice(index, 1);
+        const index = state.equipments_id.indexOf(action.payload.equipments_id);
+        state.equipments_id.splice(index, 1);
       }
     }
   },

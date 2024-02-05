@@ -8,6 +8,8 @@ import { nextButton } from "../Redux/Features/ButtonSlice";
 import { addData } from "../Redux/Features/FacilityFeature/FacilititySlice";
 import { useAppSelector } from "../Redux/hooks";
 const { TextArea } = Input;
+import type { UploadFile } from 'antd'
+
 
 const BasicInfo = () => {
   const dispatch = useDispatch();
@@ -44,6 +46,8 @@ const BasicInfo = () => {
     // Assuming ApiClientPrivate is an Axios instance
     const formData = new FormData();
     formData.append("facility_images", e.file.originFileObj);
+    console.log("imgggggg",e);
+    
 
     const response = await ApiClientPrivate.post(
       "/images/upload-img",
@@ -72,8 +76,9 @@ const BasicInfo = () => {
     try {
       // Assuming ApiClientPrivate is an Axios instance
       const formData = new FormData();
-      formData.append("logo", e.fileList[0].originFileObj);
-
+      formData.append("logo", e.file.originFileObj);
+      console.log("logooooooooo",e.file.originFileObj);
+      
       // Make the POST request to upload the logo
       const response = await ApiClientPrivate.post(
         "/images/upload-logo",
@@ -144,11 +149,25 @@ const BasicInfo = () => {
     },
   };
 
+  // const fileList: UploadFile[] = [
+  
+  //   {
+  //     uid: '-1',
+  //     name: 'yyy.png',
+  //     status: 'done',
+  //     url: () => {
+
+  //     }
+  //   },
+  // ]
+  
+  
+
   return (
     <div className="font-semibold  ">
       <Form
         form={form}
-        // onFinish={}
+        // onFinish={onFinish}
         onChange={handleInputChange}
         className=""
         labelCol={{ span: 7 }}
@@ -224,25 +243,27 @@ const BasicInfo = () => {
               rules={[{ required: true, message: "Please Enter phone number" }]}
               className="text-left"
             >
-              <Input type="tel" name="phoneNumber" className="w-[350px]" />
+              <Input type="tel" name="phoneNumber" className="md:w-[350px]" />
             </Form.Item>
 
             <Form.Item label="Website url" className="" name={"websiteURL"}>
-              <Input name="websiteURL" className="w-[350px]" />
+              <Input name="websiteURL" className="md:w-[350px]" />
             </Form.Item>
 
-            <Form.Item label="Logo" name="logo">
+            <Form.Item label="Logo" name={"logo"}>
               <div className="w-[200px]">
               <Upload
                 maxCount={1}
-                onChange={() =>
-                  debouncedNormFileLogo(form.getFieldValue("logo"))
+                onChange={(e) =>
+                  debouncedNormFileLogo(e)
                 }
                 action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
                 listType="picture"
+                // defaultFileList={[...fileList]}
               >
               <Button icon={<UploadOutlined />}>Upload</Button>
               </Upload>
+              
               </div>
             </Form.Item>
 
@@ -274,6 +295,7 @@ const BasicInfo = () => {
             className="bg-blue-600 "
             htmlType="submit"
             onClick={handleNext}
+      
           >
             Next
           </Button>
