@@ -90,7 +90,7 @@ const handleChange = (value: { value: string; label: React.ReactNode }) => {
     
   return (
     <div className="max-w-[500px] mx-auto mt-8">
-      <Form form={form} labelCol={7}>
+      <Form form={form} >
         <div className="font-semibold text-center text-2xl mb-10">
           <h1>Membership options</h1>
         </div>
