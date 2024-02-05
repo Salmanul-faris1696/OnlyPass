@@ -1,57 +1,61 @@
-import React, { useState } from 'react';
+import { Input, Switch, Table } from 'antd';
+import React, { useEffect, useState } from 'react';
 import { PiPlusCircle } from 'react-icons/pi';
-import { Table, Input, Button, Switch } from 'antd';
 import { Link } from 'react-router-dom';
+import { ApiClientPrivate } from '../../utils/axios';
 
 const { Search } = Input;
 
 interface FacilityData {
-  key: string;
+  key:string
+  _id: string;
   facilityName: string;
-  location: string;
+  place: string;
 }
 
-const data: FacilityData[] = [
-    {
-      key: '1',
-      facilityName: 'Hulk Fit',
-      location: 'ABC',
-      
-    },
-    {
-      key: '2',
-      facilityName: 'Fit And Style Multi Gym',
-      location: 'CDE',
-    },
-    {
-      key: '3',
-      facilityName: 'Hulk Fit',
-      location: 'ABC',
-    },
-  ];
-
 const Facilities: React.FC = () => {
-  const [searchText, setSearchText] = useState<string>('');
-  const [filteredData, setFilteredData] = useState<FacilityData[]>(data);
+  const [facilityData, setFacilityData] = useState<FacilityData[]>([])
+  const [filteredData, setFilteredData] = useState<FacilityData[]>([]);
+
+    // Data fetching.....!
+    const fecthFacility = async () => {
+      try {
+        const res = await ApiClientPrivate.get("/facilities");
+        console.log(res.data);
+
+        setFacilityData(res.data);
+        setFilteredData(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    useEffect(() => {
+      fecthFacility();
+    }, []);
 
   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setSearchText(value);
     const lowerCasedValue = value.toLowerCase();
-    const filtered = data.filter(
+    const filtered = facilityData.filter(
       (item) =>
         item.facilityName.toLowerCase().includes(lowerCasedValue) ||
-        item.location.toLowerCase().includes(lowerCasedValue) 
+        item.place.toLowerCase().includes(lowerCasedValue) 
        
     );
 
     setFilteredData(filtered);
   };
 
-  const handleDelete = (key: string) => {
-    const updatedData = data.filter((item) => item.key !== key);
-    setFilteredData(updatedData);
-  };
+    const tableData = filteredData?.map((It: any, i: number) => ({
+      ...It,
+      key: i + 1,
+    }));
+
+  // const handleDelete = (key: string) => {
+  //   const updatedData = data.filter((item) => item.key !== key);
+  //   setFilteredData(updatedData);
+  // };
 
   const onChange = (checked: boolean) => {
     console.log(`switch to ${checked}`);
@@ -68,21 +72,21 @@ const Facilities: React.FC = () => {
       dataIndex: 'facilityName',
       key: 'facilityName',
       width: 300,
-      render: (text: string, record: FacilityData) => (
+      render: (text: string) => (
         <Link to={`/FacilitiesDetails/`}>{text}</Link>
       ),
     },
     {
       title: 'Location',
-      dataIndex: 'location',
-      key: 'location',
+      dataIndex: 'place',
+      key: 'place',
       width: 300,
     },
     {
         title: 'Onlypass',
         width: 200,
         key: 'action',
-        render: ( record: FacilityData) => (
+        render: () => (
           <Switch defaultChecked onChange={onChange} />
         ),
       },
@@ -91,13 +95,15 @@ const Facilities: React.FC = () => {
         title: 'Web platform',
         width: 200,
         key: 'action',
-        render: ( record: FacilityData) => (
+        render: () => (
           <Switch defaultChecked onChange={onChange} />
         ),
       },
     
   ];
 
+  
+  // console.log("facility: ", facilityData);  
 
 
   return (
@@ -108,7 +114,7 @@ const Facilities: React.FC = () => {
           <h1>Facilities</h1>
           <div className='bg-black w-fit text-white text-sm flex p-2 rounded-lg hover:shadow-lg'>
             <Link to={"/Form"}>
-            <button className='md:flex md:items-center gap-2 hidden  md:block'>
+            <button className='md:flex md:items-center gap-2 hidden'>
               <PiPlusCircle size={20} /> New Facilities
             </button>
             <button className=' items-center md:hidden  '>
@@ -132,10 +138,8 @@ const Facilities: React.FC = () => {
       <div>
         <Table
           columns={columns}
-          
-          dataSource={filteredData ? filteredData : data}
+          dataSource={tableData}
           pagination={{ pageSize: 10 }}
-          
           className='m-3 p-2 shadow-lg'
         />
       </div>

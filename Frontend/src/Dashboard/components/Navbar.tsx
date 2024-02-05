@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
 import { AiOutlineMenuFold, AiOutlineSearch } from 'react-icons/ai';
-import { IoIosNotificationsOutline } from 'react-icons/io';
 import { HiOutlineUser } from 'react-icons/hi2';
+import { IoIosNotificationsOutline } from 'react-icons/io';
 
 const Navbar = () => {
   return (

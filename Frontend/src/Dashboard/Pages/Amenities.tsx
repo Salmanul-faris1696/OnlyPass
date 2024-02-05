@@ -1,8 +1,7 @@
-import React, { useState, ChangeEvent, useEffect } from 'react';
+import { Button, Input, Modal, Switch, Table } from 'antd';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { PiPlusCircle } from 'react-icons/pi';
-import { Switch, Table, Input, Modal, Button } from 'antd';
 import { ApiClientPrivate } from '../../utils/axios';
-import Item from 'antd/es/list/Item';
 
 interface Amenity {
   key: string;
@@ -11,7 +10,6 @@ interface Amenity {
 
 const Amenities: React.FC = () => {
   const [amentyData, setAmentyData] = useState<Amenity[]>([]);
-  const [searchText, setSearchText] = useState<string>('');
   const [filteredData, setFilteredData] = useState<Amenity[]>([]);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [newAmenityName, setNewAmenityName] = useState<string>('');
@@ -29,16 +27,10 @@ const Amenities: React.FC = () => {
 
   useEffect(() => {
     fetchData(); 
-  }, []);
-
-  
-
-
-  console.log("hi", amentyData);
+  }, []); 
 
   const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setSearchText(value);
     const lowerCasedValue = value.toLowerCase();
     const filtered = amentyData.filter((item) =>
       item.name.toLowerCase().includes(lowerCasedValue)
@@ -75,7 +67,7 @@ const Amenities: React.FC = () => {
       title: 'Enable/ Disable',
       width: 200,
       key: 'action',
-      render: (record: Amenity) => (
+      render: () => (
         <Switch defaultChecked onChange={onChange} />
       ),
     },
@@ -126,7 +118,7 @@ const Amenities: React.FC = () => {
         <div className='m-5 p-6 bg-slate-100 font-extrabold   text-2xl flex justify-between '>
           <h1>Amenities</h1>
           <div className='bg-black w-fit text-white text-sm flex p-2 rounded-lg hover:shadow-lg'>
-            <button className='md:flex md:items-center gap-2 hidden  md:block' onClick={showModal}>
+            <button className='md:flex md:items-center gap-2 hidden ' onClick={showModal}>
               <PiPlusCircle size={20} /> New Amenities
             </button>
             <button className='items-center md:hidden ' onClick={showModal}>

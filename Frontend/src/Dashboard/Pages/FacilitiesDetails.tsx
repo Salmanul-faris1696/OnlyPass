@@ -1,4 +1,3 @@
-import { Form, Input } from "antd";
 import { FaEdit } from "react-icons/fa";
 
 const data = [

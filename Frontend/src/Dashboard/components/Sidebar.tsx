@@ -1,11 +1,9 @@
 
-import React from 'react'
+import { FaBuilding, FaDumbbell, FaWifi } from "react-icons/fa";
+import { LuLogOut } from "react-icons/lu";
 import { PiUserGearFill } from "react-icons/pi";
 import { SlGraph } from "react-icons/sl";
-import { FaDumbbell, FaWifi } from "react-icons/fa";
-import { FaBuilding } from "react-icons/fa";
-import { LuLogOut } from "react-icons/lu";
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 
 
