@@ -35,7 +35,7 @@ const Location = () => {
     pin_code: reduxState.pin_code,
     country: "India",
     state: "Kerala",
-    latitude_lognitude: reduxState.latitude_longitude,
+    latitude_longitude: reduxState.latitude_longitude,
   });
 
   const { TextArea } = Input;

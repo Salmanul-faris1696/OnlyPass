@@ -273,8 +273,9 @@ const time = [
         time:'11:45 pm',
     },
 ]
-
 const Time = (props:any) => {
+    // console.log({props});
+    
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [selectedTime, setSelectedTime] = useState('');
   
@@ -282,10 +283,40 @@ const Time = (props:any) => {
       setIsDropdownOpen(!isDropdownOpen);
     };
   
-    const handleTimeSelect = (time:string) => {
-      setSelectedTime(time);
+    const handleTimeSelect = (
+        // time:string
+        value:any
+        ) => {
+            console.log({value});
+            
+      setSelectedTime(value.time);
       setIsDropdownOpen(false);
+      timeConcat(value.time)
     };
+
+    // console.log('time' , selectedTime);
+
+    const timeConcat = (selectedValue: any) => {
+        const { day, holder, timetype } = props;
+        console.log("tst1" ,selectedValue);
+        
+    
+        // Create a new object to hold the facility_Timing data
+        const newData = {
+          [day]: {
+            [timetype]: 
+            `${holder==="starting"? selectedValue : "," }`
+            //   [holder]: selectedValue.time,
+            // },
+          },
+        };
+    
+        // Use this newData object as needed (e.g., send it to a parent component)
+        console.log("tst2:",newData);
+      };
+
+
+    
   
     return (
       <div className="relative">
@@ -304,7 +335,7 @@ const Time = (props:any) => {
               <div
                 key={time.time}
                 className="px-4 py-2 cursor-pointer hover:bg-gray-200"
-                onClick={() => handleTimeSelect(time.time)}
+                onClick={() => handleTimeSelect({time:time.time, })}
               >
                 {time.time}
               </div>

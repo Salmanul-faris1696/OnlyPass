@@ -1,43 +1,25 @@
+import { Table } from "antd";
 import React, { useState } from "react";
-import { Input, Switch, Table, TimePicker } from "antd";
-import dayjs from "dayjs";
-import "dayjs/locale/en"; // import the locale if needed
-import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
 import Time from "./Time";
-
-dayjs.extend(utc);
-dayjs.extend(timezone);
-
 
 interface TimeData {
   key: number;
   day: string;
-  morningTime: dayjs.Dayjs | null;
-  eveningTime: dayjs.Dayjs | null;
+  morningTime?: string;
+  eveningTime?: string;
+  
 }
 
 const TimeTable: React.FC = () => {
-  const [data, setData] = useState<TimeData[]>([]);
 
-  const handleTimeChange = (
-    type: "morningTime" | "eveningTime",
-    key: number,
-    value: dayjs.Dayjs | null
-  ) => {
-    console.log("type:", type, "key: ", key, "value:", value);
+const handleTime = (e:any) =>{
+  console.log("time222",e.target.value);
   
-    setData((prevData) =>
-      prevData.map((item) => {
-        if (item.key === key) {
-          const updatedItem = { ...item, [type]: value ? [value, value] : null };
-          return updatedItem;
-        }
-        return item;
-      })
-    );
-  };
-  
+
+
+}
+
+ 
 
   const columns = [
     {
@@ -49,43 +31,21 @@ const TimeTable: React.FC = () => {
       title: "Morning Time",
       dataIndex: "morningTime",
       key: "morningTime",
-      render: (record: TimeData) => (
-//         <div className="flex gap-2 items-center">
-
-         
- 
-//  <TimePicker.RangePicker
-//  onChange={handleTimeChange}/>
-//           <Switch size="small" defaultChecked className="bg-red-500"/>
-          
-//         </div>
-<div className="grid gap-2">
-
-<Time holder={"starting"}/>
-<Time holder={"ending"}/>
-</div>
-
+      render: (record:any) => (
+          <div className="grid gap-2" >
+            <Time holder={"starting"} timetype="morningTime" day={record} onChange={handleTime} />
+            <Time holder={"ending"} day={record} timetype="morningTime" onChange={handleTime}/>
+          </div>
       ),
     },
     {
       title: "Evening Time",
       dataIndex: "eveningTime",
       key: "eveningTime",
-      render: (record: TimeData) => (
-
-        // <div className="flex gap-2 items-center">
-         
-        //   <TimePicker.RangePicker />
-
-
-        //   {/* <input type="time"  name="" id="" format="h:mm A" className="border p-2  rounded-md w-36 h-9 outline-blue-500"/> */}
-        //    <Switch size="small" defaultChecked className="bg-red-500"/>
-
-        // </div>
-        <div className="grid gap-2">
-
-<Time holder={"starting"}/>
-<Time holder={"ending"}/>
+      render: (record:any) => (
+        <div className="grid gap-2" onChange={handleTime} >
+          <Time holder={"starting"} timetype="eveningTime" day={record} />
+          <Time holder={"ending"} timetype="eveningTime" day={record}/>
         </div>
       ),
     },
@@ -104,15 +64,15 @@ const TimeTable: React.FC = () => {
 
   const initialData: TimeData[] = days.map((day, index) => ({
     key: index + 1,
+    morningTime:day,
+    eveningTime:day,
     day,
-    morningTime: dayjs(), // Initialize with the current time
-    eveningTime: dayjs(), // Initialize with the current time
   }));
 
   return (
     <div>
       <Table
-        dataSource={data.length === 0 ? initialData : data}
+        dataSource={initialData}
         columns={columns}
         pagination={false}
         className="mb-4 rounded-md"

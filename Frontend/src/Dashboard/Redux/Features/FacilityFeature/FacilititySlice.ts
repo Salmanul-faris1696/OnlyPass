@@ -161,8 +161,8 @@ export const FacilitySlice = createSlice({
 
       if(action.payload.equipments_id) {
       if (!state.equipments_id.includes(action.payload.equipments_id)) {
-        console.log(action.payload.equipments_id);
-        console.log("not include");
+        // console.log(action.payload.equipments_id);
+        // console.log("not include");
 
         state.equipments_id.push(action.payload.equipments_id);
       } else {

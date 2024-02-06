@@ -1,11 +1,19 @@
 import { Button, Checkbox, Form, Input, InputNumber, Select } from "antd";
 import { useDispatch } from "react-redux";
 import { nextButton, prevButton } from "../Redux/Features/ButtonSlice";
-import { useState } from "react";
+import {  useState } from "react";
 import { addData } from "../Redux/Features/FacilityFeature/FacilititySlice";
 import { useAppSelector } from "../Redux/hooks";
 
 // const { TextArea } = Input;
+interface CheckedState {
+  admission_fee: boolean;
+  daily_pass: boolean;
+  monthly_pass: boolean;
+  threeMonth_pass: boolean;
+  sixMonth_pass: boolean;
+  annual_pass: boolean;
+}
 
 const Membership = () => {
   const data = [
@@ -41,20 +49,22 @@ const Membership = () => {
     },
   ];
 
-  const [checkedState, setCheckedState] = useState({
-    admissionFee: false,
-    dailyPass: false,
-    monthlyPass: false,
-    threeMonthPass: false,
-    sixMonthPass: false,
-    annualPass: false,
+  const reduxState = useAppSelector((state) => state.facility);
+  const [checkedState, setCheckedState] = useState<CheckedState>({
+    admission_fee: reduxState.admission_fee ? true : false,
+    daily_pass: false,
+    monthly_pass: false,
+    threeMonth_pass: false,
+    sixMonth_pass: false,
+    annual_pass: false,
   });
+  console.log("check" ,checkedState);
+  
 
-const reduxState = useAppSelector((state) => state.facility);
 const [form] = Form.useForm();
 
 form.setFieldsValue({
-  admission_fee: reduxState.admission_fee,
+  admission_fee: reduxState.admission_fee ,
   daily_pass: reduxState.daily_pass,
   monthly_pass: reduxState.monthly_pass,
   threeMonth_pass: reduxState.threeMonth_pass,
@@ -87,6 +97,9 @@ const handleChange = (value: { value: string; label: React.ReactNode }) => {
   console.log({ value });
   dispatch(addData({ ["tier"]: value.value }));
 };
+
+
+
     
   return (
     <div className="max-w-[500px] mx-auto mt-8">
@@ -104,7 +117,13 @@ const handleChange = (value: { value: string; label: React.ReactNode }) => {
               <div className=" w-[150px] md:w-[200px]  flex justify-between gap-3">
                 {item.label}
 
-                <Checkbox name={item.name + "Check"} onChange={handleCheckBox}>
+                <Checkbox name={item.name }
+                checked={
+                  checkedState[
+                    (item.name ) as keyof typeof checkedState
+                  ]
+                }
+                onChange={handleCheckBox} >
                   {" "}
                 </Checkbox>
               </div>
@@ -116,7 +135,7 @@ const handleChange = (value: { value: string; label: React.ReactNode }) => {
                 name={item.name}
                 hidden={
                   !checkedState[
-                    (item.name + "Check") as keyof typeof checkedState
+                    (item.name ) as keyof typeof checkedState
                   ]
                 }
                 // wrapperCol={{ span: 6 }}

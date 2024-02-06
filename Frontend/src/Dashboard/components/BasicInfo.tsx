@@ -104,23 +104,6 @@ const BasicInfo = () => {
     }
   };
 
-  // const debounce = <F extends (...args: any[]) => any>(
-  //   func: F,
-  //   delay: number
-  // ) => {
-  //   let timeoutId: ReturnType<typeof setTimeout>;
-  //   return (...args: Parameters<F>) => {
-  //     clearTimeout(timeoutId);
-  //     timeoutId = setTimeout(() => {
-  //       func(...args);
-  //     }, delay);
-  //   };
-  // };
-
-  // const debouncedNormFileLogo = useMemo(
-  //   () => debounce(normFileLogo, 500),
-  //   [normFileLogo]
-  // );
   
   // This is using for avoid re rendering while the files upload........!
   const debouncedNormFileLogo = useDebounce(normFileLogo, 500);
