@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/en"; // import the locale if needed
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import Time from "./Time";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -49,26 +50,21 @@ const TimeTable: React.FC = () => {
       dataIndex: "morningTime",
       key: "morningTime",
       render: (record: TimeData) => (
-        <div className="flex gap-2 items-center">
+//         <div className="flex gap-2 items-center">
 
-          {/* <TimePicker
-            value={record.morningTime}
-            onChange={(value) =>
-              handleTimeChange("morningTime", record.key, value)
-            }
-            format="h:mm A" // changed format to match dayjs format
-            className="custom-time-picker "
-            
-            
-          /> */}
-                    {/* <input type="time" for  name="" id="" className="border p-2  rounded-md w-36 h-9 outline-blue-500"/>
-                    <TimePicker.RangePicker />
- */}
- <TimePicker.RangePicker
- onChange={handleTimeChange}/>
-          <Switch size="small" defaultChecked className="bg-red-500"/>
+         
+ 
+//  <TimePicker.RangePicker
+//  onChange={handleTimeChange}/>
+//           <Switch size="small" defaultChecked className="bg-red-500"/>
           
-        </div>
+//         </div>
+<div className="grid gap-2">
+
+<Time holder={"starting"}/>
+<Time holder={"ending"}/>
+</div>
+
       ),
     },
     {
@@ -77,28 +73,23 @@ const TimeTable: React.FC = () => {
       key: "eveningTime",
       render: (record: TimeData) => (
 
-        <div className="flex gap-2 items-center">
-          {/* <TimePicker
-            value={record.eveningTime}
-            onChange={(value) =>
-              handleTimeChange("eveningTime", record.key, value)
-            }
-            format="h:mm A" // changed format to match dayjs format
-            className="custom-time-picker "
-          /> */}
-          <TimePicker.RangePicker />
+        // <div className="flex gap-2 items-center">
+         
+        //   <TimePicker.RangePicker />
 
 
-          {/* <input type="time"  name="" id="" format="h:mm A" className="border p-2  rounded-md w-36 h-9 outline-blue-500"/> */}
-           <Switch size="small" defaultChecked className="bg-red-500"/>
+        //   {/* <input type="time"  name="" id="" format="h:mm A" className="border p-2  rounded-md w-36 h-9 outline-blue-500"/> */}
+        //    <Switch size="small" defaultChecked className="bg-red-500"/>
 
+        // </div>
+        <div className="grid gap-2">
+
+<Time holder={"starting"}/>
+<Time holder={"ending"}/>
         </div>
       ),
     },
   ];
-
-
-
 
 
   const days = [

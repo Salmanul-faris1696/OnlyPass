@@ -85,7 +85,7 @@ const getPincodeInfo = async (pin:number) => {
   
   return (
     <div>
-      <div className="font-semibold md:px-5 ">
+      <div className="font-semibold md:px-5  ">
         <Form
           form={form}
           onFinish={(values) => console.log({ values })}
