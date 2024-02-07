@@ -2,7 +2,7 @@ import { Button, Checkbox, Form, Input, InputNumber, Select } from "antd";
 import { useDispatch } from "react-redux";
 import { nextButton, prevButton } from "../Redux/Features/ButtonSlice";
 import {  useState } from "react";
-import { addData } from "../Redux/Features/FacilityFeature/FacilititySlice";
+import { addData, setTier } from "../Redux/Features/FacilityFeature/FacilititySlice";
 import { useAppSelector } from "../Redux/hooks";
 
 // const { TextArea } = Input;
@@ -52,11 +52,11 @@ const Membership = () => {
   const reduxState = useAppSelector((state) => state.facility);
   const [checkedState, setCheckedState] = useState<CheckedState>({
     admission_fee: reduxState.admission_fee ? true : false,
-    daily_pass: false,
-    monthly_pass: false,
-    threeMonth_pass: false,
-    sixMonth_pass: false,
-    annual_pass: false,
+    daily_pass: reduxState.daily_pass ? true : false,
+    monthly_pass: reduxState.monthly_pass ?true :false,
+    threeMonth_pass:reduxState.threeMonth_pass?true :   false,
+    sixMonth_pass:reduxState.sixMonth_pass ?true : false,
+    annual_pass:reduxState.annual_pass ?true : false,
   });
   console.log("check" ,checkedState);
   
@@ -71,6 +71,7 @@ form.setFieldsValue({
   sixMonth_pass: reduxState.sixMonth_pass,
   annual_pass: reduxState.annual_pass,
   tier: reduxState.tier? reduxState.tier : "Select Tier",
+  other:reduxState.other
 });
 
 const dispatch = useDispatch();
@@ -94,9 +95,15 @@ const handlePriceChange = (name: string, value: number) => {
   
 };
 const handleChange = (value: { value: string; label: React.ReactNode }) => {
-  console.log({ value });
-  dispatch(addData({ ["tier"]: value.value }));
+  console.log("salman :" , { value });
+  // dispatch(addData({ tier: value.value }));
+  dispatch(setTier(value))
 };
+
+const handleOtherchange = (e:any) => {
+  dispatch(addData({ ["other"] : e.target.value}))
+
+}
 
 
 
@@ -152,7 +159,16 @@ const handleChange = (value: { value: string; label: React.ReactNode }) => {
             </div>
           </div>
         ))}
-          <Form.Item
+         
+        <Form.Item
+          label="Other Options"
+          labelCol={{ span: 7 }}
+          name={"other"}
+        >
+          <Input name="other" className="w-52" onChange={handleOtherchange} />
+        </Form.Item>
+
+        <Form.Item
             label="Facility Tier"
             name="tier"
             className="text-start"
@@ -182,13 +198,6 @@ const handleChange = (value: { value: string; label: React.ReactNode }) => {
               ]}
             />
           </Form.Item>
-        <Form.Item
-          label="Other Options"
-          labelCol={{ span: 7 }}
-
-        >
-          <Input name="other" className="w-52" />
-        </Form.Item>
       </Form>
 
       <div className="flex gap-3 justify-center">

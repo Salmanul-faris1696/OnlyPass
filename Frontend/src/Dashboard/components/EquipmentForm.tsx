@@ -16,6 +16,7 @@ interface Equipment {
 
 const EquipmentForm = () => {
   const [equipmentsData, setEquipmetsData] = useState<Equipment[]>([]);
+  const {equipments_id} = useAppSelector((state) => state.facility);
   const dispatch = useDispatch();
   // const handleNext = () => {
   //     dispatch(nextButton());
@@ -80,7 +81,7 @@ const EquipmentForm = () => {
         </div>
 
         <div className="List-Section">
-          {equipmentsData.map((it,ind) => (
+          {equipmentsData.map((item,ind) => (
             <div
               key={ind}
               className="object-section border flex items-center justify-between p-2 mb-4 bg-white rounded-md shadow-md"
@@ -88,16 +89,17 @@ const EquipmentForm = () => {
               <div className="flex items-center gap-3">
                 <div className="image-section">
                   <img
-                    src={`${imaageURL}/${it.image}`}
+                    src={`${imaageURL}/${item.image}`}
                     alt="image"
                     className="h-20 w-24"
                   />
                 </div>
-                <div className="Name-section">{it.name}</div>
+                <div className="Name-section">{item.name}</div>
               </div>
               <div className="flex justify-end">
                 <Checkbox
-                  onChange={(e) => onChange(e.target.checked, it._id)}
+                  checked={equipments_id.length > 0 && equipments_id?.find(it => it === item._id) }
+                  onChange={(e) => onChange(e.target.checked, item._id)}
                 ></Checkbox>
               </div>
             </div>

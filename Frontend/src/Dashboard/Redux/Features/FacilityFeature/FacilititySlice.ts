@@ -86,6 +86,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 // import type { RootState } from "../../store";
 
+
 export interface FacilitiesState {
   facility_type: string;
   gender: string;
@@ -109,7 +110,9 @@ export interface FacilitiesState {
   threeMonth_pass: string;
   sixMonth_pass: string;
   annual_pass: string;
-  equipments_id: string[];
+  other:string
+  equipments_id: any[];
+  amenities:any[]
 }
 
 const initialState: FacilitiesState = {
@@ -135,7 +138,9 @@ const initialState: FacilitiesState = {
   threeMonth_pass: "",
   sixMonth_pass: "",
   annual_pass: "",
+  other:"",
   equipments_id: [],
+  amenities:[]
 };
 
 export const FacilitySlice = createSlice({
@@ -147,6 +152,8 @@ export const FacilitySlice = createSlice({
       // action: PayloadAction<Partial<FacilitiesState>>
       action: PayloadAction<Partial<any>>
     ) => {
+      console.log("niyad" , action.payload);
+      
       const payloadKeys = Object.keys(action.payload) as Array<
         keyof FacilitiesState
       >; // Type assertion
@@ -172,8 +179,31 @@ export const FacilitySlice = createSlice({
       }
     }
   },
+  setTier :(state ,action) => {
+    console.log(action.payload);
+    
+    state.tier = action.payload
+  },
+  setAmenties: (state, action) => {
+    if (action.payload && action.payload.amenities_id) {
+      const existingIndex = state.amenities.findIndex(
+        (item:any) => item.amenities_id === action.payload.amenities_id
+      );
+  
+      if (existingIndex === -1 && action.payload.Paid !== false) {
+        // If amenity not present and Paid is not false, add it to the array
+        state.amenities.push(action.payload);
+      } else if (existingIndex !== -1 && action.payload.Paid !== false) {
+        // If amenity already present and Paid is not false, replace the existing data
+        state.amenities[existingIndex] = action.payload;
+      } else if (existingIndex !== -1 && action.payload.Paid === false) {
+        // If amenity already present and Paid is false, remove the existing data
+        state.amenities.splice(existingIndex, 1);
+      }
+    }
+  }
  },
 });
 
-export const { addData } = FacilitySlice.actions;
+export const { addData,setTier,setAmenties } = FacilitySlice.actions;
 export default FacilitySlice.reducer;

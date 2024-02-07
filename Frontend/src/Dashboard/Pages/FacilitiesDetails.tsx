@@ -1,4 +1,8 @@
 import { FaEdit } from "react-icons/fa";
+import { Table } from 'antd';
+import type { TableProps } from 'antd';
+import Amenities from './../../../../only-pass-frontend/src/Dashboard/Pages/Amenities';
+
 
 const data = [
   {
@@ -68,12 +72,120 @@ const data2 = [
   }
 ]
 
+interface DataType {
+  key: string;
+  plans: string;
+  price: number;
+  
+  
+}
+interface amenityData{
+  amenities:string
+  paid : string
+}
+interface equipmentData{
+  equi_name:string
+  equi_image:any
+}
+
+const columns: TableProps<DataType>['columns'] = [
+  {
+    title: 'Plans',
+    dataIndex: 'plans',
+    key: 'plans',
+    render: (text) => <a>{text}</a>,
+  },
+  {
+    title: 'Price',
+    dataIndex: 'price',
+    key: 'price',
+  },
+
+]
+
+const tableData: DataType[] = [
+  {
+    key: '1',
+    plans: 'adimission fees',
+    price: 1000,
+    
+  },
+  {
+    key: '2',
+    plans: 'Monthly pass',
+    price: 850,
+    
+  },
+  {
+    key: '3',
+    plans: '3 Month pass',
+    price: 2800,
+    
+  },
+  {
+    key: '4',
+    plans: '6 Monthly pass',
+    price: 5500,
+    
+  },
+]
+
+const columns2: TableProps<amenityData>['columns'] = [
+  {
+    title: 'Amenties',
+    dataIndex: 'amenities',
+    key: 'amenities',
+    render: (text) => <a>{text}</a>,
+  },
+  {
+    title: 'Paid',
+    dataIndex: 'paid',
+    key: 'paid',
+  },
+
+]
+
+const tableData2: amenityData[] = [
+  {
+    amenities: 'Parking',
+    paid: "paid",
+    
+  },
+  {
+    amenities: 'Shower',
+    paid: "paid",
+    
+  },{
+    amenities: 'Locker Room',
+    paid: "free",
+    
+  },{
+    amenities: 'Wifi',
+    paid: "free",
+    
+  },{
+    amenities: 'ice-Bath',
+    paid: "paid",
+    
+  },
+  
+ 
+]
+
+
+
 
 
 const FacilitiesDetails = () => {
   return (
-    <div className="md:flex m-3">
+    <div className="w-fit">
+       <div className="text-center p-3  mt-5">
+      <h1 className="font-semibold text-5xl ">Hulk fit</h1>
+    </div>
+    <div className="md:flex m-3"> 
+   
       <div className=" p-3 w-fit  md:w-[50%]">
+       
         <div className="basic_info">
 
         <div className=" flex justify-between items-center font-semibold">
@@ -95,7 +207,7 @@ const FacilitiesDetails = () => {
 
             </div>
             <div className="input flex gap-3 items-center"> 
-            <input type="text" value={item.input} disabled className="border rounded-md p-2 bg-gray-300 w-[250px]"/>
+            <input type="text" value={item.input} disabled className="border rounded-md p-2 bg-gray-100 w-[250px]"/> 
 
             </div>
           </div>
@@ -106,7 +218,7 @@ const FacilitiesDetails = () => {
             <h1>Description:</h1>
           </div>
           <div className="md:flex  md:gap-3 ">
-            <textarea name="" value={"Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque maxime consequuntur voluptatem iusto inventore molestiae aspernatur? Non magnam, "}  id="" cols={45} rows={5} className="border rounded-md  p-2 bg-gray-300 md:w-[400px] mt-3 "></textarea>
+            <textarea name="" disabled value={"Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque maxime consequuntur voluptatem iusto inventore molestiae aspernatur? Non magnam, "}  id="" cols={45} rows={5} className="border rounded-md  p-2 bg-gray-100 md:w-[400px] mt-3 "></textarea>
             
           </div>
         </div>
@@ -140,7 +252,8 @@ const FacilitiesDetails = () => {
         </div>
       </div>
 
-      <div className="section-2 bg-gray-200 p-3  md:w-[50%]">
+      <div className="section-2  p-3  md:w-[50%]">
+
         <div className="Location">
 
         <div className=" flex  justify-between items-center font-semibold">
@@ -157,7 +270,7 @@ const FacilitiesDetails = () => {
             <h1>Address:</h1>
           </div>
           <div className="md:flex  md:gap-3 ">
-            <textarea name="" value={"hulk fit kottakkal puthur malapppuram road  "}  id="" cols={45} rows={3} className="border rounded-md  p-2 bg-gray-300 md:w-[400px] mt-3 "></textarea>
+            <textarea name="" value={"hulk fit kottakkal puthur malapppuram road  "} disabled  id="" cols={45} rows={3} className="border rounded-md  p-2 bg-gray-100 md:w-[400px] mt-3 "></textarea>
             
           </div>
         </div>
@@ -173,7 +286,7 @@ const FacilitiesDetails = () => {
 
             </div>
             <div className="input flex gap-3 items-center"> 
-            :<input type="text" value={it.input} disabled className="border rounded-md p-2 bg-gray-300 w-[250px]"/>
+            :<input type="text" value={it.input} disabled className="border rounded-md p-2 bg-gray-100 w-[250px]"/>
 
             </div>
           </div>
@@ -183,7 +296,7 @@ const FacilitiesDetails = () => {
         </div>
 
         <div className="Membership mt-10">
-        <div className=" flex  justify-between items-center font-semibold">
+        <div className=" flex  justify-between items-center font-semibold ">
           <div>
             <h1>Membership options</h1>
           </div>
@@ -192,8 +305,80 @@ const FacilitiesDetails = () => {
           </div>
         </div>
 
+       
+
+        <div className="mt-10">
+        <Table columns={columns} dataSource={tableData} pagination={false} />
+         
+        </div>
+
+        </div>
+
+        <div className="Time mt-10">
+        <div className=" flex  justify-between items-center font-semibold">
+          <div>
+            <h1>Time</h1>
+          </div>
+          <div>
+            <FaEdit />
+          </div>
         </div>
         </div>
+        </div>
+    </div>
+
+    <div className="section-3 w-full flex  mt-5 gap-5 p-5">
+      <div className="Amenities w-1/2  ">
+      <div className=" flex  justify-between items-center font-semibold ">
+          <div>
+            <h1> Amenities</h1>
+          </div>
+          <div>
+            <FaEdit />
+          </div>
+        </div>
+        <div className="p-3">
+         <Table columns={columns2} dataSource={tableData2} pagination={false}  className=""/>
+
+        </div>
+
+
+
+      </div>
+
+      <div className="equipments w-1/2 ">
+      <div className=" flex  justify-between items-center font-semibold ">
+          <div>
+            <h1>Equipments</h1>
+          </div>
+          <div>
+            <FaEdit />
+          </div>
+        </div>
+      <div className="p-3">
+        <div className="   items-center justify-between  mb-4 bg-gray-100 rounded-md shadow-md">
+          <div className="flex items-center gap-3 p-3 ">
+            <div className="image-section">
+                  <img
+                    // src={`${imaageURL}/${item.image}`}
+                    src="https://imgs.search.brave.com/EqzCar3z-2kBvaUCGU9VXLq4NizLppHsJ73ID82oJi8/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTg1/Mjg1MjI3L3Bob3Rv/L2R1bWJiZWxsLmpw/Zz9zPTYxMng2MTIm/dz0wJms9MjAmYz02/ckNtSlBCSi1zbXZH/SnZqclNVSGRoYnQx/b1BidVV6b2tUaEJJ/X21ZNU5ZPQ"
+                    alt="image"
+                    className="md:h-20  md:w-24 w-12 h-10"
+                  />
+                </div>
+                <div className="Name-section">Dumbel</div>
+            </div>
+           
+
+          
+
+        </div>
+
+
+        </div>
+      </div>
+
+    </div>
     </div>
   );
 };
