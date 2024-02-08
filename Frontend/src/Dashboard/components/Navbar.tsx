@@ -10,7 +10,7 @@ const Navbar = () => {
 
   
   return (
-    <div className='fixed top-0 w-full md:w-[100%] md:h-24  lg:w-[75%] xl:w-[80%] bg-white py-8 p-5 z-10 '>
+    <div className='fixed top-0 w-full md:w-[100%] md:h-24  lg:w-[75%] xl:w-[80%] bg-white p-5 z-10 '>
       <div className='flex justify-between'>
         <div className='flex gap-3'>
           <div className='border rounded-full shadow-lg p-1 lg:hidden' onClick={() =>setIsSidebarOpen((sidebarhide) => !sidebarhide) }>
@@ -25,7 +25,7 @@ const Navbar = () => {
 
         
 
-        <div className='flex gap-3'>
+        <div className='flex gap-3 pr-5 lg:pr-0'>
           <div className='border rounded-full shadow-lg p-1'>
             <IoIosNotificationsOutline size={20} />
           </div>
@@ -35,7 +35,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className={`${isSidebarOpen ? 'flex' : "hidden"} absolute left-0 top-[87px] `} onClick={() =>setIsSidebarOpen((sidebarhide) => !sidebarhide) }>
+      <div className={`${isSidebarOpen ? 'flex' : "hidden"} absolute -left-2 top-[95px] `} onClick={() =>setIsSidebarOpen((sidebarhide) => !sidebarhide) }>
         <Sidebar />
       </div>
     </div>

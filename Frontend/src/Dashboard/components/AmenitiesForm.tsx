@@ -35,7 +35,7 @@ console.log({amenities, selectedTypes});
       const res = await ApiClientPrivate.get("/amenities");
       const initialSelectedTypes: { [key: string]: string | null } = {};
       res.data.forEach((item:any) => {
-        initialSelectedTypes[item._id] = null;
+        initialSelectedTypes[item.name] = null;
       });
       setSelectedTypes(initialSelectedTypes);
       setAmentyData(res.data);
@@ -48,19 +48,19 @@ console.log({amenities, selectedTypes});
     fetchData();
   }, []);
 
-  const handleTypeChange = (id: string, type: string, e:any) => {
+  const handleTypeChange = (name: string, type: string, e:any) => {
     setSelectedTypes((prevSelectedTypes) => ({
       ...prevSelectedTypes,
-      [id]: prevSelectedTypes[id] === type ? null : type,
+      [name]: prevSelectedTypes[name] === type ? null : type,
 
     }));
     console.log("check",e.target.checked);
     
     // Dispatch your action accordingly
     if (type === 'free' && e.target.checked || type === 'paid' && e.target.checked ) {
-      dispatch(setAmenties({ amenities_id: id, isPaid: type }));
+      dispatch(setAmenties({ amenities_name: name, isPaid: type }));
     }else{
-      dispatch(setAmenties( { amenities_id: id, Paid: e.target.checked }))
+      dispatch(setAmenties( { amenities_name: name, Paid: e.target.checked }))
     }
 
   };
@@ -80,14 +80,14 @@ console.log({amenities, selectedTypes});
           <div className="flex items-center gap-3 ">
             <div className="PaidSection">Free</div>
             <Checkbox 
-            checked={amenities.length > 0 && amenities?.find(it => it.amenities_id == item._id)?.isPaid === 'free' || selectedTypes[item._id] === 'free'} 
-            onChange={(e:any) => handleTypeChange(item._id, 'free',e)}></Checkbox>
+            checked={amenities.length > 0 && amenities?.find(it => it.amenities_name == item.name)?.isPaid === 'free' || selectedTypes[item.name] === 'free'} 
+            onChange={(e:any) => handleTypeChange(item.name, 'free',e)}></Checkbox>
           </div>
           <div className="flex items-center gap-3 ">
             <div className="PaidSection">Paid</div>
             <Checkbox 
-            checked={amenities.length > 0 && amenities?.find(it => it.amenities_id == item._id)?.isPaid === 'paid' || selectedTypes[item._id] === 'paid'} 
-            onChange={(e:any) => handleTypeChange(item._id, 'paid', e)}></Checkbox>
+            checked={amenities.length > 0 && amenities?.find(it => it.amenities_name == item.name)?.isPaid === 'paid' || selectedTypes[item.name] === 'paid'} 
+            onChange={(e:any) => handleTypeChange(item.name, 'paid', e)}></Checkbox>
           </div>
         </div>
       ))}

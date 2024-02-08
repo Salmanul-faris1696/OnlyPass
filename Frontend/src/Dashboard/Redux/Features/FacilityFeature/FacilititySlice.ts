@@ -111,7 +111,7 @@ export interface FacilitiesState {
   sixMonth_pass: string;
   annual_pass: string;
   other:string
-  equipments_id: any[];
+  equipments: any[];
   amenities:any[]
 }
 
@@ -129,8 +129,8 @@ const initialState: FacilitiesState = {
   images: [],
   address: "",
   pin_code: "",
-  state: "",
-  country: "",
+  state: "India",
+  country: "Kerala",
   latitude_longitude: "",
   admission_fee: "",
   daily_pass: "",
@@ -139,7 +139,7 @@ const initialState: FacilitiesState = {
   sixMonth_pass: "",
   annual_pass: "",
   other:"",
-  equipments_id: [],
+  equipments: [],
   amenities:[]
 };
 
@@ -158,26 +158,13 @@ export const FacilitySlice = createSlice({
         keyof FacilitiesState
       >; // Type assertion
       payloadKeys.forEach((key) => {
-        if (key !== "images" && key !== "equipments_id") {
+        if (key !== "images" ) {
           state[key] = action.payload[key]!;
         }
       });
       if (action.payload.images) {
         state.images = state.images.concat(action.payload.images);
       }
-
-      if(action.payload.equipments_id) {
-      if (!state.equipments_id.includes(action.payload.equipments_id)) {
-        // console.log(action.payload.equipments_id);
-        // console.log("not include");
-
-        state.equipments_id.push(action.payload.equipments_id);
-      } else {
-        console.log("include");
-        const index = state.equipments_id.indexOf(action.payload.equipments_id);
-        state.equipments_id.splice(index, 1);
-      }
-    }
   },
   setTier :(state ,action) => {
     console.log(action.payload);
@@ -185,9 +172,9 @@ export const FacilitySlice = createSlice({
     state.tier = action.payload
   },
   setAmenties: (state, action) => {
-    if (action.payload && action.payload.amenities_id) {
+    if (action.payload && action.payload.amenities_name) {
       const existingIndex = state.amenities.findIndex(
-        (item:any) => item.amenities_id === action.payload.amenities_id
+        (item:any) => item.amenities_name === action.payload.amenities_name
       );
   
       if (existingIndex === -1 && action.payload.Paid !== false) {
@@ -201,9 +188,34 @@ export const FacilitySlice = createSlice({
         state.amenities.splice(existingIndex, 1);
       }
     }
-  }
+  },
+
+  setEquipments: (state, action) => {
+    const { equipment_id, equipment_name, equipment_img } = action.payload;
+
+    // Check if the equipment with the given ID already exists
+    const existingEquipmentIndex = state.equipments.findIndex(
+      (equipment) => equipment.equipment_id === equipment_id
+    );
+
+    if (existingEquipmentIndex !== -1) {
+      // If exists, remove it
+      state.equipments = state.equipments.filter(
+        (equipment) => equipment.equipment_id !== equipment_id
+      );
+    } else {
+      // If not exists, add it
+      state.equipments.push({
+        equipment_id,
+        equipment_name,
+        equipment_img,
+      });
+    }
+
+    console.log("Equipments", state.equipments);
+  },
  },
 });
 
-export const { addData,setTier,setAmenties } = FacilitySlice.actions;
+export const { addData,setTier,setAmenties,setEquipments } = FacilitySlice.actions;
 export default FacilitySlice.reducer;

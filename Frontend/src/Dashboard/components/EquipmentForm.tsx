@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { prevButton } from "../Redux/Features/ButtonSlice";
 import { Button } from "antd/es/radio";
 import { useAppSelector } from "../Redux/hooks";
-import { addData } from "../Redux/Features/FacilityFeature/FacilititySlice";
+import { addData, setEquipments } from "../Redux/Features/FacilityFeature/FacilititySlice";
 
 interface Equipment {
   _id: string;
@@ -16,7 +16,7 @@ interface Equipment {
 
 const EquipmentForm = () => {
   const [equipmentsData, setEquipmetsData] = useState<Equipment[]>([]);
-  const {equipments_id} = useAppSelector((state) => state.facility);
+  const {equipments} = useAppSelector((state) => state.facility);
   const dispatch = useDispatch();
   // const handleNext = () => {
   //     dispatch(nextButton());
@@ -68,9 +68,9 @@ const EquipmentForm = () => {
     }
   };
 
-  const onChange = (checked: boolean, id: string) => {
+  const onChange = (checked: boolean, id: string , name :string , image:string ) => {
     console.log("equipment id:", id, { checked });
-      dispatch(addData({equipments_id: id,}));
+      dispatch(setEquipments( {equipment_id : id ,equipment_name : name , equipment_img : image}));
   };
 
   return (
@@ -98,8 +98,8 @@ const EquipmentForm = () => {
               </div>
               <div className="flex justify-end">
                 <Checkbox
-                  checked={equipments_id.length > 0 && equipments_id?.find(it => it === item._id) }
-                  onChange={(e) => onChange(e.target.checked, item._id)}
+                  checked={equipments.length > 0 && equipments?.find((it:any) => it.equipment_id === item._id) }
+                  onChange={(e) => onChange(e.target.checked, item._id , item.name ,item.image  )}
                 ></Checkbox>
               </div>
             </div>

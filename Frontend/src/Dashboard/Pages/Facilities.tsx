@@ -10,7 +10,7 @@ interface FacilityData {
   key:string
   _id: string;
   facilityName: string;
-  place: string;
+  address: string;
 }
 
 const Facilities: React.FC = () => {
@@ -18,10 +18,10 @@ const Facilities: React.FC = () => {
   const [filteredData, setFilteredData] = useState<FacilityData[]>([]);
 
     // Data fetching.....!
-    const fecthFacility = async () => {
+    const fetchFacility = async () => {
       try {
         const res = await ApiClientPrivate.get("/facilities");
-        console.log(res.data);
+        console.log({'aaaaa':res.data});
 
         setFacilityData(res.data);
         setFilteredData(res.data);
@@ -31,7 +31,7 @@ const Facilities: React.FC = () => {
     };
 
     useEffect(() => {
-      fecthFacility();
+      fetchFacility();
     }, []);
 
   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +40,7 @@ const Facilities: React.FC = () => {
     const filtered = facilityData.filter(
       (item) =>
         item.facilityName.toLowerCase().includes(lowerCasedValue) ||
-        item.place.toLowerCase().includes(lowerCasedValue) 
+        item.address.toLowerCase().includes(lowerCasedValue) 
        
     );
 
@@ -65,26 +65,21 @@ const Facilities: React.FC = () => {
       title: 's.No',
       dataIndex: 'key',
       key: 'sNo',
-      width: 100,
     },
     {
       title: 'Facilities',
-      dataIndex: 'facilityName',
       key: 'facilityName',
-      width: 300,
-      render: (text: string) => (
-        <Link to={`/FacilitiesDetails/`}>{text}</Link>
+      render: (record:any) => (
+        <Link to={`/FacilitiesDetails/${record._id}`}>{record.facilityName}</Link>
       ),
     },
     {
-      title: 'Location',
-      dataIndex: 'place',
-      key: 'place',
-      width: 300,
+      title: 'Address',
+      dataIndex: 'address',
+      key: 'address',
     },
     {
         title: 'Onlypass',
-        width: 200,
         key: 'action',
         render: () => (
           <Switch defaultChecked onChange={onChange} />
@@ -93,12 +88,12 @@ const Facilities: React.FC = () => {
 
       {
         title: 'Web platform',
-        width: 200,
         key: 'action',
         render: () => (
           <Switch defaultChecked onChange={onChange} />
         ),
       },
+      
     
   ];
 
@@ -109,8 +104,8 @@ const Facilities: React.FC = () => {
   return (
     <div>
       {/* headerSection */}
-      <div className='headerSection mt-24'>
-        <div className='m-5 p-6 bg-slate-100 font-bold  text-2xl flex justify-between '>
+      <div className='headerSection mt-24 '>
+        <div className=' p-6 bg-slate-100 font-bold  text-2xl flex justify-between w-[450px] sm:w-auto '>
           <h1>Facilities</h1>
           <div className='bg-black w-fit text-white text-sm flex p-2 rounded-lg hover:shadow-lg'>
             <Link to={"/Form"}>
@@ -135,12 +130,12 @@ const Facilities: React.FC = () => {
       </div>
 
       {/* Table Section */}
-      <div>
+      <div className='w-fit sm:w-auto'>
         <Table
           columns={columns}
           dataSource={tableData}
           pagination={{ pageSize: 10 }}
-          className='m-3 p-2 shadow-lg'
+          className=' p-5 shadow-lg'
         />
       </div>
     </div>

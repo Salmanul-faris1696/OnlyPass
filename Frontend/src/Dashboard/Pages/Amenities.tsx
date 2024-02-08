@@ -115,7 +115,7 @@ const Amenities: React.FC = () => {
     <div className=''>
       {/* header-Section */}
       <div className='headerSection mt-24'>
-        <div className='m-5 p-6 bg-slate-100 font-extrabold   text-2xl flex justify-between '>
+        <div className=' p-6 bg-slate-100 font-extrabold   text-2xl flex justify-between '>
           <h1>Amenities</h1>
           <div className='bg-black w-fit text-white text-sm flex p-2 rounded-lg hover:shadow-lg'>
             <button className='md:flex md:items-center gap-2 hidden ' onClick={showModal}>

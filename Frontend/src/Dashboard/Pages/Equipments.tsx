@@ -97,7 +97,7 @@ const Equipments: React.FC = () => {
     <div>
       {/* header-Section */}
       <div className='headerSection mt-24'>
-        <div className='m-5 p-6 bg-slate-100 font-bold  text-2xl flex justify-between '>
+        <div className='mb-5 p-6 bg-slate-100 font-bold  text-2xl flex justify-between '>
           <h1>Equipments</h1>
           <div className='bg-black w-fit text-white text-sm flex p-2 rounded-lg hover:shadow-lg'>
             <button className='md:flex md:items-center gap-2 hidden ' onClick={showModal}>
@@ -110,11 +110,11 @@ const Equipments: React.FC = () => {
         </div>
       </div>
       {/* CardSection */}
-      <div className='Card-Section  grid gap-y-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-col-4 '>
+      <div className='Card-Section grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid lg:grid-cols-4 gap-3'>
         {equipmentsData.map(({ _id,  image, name }) => (
           <div className='mx-auto' key={_id}>
-            <Card className='w-[300px] p-1 shadow-md'>
-              <img alt={name} src={`${imaageURL}/${image}`} className='p-2  border-b-2 w-[300px] h-[300px]' />
+            <Card className='w-[250px]  p-1 shadow-md'>
+              <img alt={name} src={`${imaageURL}/${image}`} className='p-2  border-b-2 w-[200px] h-[200px]' />
               <div className='flex items-center justify-between'>
                 <Meta title={name} />
                 <Switch defaultChecked onChange={onChange} />
