@@ -8,7 +8,6 @@ import { nextButton } from "../Redux/Features/ButtonSlice";
 import { addData } from "../Redux/Features/FacilityFeature/FacilititySlice";
 import { useAppSelector } from "../Redux/hooks";
 const { TextArea } = Input;
-import type { UploadFile } from 'antd'
 
 
 const BasicInfo = () => {

@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { prevButton } from "../Redux/Features/ButtonSlice";
 import { Button } from "antd/es/radio";
 import { useAppSelector } from "../Redux/hooks";
-import { addData, setEquipments } from "../Redux/Features/FacilityFeature/FacilititySlice";
+import {  setEquipments } from "../Redux/Features/FacilityFeature/FacilititySlice";
 
 interface Equipment {
   _id: string;

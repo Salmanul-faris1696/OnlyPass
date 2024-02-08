@@ -189,7 +189,7 @@ const tableData: DataType[] = [
 const filteredTableData = tableData.filter(item => item.price !== null );
 
 //amenities data
-const amenityTableData =facilityData.amenities?.map(((amenity:any, index:any) => ({
+const amenityTableData =facilityData.amenities?.map(((amenity:any, ) => ({
   id: amenity._id,
   amenity: amenity.amenities_name,
   paid: amenity.isPaid === 'paid' ? 'Paid' : 'Free',

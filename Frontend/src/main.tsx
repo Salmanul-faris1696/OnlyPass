@@ -10,7 +10,6 @@ import Facilities from './Dashboard/Pages/Facilities.tsx';
 import { Provider } from 'react-redux'
 import { store } from './Dashboard/Redux/store.ts';
 import Form from './Dashboard/Pages/Form.tsx';
-import Location from './Dashboard/components/Location.tsx';
 import FacilitiesDetails from './Dashboard/Pages/FacilitiesDetails.tsx';
 
 
