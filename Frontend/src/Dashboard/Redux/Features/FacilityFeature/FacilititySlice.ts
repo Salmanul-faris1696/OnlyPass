@@ -112,7 +112,20 @@ export interface FacilitiesState {
   annual_pass: string;
   other:string
   equipments: any[];
-  amenities:any[]
+  amenities:any[],
+  facilityTimes: {
+    day: string
+    morning: {
+      start: string,
+      end: string,
+    },
+    evening: {
+      start: string,
+      end: string,
+    },
+    holiday: boolean,
+    fullDay: boolean,
+  }[]
 }
 
 const initialState: FacilitiesState = {
@@ -140,7 +153,107 @@ const initialState: FacilitiesState = {
   annual_pass: "",
   other:"",
   equipments: [],
-  amenities:[]
+  amenities:[],
+  facilityTimes:[
+    {
+      day:"Monday",
+      morning: {
+        start:"",
+        end:""
+      },
+      evening: {
+        start:"",
+        end:""
+      },
+      holiday: false,
+      fullDay: false
+
+    },
+    {
+      day:"Tuesday",
+      morning: {
+        start:"",
+        end:""
+      },
+      evening: {
+        start:"",
+        end:""
+      },
+      holiday: false,
+      fullDay: false
+
+    },
+    {
+      day:"Wednesday",
+      morning: {
+        start:"",
+        end:""
+      },
+      evening: {
+        start:"",
+        end:""
+      },
+      holiday: false,
+      fullDay: false
+
+    },
+    {
+      day:"Thursday",
+      morning: {
+        start:"",
+        end:""
+      },
+      evening: {
+        start:"",
+        end:""
+      },
+      holiday: false,
+      fullDay: false
+
+    },
+    {
+      day:"Friday",
+      morning: {
+        start:"",
+        end:""
+      },
+      evening: {
+        start:"",
+        end:""
+      },
+      holiday: false,
+      fullDay: false
+
+    },
+    {
+      day:"Saturday",
+      morning: {
+        start:"",
+        end:""
+      },
+      evening: {
+        start:"",
+        end:""
+      },
+      holiday: false,
+      fullDay: false
+
+    },
+    {
+      day:"Sunday",
+      morning: {
+        start:"",
+        end:""
+      },
+      evening: {
+        start:"",
+        end:""
+      },
+      holiday: false,
+      fullDay: false
+
+    },
+  ]
 };
 
 export const FacilitySlice = createSlice({
