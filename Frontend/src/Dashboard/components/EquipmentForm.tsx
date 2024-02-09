@@ -76,7 +76,7 @@ const EquipmentForm = () => {
   return (
     <div>
       <div className="max-w-[500px] mx-auto mt-8">
-        <div className="font-bold text-lg mb-8">
+        <div className="font-semibold text-center text-2xl mb-10">
           <h1>Equipments</h1>
         </div>
 

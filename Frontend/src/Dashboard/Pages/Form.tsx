@@ -47,7 +47,7 @@ const Form = () => {
               </Link>
           </div>
       
-          <div className='mx-auto w-[400px] m-7 md:w-[600px] bg-gray-100  p-5 rounded-lg ' >
+          <div className='mx-auto w-[500px] m-7 md:w-[600px] bg-gray-100  p-5 rounded-lg ' >
             {steps[setCurrentStep].content}
           </div>
       </div> 

@@ -95,7 +95,7 @@ const handlePriceChange = (name: string, value: number) => {
   
 };
 const handleChange = (value: { value: string; label: React.ReactNode }) => {
-  console.log("salman :" , { value });
+  // console.log("salman :" , { value });
   // dispatch(addData({ tier: value.value }));
   dispatch(setTier(value))
 };

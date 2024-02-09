@@ -84,8 +84,8 @@ const getPincodeInfo = async (pin:number) => {
 
   
   return (
-    <div>
-      <div className="font-semibold md:px-5  ">
+    <div className="">
+      <div className="font-semibold ">
         <Form
           form={form}
           onFinish={(values) => console.log({ values })}
@@ -145,7 +145,7 @@ const getPincodeInfo = async (pin:number) => {
           <div className="font-semibold text-center text-2xl my-10">
             <h1>Time</h1>
           </div>
-          <div>
+          <div className="flex justify-center">
             <TimeTable />
           </div>
         </div>
