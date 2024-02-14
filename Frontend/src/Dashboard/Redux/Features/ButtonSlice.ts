@@ -5,6 +5,8 @@ interface ButtonState {
   formData: any;
 }
 
+
+
 export const buttonSlice = createSlice({
   name: 'FormButton',
   initialState: {
@@ -23,6 +25,8 @@ export const buttonSlice = createSlice({
     updateFormData: (state, action) => {
       state.formData = { ...state.formData, ...action.payload };
     },
+
+
    
   },
 });

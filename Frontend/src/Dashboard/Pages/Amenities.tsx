@@ -2,6 +2,7 @@ import { Button, Input, Modal, Switch, Table } from 'antd';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { PiPlusCircle } from 'react-icons/pi';
 import { ApiClientPrivate } from '../../utils/axios';
+import { MdDeleteForever } from "react-icons/md";
 
 interface Amenity {
   key: string;
@@ -54,7 +55,7 @@ const Amenities: React.FC = () => {
       title: 's.No',
       dataIndex: "key",
       key: 'sNo',
-      width: 100,
+      width: 50,
     },
     {
       title: 'Name',
@@ -65,13 +66,39 @@ const Amenities: React.FC = () => {
     },
     {
       title: 'Enable/ Disable',
-      width: 200,
+      width: 100,
       key: 'action',
       render: () => (
         <Switch defaultChecked onChange={onChange} />
       ),
     },
+    {
+      // title: 'Enable/ Disable',
+      width: 50,
+      key: 'action',
+      render: (record:any) => (
+        <MdDeleteForever size={20} className='hover:text-red-500 scale-100 hover:scale-125 duration-200' onClick= {()=>deleteAmenities(record._id)}/>
+      ),
+    },
   ];
+
+  const deleteAmenities = async(id:string) => {
+    console.log("mm" , id);
+    
+    try {
+       const res = await  ApiClientPrivate.delete(`/amenities/remove/${id}`)
+       if(res){
+         window.location.reload();
+       }
+    } catch (error) {
+      alert(
+        "cannot delete amenities "
+
+      )
+      
+      
+    }
+  }
 
   
 
@@ -82,6 +109,7 @@ const Amenities: React.FC = () => {
 
   const handleCancel = () => {
     setIsModalVisible(false);
+    setNewAmenityName('')
   };
 
   const handleAddAmenity = async () => {
@@ -90,11 +118,15 @@ const Amenities: React.FC = () => {
       const newData = [...amentyData, { key: (amentyData.length + 1).toString(), name: newAmenityName }];
       console.log(newData);
       
-      setAmentyData(newData);
-      setFilteredData(newData);
+      // setAmentyData(newData);
+      // setFilteredData(newData);
       setIsModalVisible(false);
+      setNewAmenityName('')
   
-      await ApiClientPrivate.post("/amenities/create",{name :newAmenityName})
+      const res = await ApiClientPrivate.post("/amenities/create",{name :newAmenityName })
+      if(res){
+        window.location.reload()
+      }
       console.log("added");
 
       setNewAmenityName('');
@@ -149,10 +181,10 @@ const Amenities: React.FC = () => {
         open={isModalVisible}
         onCancel={handleCancel}
         footer={[
-          <Button key='cancel' onClick={handleCancel}>
-            Cancel
-          </Button>,
-          <Button key='add' type='primary' onClick={handleAddAmenity} className='bg-blue-500'>
+          // <Button key='cancel' onClick={handleCancel}>
+          //   Cancel
+          // </Button>,
+          <Button key='add' type='primary' onClick={handleAddAmenity}  disabled={!newAmenityName.trim()} className='bg-blue-500'>
             Add
           </Button>,
         ]}
@@ -160,6 +192,7 @@ const Amenities: React.FC = () => {
         <Input
           placeholder='Enter Amenity Name'
           onChange={(e) => setNewAmenityName(e.target.value)}
+          value={newAmenityName}
         />
       </Modal>
     </div>

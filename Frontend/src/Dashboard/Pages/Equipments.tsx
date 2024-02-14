@@ -115,9 +115,9 @@ const Equipments: React.FC = () => {
           <div className='mx-auto' key={_id}>
             <Card className='w-[250px]  p-1 shadow-md'>
               <img alt={name} src={`${imaageURL}/${image}`} className='p-2  border-b-2 w-[200px] h-[200px]' />
-              <div className='flex items-center justify-between'>
+              <div className='flex items-center justify-between mt-3'>
                 <Meta title={name} />
-                <Switch defaultChecked onChange={onChange} />
+                <Switch size='small' defaultChecked onChange={onChange}  />
               </div>
             </Card>
           </div>
