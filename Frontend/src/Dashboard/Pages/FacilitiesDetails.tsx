@@ -397,7 +397,7 @@ const FacilitiesDetails = () => {
 
           <div className="Time mt-10">
             <div className=" flex  justify-between items-center font-semibold">
-              <div className="w-1/2 mb-2">
+              <div className=" mb-2">
                 <h1 className="text-lg pb-2 ">Time</h1>
               </div>
               <div>
@@ -467,18 +467,13 @@ const FacilitiesDetails = () => {
 
                   ))
                 }
-             
-
-             
-
-
             </div>
           </div>
         </div>
       </div>
 
-      <div className="section-3 w-full flex px-10 mt-5 gap-5 ">
-        <div className="Amenities w-1/2  ">
+      <div className="section-3 w-full flex   px-10  mt-5 gap-5 ">
+        <div className="Amenities w-[50%] ">
           <div className=" flex  justify-between items-center font-semibold ">
             <div>
               <h1> Amenities</h1>
@@ -492,12 +487,12 @@ const FacilitiesDetails = () => {
               columns={columns2}
               dataSource={amenityTableData}
               pagination={false}
-              className=""
+              
             />
           </div>
         </div>
 
-        <div className="equipments w-1/2 ">
+        <div className="equipments w-[50%] ">
           <div className=" flex  justify-between items-center font-semibold ">
             <div>
               <h1>Equipments</h1>
@@ -506,7 +501,7 @@ const FacilitiesDetails = () => {
               <FaEdit onClick={updateEquipments} />
             </div>
           </div>
-          <div className="p-3">
+          <div className="p-3 ">
             <div className="   items-center justify-between  mb-4 rounded-md shadow-md p-3">
               {facilityData.equipments?.map((it: any, ind: number) => (
                 <div
@@ -526,6 +521,8 @@ const FacilitiesDetails = () => {
             </div>
           </div>
         </div>
+
+      </div>
         <UpdateBasicInfo facilityData = {facilityData}/>
         <UpdateLocation facilityData = {facilityData}/>
         <UpdateMembershipModal facilityData = {facilityData}/>
@@ -538,8 +535,6 @@ const FacilitiesDetails = () => {
         <UpdateEquipmentModal
         //  facilityData = {facilityData}
          />
-
-      </div>
     </div>
   );
 };
