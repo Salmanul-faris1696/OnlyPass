@@ -1,12 +1,14 @@
-import { Table, TableProps } from "antd";
+import { Modal, Table, TableProps } from "antd";
 import { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { ApiClientPrivate } from "../../utils/axios";
 import { setAmenitiesEditBtn, setBasicEditBtn, setEquipmentEditBtn, setLocationEditBtn, setMembershipEditBtn, setTimeEditbtn } from "../Redux/Features/EditFacilityBtn";
 import { useAppDispatch } from "../Redux/hooks";
-import {  UpdateMembershipModal, UpdateAmenities, UpdateBasicInfo, UpdateLocation, UpdateTime, UpdateEquipmentModal } from "../components/UpdateFacilityForm";
+// import {  UpdateMembershipModal, UpdateAmenities, UpdateBasicInfo, UpdateLocation, UpdateTime, UpdateEquipmentModal } from "../components/UpdateFacilityForm";
 import { dataImages, dataLogo, imaageURL } from "./../../utils/urls";
+import UpdateBasicInfo from "../components/updateFacilities/UpdateBasicInfo";
+// import Amenities from './Amenities';
 
 
 
@@ -55,7 +57,47 @@ const FacilitiesDetails = () => {
   // fectch Facilities data
   const [facilityData, setfacilityData] = useState<any>([]);
 
+  ////////// Modal State /////////
+
+  const [basicModalOpen, setBasicModalOpen] = useState(false)
+  const [locationModalOPen, setlocationModalOpen] = useState(false)
+  const [membershipModalOpen, setMembershipModalOpen] = useState(false)
+  const [timeModalOpen, setTimeModalOpen] = useState(false)
+  const [amenitiesModalOpen, setAmenitiesModalOpen] = useState(false)
+  const [equipmentsModalOpen, setequipmentsModalOpen] = useState(false)
+
+////////
+
   
+  const OpenBasicModal = () => {
+    setBasicModalOpen(true)
+  }
+
+
+  const OpenLoactionModal = () => {
+    setlocationModalOpen(true)
+  }
+
+  const OpenMemebershipModal = () => {
+    console.log("hello onclik");
+    
+    dispatch(setMembershipEditBtn(true))
+    
+
+  }
+  const updateTime = () => {
+    dispatch(setTimeEditbtn(true))
+  }
+
+  const updateAmenities = () => {
+    dispatch(setAmenitiesEditBtn(true))
+  }
+
+  const updateEquipments = () => {
+    dispatch(setEquipmentEditBtn(true))
+  }
+
+  /////////////
 
   const { id } = useParams();
   console.log("facilityId ", id);
@@ -84,33 +126,29 @@ const FacilitiesDetails = () => {
       label: " Facility Gender ",
       input: facilityData.gender,
     },
+  
     {
       id: 3,
-      label: "Facility Tier ",
-      input: facilityData.tier,
-    },
-    {
-      id: 4,
       label: "Facility Name ",
       input: facilityData.facilityName,
     },
     {
-      id: 5,
+      id: 4,
       label: "Contact Person Name ",
       input: facilityData.contactPerson,
     },
     {
-      id: 6,
+      id: 5,
       label: "Email Address",
       input: facilityData.emailAddress,
     },
     {
-      id: 7,
+      id: 6,
       label: "Phone Number",
       input: facilityData.phoneNumber,
     },
     {
-      id: 8,
+      id: 7,
       label: "Website URL",
       input: facilityData.websiteURL,
     },
@@ -175,8 +213,9 @@ const FacilitiesDetails = () => {
       price: facilityData.annual_pass,
     },
     
+    
   ];
-  const filteredTableData = tableData.filter((item) => item.price !== null);
+  const filteredTableData = tableData.filter((item) => item.price !== null &&item.price !==0 );
 
   //amenities data
   const amenityTableData = facilityData.amenities?.map((amenity: any) => ({
@@ -194,37 +233,37 @@ const FacilitiesDetails = () => {
 
 
 
-  const UpadteBasicInfos = () => {
-    console.log("hello onclik");
-  dispatch(setBasicEditBtn(true))
-  }
+  // const OpenBasicModal = () => {
+  //   console.log("hello onclik");
+  // dispatch(setBasicEditBtn(true))
+  // }
 
-  const UpadteLocation = () => {
-    console.log("hello onclik");
+  // const UpadteLocation = () => {
+  //   console.log("hello onclik");
     
-    dispatch(setLocationEditBtn(true))
-    
-
-  }
-
-  const UpdateMembership = () => {
-    console.log("hello onclik");
-    
-    dispatch(setMembershipEditBtn(true))
+  //   dispatch(setLocationEditBtn(true))
     
 
-  }
-  const updateTime = () => {
-    dispatch(setTimeEditbtn(true))
-  }
+  // }
 
-  const updateAmenities = () => {
-    dispatch(setAmenitiesEditBtn(true))
-  }
+  // const UpdateMembership = () => {
+  //   console.log("hello onclik");
+    
+  //   dispatch(setMembershipEditBtn(true))
+    
 
-  const updateEquipments = () => {
-    dispatch(setEquipmentEditBtn(true))
-  }
+  // }
+  // const updateTime = () => {
+  //   dispatch(setTimeEditbtn(true))
+  // }
+
+  // const updateAmenities = () => {
+  //   dispatch(setAmenitiesEditBtn(true))
+  // }
+
+  // const updateEquipments = () => {
+  //   dispatch(setEquipmentEditBtn(true))
+  // }
 
 
   return (
@@ -240,7 +279,7 @@ const FacilitiesDetails = () => {
                 <h1>Basic information</h1>
               </div>
               <div >
-                <FaEdit  onClick={UpadteBasicInfos}/>
+                <FaEdit  onClick={OpenBasicModal}/>
               </div>
             </div>
 
@@ -317,7 +356,7 @@ const FacilitiesDetails = () => {
                 <h1>Location</h1>
               </div>
               <div>
-                <FaEdit  onClick={UpadteLocation}/>
+                <FaEdit  onClick={OpenLoactionModal}/>
               </div>
             </div>
 
@@ -364,7 +403,7 @@ const FacilitiesDetails = () => {
                 <h1>Membership options</h1>
               </div>
               <div>
-                <FaEdit onClick={UpdateMembership} />
+                <FaEdit onClick={OpenMemebershipModal} />
               </div>
             </div>
             <div className="mt-10">
@@ -385,6 +424,26 @@ const FacilitiesDetails = () => {
                       type="text"
                       disabled
                       value={facilityData.other}
+                      className="border rounded-md p-2 bg-gray-100 w-[250px]"
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div></div>
+              )}
+            </div>
+
+            <div className="tier">
+              {facilityData.tier ? (
+                <div className=" flex items-center m-3 p-1">
+                  <div className="label w-[150px]">
+                    <h1>Tier</h1>
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      disabled
+                      value={facilityData.tier}
                       className="border rounded-md p-2 bg-gray-100 w-[250px]"
                     />
                   </div>
@@ -523,18 +582,22 @@ const FacilitiesDetails = () => {
         </div>
 
       </div>
-        <UpdateBasicInfo facilityData = {facilityData}/>
+      <Modal title=""
+        open={basicModalOpen}
+        onCancel={() => setBasicModalOpen(false)}
+        footer={false}
+        >
+          <UpdateBasicInfo facilityData ={facilityData} cancel={() => setBasicModalOpen(false)}/>
+        </Modal>
+
+        {/* <UpdateBasicInfo facilityData = {facilityData}/>
         <UpdateLocation facilityData = {facilityData}/>
         <UpdateMembershipModal facilityData = {facilityData}/>
-        <UpdateTime 
-        // facilityData = {facilityData}
-        />
-        <UpdateAmenities 
-        // facilityData = {facilityData}
-        />
-        <UpdateEquipmentModal
-        //  facilityData = {facilityData}
-         />
+        <UpdateTime facilityData = {facilityData}/>
+        <UpdateAmenities facilityData = {facilityData.amenities} />
+        <UpdateEquipmentModal */}
+        {/* //  facilityData = {facilityData} */}
+         {/* /> */}
     </div>
   );
 };

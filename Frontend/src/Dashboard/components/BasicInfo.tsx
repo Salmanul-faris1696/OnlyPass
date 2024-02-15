@@ -165,9 +165,9 @@ const BasicInfo = () => {
               name={"facility_type"}
               rules={[{ required: true, message: "Please Select your Type!" }]}
             >
-              <Radio.Group name="facility_type">
-                <Radio value="acess"> Access </Radio>
-                <Radio value="pass"> Pass </Radio>
+              <Radio.Group name="facility_type" >
+                <Radio  value="acess" > Access </Radio>
+                <Radio value="pass" > Pass </Radio>
               </Radio.Group>
             </Form.Item>
           </div>

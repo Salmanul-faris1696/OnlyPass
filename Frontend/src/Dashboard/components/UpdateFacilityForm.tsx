@@ -1,203 +1,234 @@
 import { UploadOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input, InputNumber, Modal, Radio, Select, Upload } from "antd";
+import { Button, Checkbox, Form, Input, InputNumber, Modal, Radio, Select, Upload ,Tooltip} from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { useEffect, useState } from 'react';
 import { ApiClientPrivate } from '../../utils/axios';
 import { setAmenitiesEditBtn, setBasicEditBtn, setEquipmentEditBtn, setLocationEditBtn, setMembershipEditBtn, setTimeEditbtn } from "../Redux/Features/EditFacilityBtn";
-import { setAmenties } from '../Redux/Features/FacilityFeature/FacilititySlice';
+import { setAllTimingField, setAmenties } from '../Redux/Features/FacilityFeature/FacilititySlice';
 import { useAppDispatch, useAppSelector } from "../Redux/hooks";
-import TimeTable from './TimeTable';
+import  { SwitchHoliday, TimeEvening, TimeMorning } from './TimeTable';
 import { imaageURL } from '../../utils/urls';
+import { IoMdColorFill } from 'react-icons/io';
 
 
+//Basic info
 
-export const UpdateBasicInfo = (props: any) => {
+// export const UpdateBasicInfo = (props: any) => {
 
-    const [form]= Form.useForm()
-    const {basicEditBtn} = useAppSelector((state) => state.editFacilities);
-    console.log({basicEditBtn});
-    const dispatch = useAppDispatch()
-    console.log("fadRfdf:", );
-    form.setFieldsValue({
-        facility_type:props.facilityData.facility_type,
-        gender:props.facilityData.gender,
-        facilityName:props.facilityData.facilityName,
-        emailAddress:props.facilityData.emailAddress,
-        contactPerson:props.facilityData.contactPerson,
-        phoneNumber:props.facilityData.phoneNumber,
-        websiteURL:props.facilityData.websiteURL,
-        logo:props.facilityData.logoUrl,
-        description:props.facilityData.description,
-        images:props.facilityData.Facilityimages
-    })
-
-
-  const handleOk = () => {
-    dispatch(setBasicEditBtn(false))
-  };
-
-  const handleCancel = () => {
-    dispatch(setBasicEditBtn(false))
-
-  };
-  console.log("hello,,,ggggggggggg");
+//     const [form]= Form.useForm()
+//     const {basicEditBtn} = useAppSelector((state) => state.editFacilities);
+//     console.log({basicEditBtn});
+//     const dispatch = useAppDispatch()
+//     console.log("fadRfdf:", );
+//     form.setFieldsValue({
+//         facility_type:props.facilityData.facility_type,
+//         gender:props.facilityData.gender,
+//         facilityName:props.facilityData.facilityName,
+//         emailAddress:props.facilityData.emailAddress,
+//         contactPerson:props.facilityData.contactPerson,
+//         phoneNumber:props.facilityData.phoneNumber,
+//         websiteURL:props.facilityData.websiteURL,
+//         logo:props.facilityData.logoUrl,
+//         description:props.facilityData.description,
+//         images:props.facilityData.Facilityimages
+//     })
 
 
-  return (
-    <div>
-        <Modal title=""
-        open={basicEditBtn}
-         onOk={handleOk} 
-         onCancel={handleCancel} 
-         footer={[
-            <Button key='update' type='primary' onClick={handleOk}   className='bg-blue-500'>
-            Update
-          </Button>,
+//     const handleOk = async () => {
+//       try {
+//         const values = await form.validateFields(); // validate the form fields
+//         dispatch(setBasicEditBtn(false));
+  
+//         // Assuming you have an API endpoint for updating facilities, adjust the URL accordingly
+//         const id = props.facilityData._id; // Replace 'id' with the actual identifier for your facility
+//         await ApiClientPrivate.put(`facilities/update/${id}`, values);
+  
+//         // You may want to handle success, close modal, or update the Redux state accordingly
+//       } catch (error) {
+//         console.error('Error updating facility:', error);
+//         // Handle error appropriately
+//       }
+//     };
+
+//   const handleCancel = () => {
+//     dispatch(setBasicEditBtn(false))
+
+//   };
+//   console.log("hello,,,ggggggggggg");
+
+  
+
+//   return (
+//     <div>
+//         <Modal title=""
+//         open={basicEditBtn}
+//          onOk={handleOk} 
+//          onCancel={handleCancel} 
+//          footer={[
+//             <Button key='update' type='primary' onClick={handleOk}   className='bg-blue-500'>
+//             Update
+//           </Button>,
             
-         ]}
-         >
-        <div className="font-semibold  ">
-      <Form
-        form={form}
-        // onFinish={onFinish}
-        // onChange={handleInputChange}
-        className=""
-        labelCol={{ span: 7 }}
-      >
-        <div>
-          <div className="text-start">
+//          ]}
+//          >
+//         <div className="font-semibold  ">
+//       <Form
+//         form={form}
+//         // onFinish={onFinish}
+//         // onChange={handleInputChange}
+//         className=""
+//         labelCol={{ span: 7 }}
+//       >
+//         <div>
+//           <div className="text-start">
          
-            <Form.Item
-              label="Facility Type :"
-              className="text-left"
-              name={"facility_type"}
+//             <Form.Item
+//               label="Facility Type :"
+//               className="text-left"
+//               name={"facility_type"}
               
-              rules={[{ required: true, message: "Please Select your Type!" }]}
-            >
-              <Radio.Group name="facility_type">
-                <Radio value="acess"> Access </Radio>
-                <Radio value="pass"> Pass </Radio>
-              </Radio.Group>
-            </Form.Item>
-          </div>
+//               rules={[{ required: true, message: "Please Select your Type!" }]}
+//             >
+//               <Radio.Group name="facility_type">
+//                 <Radio value="acess"> Access </Radio>
+//                 <Radio value="pass"> Pass </Radio>
+//               </Radio.Group>
+//             </Form.Item>
+//           </div>
 
-          <div className="">
-            <Form.Item
-              label="Gender :"
-              className="text-start"
-              name={"gender"}
-              rules={[{ required: true, message: "Please Select your Type!" }]}
-            >
-              <Radio.Group name="gender">
-                <Radio value="gents"> Gents </Radio>
-                <Radio value="ladies"> Ladies </Radio>
-                <Radio value="unisex"> Unisex (mixed) </Radio>
-              </Radio.Group>
-            </Form.Item>
-          </div>
-        </div>
+//           <div className="">
+//             <Form.Item
+//               label="Gender :"
+//               className="text-start"
+//               name={"gender"}
+//               rules={[{ required: true, message: "Please Select your Type!" }]}
+//             >
+//               <Radio.Group name="gender">
+//                 <Radio value="gents"> Gents </Radio>
+//                 <Radio value="ladies"> Ladies </Radio>
+//                 <Radio value="unisex"> Unisex (mixed) </Radio>
+//               </Radio.Group>
+//             </Form.Item>
+//           </div>
+//         </div>
 
-        <div>
-          <div>
-            <Form.Item
-              label="Facility Name"
-              name={"facilityName"}
-              className="text-left"
-              rules={[
-                { required: true, message: "Please Enter Facilicty name" },
-              ]}
-            >
-              <Input name="facilityName" value={props.facilityData.facilityName} className="md:w-[350px]" />
-            </Form.Item>
-            <Form.Item
-              label="Email"
-              name={"emailAddress"}
-              rules={[
-                { required: true, message: "Please Enter Email Address" },
-              ]}
-              className=""
-            >
-              <Input name="emailAddress" className="md:w-[350px]" />
-            </Form.Item>
-            <Form.Item
-              label="Contact Person"
-              name={"contactPerson"}
-              rules={[
-                { required: true, message: "Please Enter Contact person name" },
-              ]}
-            >
-              <Input name="contactPerson" className="md:w-[350px]" />
-            </Form.Item>
-            <Form.Item
-              label=" Phone No "
-              name={"phoneNumber"}
-              rules={[{ required: true, message: "Please Enter phone number" }]}
-              className="text-left"
-            >
-              <Input type="tel" name="phoneNumber" className="md:w-[350px]" />
-            </Form.Item>
+//         <div>
+//           <div>
+//             <Form.Item
+//               label="Facility Name"
+//               name={"facilityName"}
+//               className="text-left"
+//               rules={[
+//                 { required: true, message: "Please Enter Facilicty name" },
+//               ]}
+//             >
+//               <Input name="facilityName" value={props.facilityData.facilityName} className="md:w-[350px]" />
+//             </Form.Item>
+//             <Form.Item
+//               label="Email"
+//               name={"emailAddress"}
+//               rules={[
+//                 { required: true, message: "Please Enter Email Address" },
+//               ]}
+//               className=""
+//             >
+//               <Input name="emailAddress" className="md:w-[350px]" />
+//             </Form.Item>
+//             <Form.Item
+//               label="Contact Person"
+//               name={"contactPerson"}
+//               rules={[
+//                 { required: true, message: "Please Enter Contact person name" },
+//               ]}
+//             >
+//               <Input name="contactPerson" className="md:w-[350px]" />
+//             </Form.Item>
+//             <Form.Item
+//               label=" Phone No "
+//               name={"phoneNumber"}
+//               rules={[{ required: true, message: "Please Enter phone number" }]}
+//               className="text-left"
+//             >
+//               <Input type="tel" name="phoneNumber" className="md:w-[350px]" />
+//             </Form.Item>
 
-            <Form.Item label="Website url" className="" name={"websiteURL"}>
-              <Input name="websiteURL" className="md:w-[350px]" />
-            </Form.Item>
+//             <Form.Item label="Website url" className="" name={"websiteURL"}>
+//               <Input name="websiteURL" className="md:w-[350px]" />
+//             </Form.Item>
 
-            <Form.Item label="Logo" name={"logo"}>
-              <div className="w-[200px]">
-              <Upload
-                maxCount={1}
-                // onChange={(e) =>
-                // //   debouncedNormFileLogo(e)
-                // ""
-                // }
-                action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                listType="picture"
-                // defaultFileList={[...fileList]}
-              >
-              <Button icon={<UploadOutlined />}>Upload</Button>
-              </Upload>
+//             <Form.Item label="Logo" name={"logo"}>
+//               <div className="w-[200px]">
+//               <Upload
+//                 maxCount={1}
+//                 // onChange={(e) =>
+//                 // //   debouncedNormFileLogo(e)
+//                 // ""
+//                 // }
+//                 action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+//                 listType="picture"
+//                 // defaultFileList={[...fileList]}
+//               >
+//               <Button icon={<UploadOutlined />}>Upload</Button>
+//               </Upload>
               
-              </div>
-            </Form.Item>
+//               </div>
+//             </Form.Item>
 
-            <Form.Item label="Description" name={"description"}>
-              <TextArea name="description" rows={4} className="w-[350px]" />
-            </Form.Item>
+//             <Form.Item label="Description" name={"description"}>
+//               <TextArea name="description" rows={4} className="w-[350px]" />
+//             </Form.Item>
 
-            <div className=" ">
-              <Form.Item
-                label="Images (min.5 Nos)"
-                name={"images"}
-              >
-                <Upload
-                  {...props}
-                  onChange={() =>
-                    // debouncedNormFileImages(form.getFieldValue("images"))
-                    ""
-                  }
-                >
-                  <Button icon={<UploadOutlined />}>Click to Upload</Button>
-                  <h1 className="text-red-600">(preview size is 16:9)</h1>
-                </Upload>
-              </Form.Item>
-            </div>
-          </div>
-        </div>
+//             <div className=" ">
+//               <Form.Item
+//                 label="Images (min.5 Nos)"
+//                 name={"images"}
+//               >
+//                 <Upload
+//                   {...props}
+//                   onChange={() =>
+//                     // debouncedNormFileImages(form.getFieldValue("images"))
+//                     ""
+//                   }
+//                 >
+//                   <Button icon={<UploadOutlined />}>Click to Upload</Button>
+//                   <h1 className="text-red-600">(preview size is 16:9)</h1>
+//                 </Upload>
+//               </Form.Item>
+//             </div>
+//           </div>
+//         </div>
        
-      </Form>
-    </div>
-      </Modal>
-    </div>
-  )
-}
+//       </Form>
+//     </div>
+//       </Modal>
+//     </div>
+//   )
+// }
 
+/////
+
+
+// location
 export const UpdateLocation = (props : any) => {
 
     const [form]= Form.useForm()
     const {locationEditBtn} = useAppSelector((state) => state.editFacilities);
     const dispatch = useAppDispatch()
-    const handleOk = () => {
-        dispatch(setLocationEditBtn(false))
-      };
+    const handleOk = async () => {
+      try {
+        const values = await form.validateFields(); // validate the form fields
+        dispatch(setLocationEditBtn(false));
+  
+        // Assuming you have an API endpoint for updating facilities, adjust the URL accordingly
+        const id = props.facilityData._id; // Replace 'id' with the actual identifier for your facility
+        await ApiClientPrivate.put(`facilities/update/${id}`, values);
+  
+        // You may want to handle success, close modal, or update the Redux state accordingly
+      } catch (error) {
+        console.error('Error updating facility:', error);
+        // Handle error appropriately
+      }
+    };
     
       const handleCancel = () => {
         dispatch(setLocationEditBtn(false))
@@ -290,6 +321,11 @@ export const UpdateLocation = (props : any) => {
     )
 }
 
+//////
+
+
+
+//membership form
 interface CheckedState {
     admission_fee: boolean;
     daily_pass: boolean;
@@ -299,14 +335,29 @@ interface CheckedState {
     annual_pass: boolean;
   }
 
-
-
 export const UpdateMembershipModal = (props : any) => {
 
     const {membershipEditbtn} = useAppSelector((state) => state.editFacilities);
     const dispatch = useAppDispatch()
-    const handleOk = () => {
-        dispatch(setMembershipEditBtn(false))
+const [form] = Form.useForm();
+
+    const handleOk = async () => {
+      try {
+        const values = await form.validateFields(); // validate the form fields
+        dispatch(setMembershipEditBtn(false));
+        console.log({values
+        });
+        
+  
+        // Assuming you have an API endpoint for updating facilities, adjust the URL accordingly
+        const id = props.facilityData._id; // Replace 'id' with the actual identifier for your facility
+        await ApiClientPrivate.put(`facilities/update/${id}`, values);
+  
+        // You may want to handle success, close modal, or update the Redux state accordingly
+      } catch (error) {
+        console.error('Error updating facility:', error);
+        // Handle error appropriately
+      }
       };
     
       const handleCancel = () => {
@@ -315,14 +366,16 @@ export const UpdateMembershipModal = (props : any) => {
       };
 
       const [checkedState, setCheckedState] = useState<CheckedState>({
-        admission_fee: props.facilityData.admission_fee ? true : false,
-        daily_pass: props.facilityData.daily_pass ? true : false,
-        monthly_pass: props.facilityData.monthly_pass ?true :false,
-        threeMonth_pass:props.facilityData.threeMonth_pass?true :   false,
-        sixMonth_pass:props.facilityData.sixMonth_pass ?true : false,
-        annual_pass:props.facilityData.annual_pass ?true : false,
+        admission_fee: props.facilityData.admission_fee !=="" ? true : false,
+        daily_pass: props.facilityData.daily_pass  !=="" ? true : false,
+        monthly_pass: props.facilityData.monthly_pass  !=="" ?true :false,
+        threeMonth_pass:props.facilityData.threeMonth_pass !=="" ?true :   false,
+        sixMonth_pass:props.facilityData.sixMonth_pass  !=="" ?true : false,
+        annual_pass:props.facilityData.annual_pass  !=="" ?true : false,
       });
 
+      console.log(checkedState);
+      
       const data = [
         {
           id: 1,
@@ -361,19 +414,40 @@ export const UpdateMembershipModal = (props : any) => {
         setCheckedState((prevState) => ({
           ...prevState,
           [name]: checked,}));
+          if(checked === false){
+            console.log({name});
+            
+            form.setFieldsValue({
+              admission_fee: name=== "admission_fee"? null:props.facilityData.admission_fee,
+              daily_pass: name=== "daily_pass"? null:props.facilityData.daily_pass,
+              monthly_pass: name=== "monthly_pass"? null:props.facilityData.monthly_pass,
+              threeMonth_pass: name=== "threeMonth_pass"? null:props.facilityData.threeMonth_pass,
+              sixMonth_pass: name=== "sixMonth_pass"? null:props.facilityData.sixMonth_pass,
+              annual_pass: name=== "annual_pass"? null:props.facilityData.annual_pass,
+            })
+            
+          }
+          console.log(form.getFieldValue('admission_fee'));
+          
         };
-const [form] = Form.useForm();
 
-form.setFieldsValue({
-  admission_fee: props.facilityData.admission_fee ,
-  daily_pass: props.facilityData.daily_pass,
-  monthly_pass: props.facilityData.monthly_pass,
-  threeMonth_pass: props.facilityData.threeMonth_pass,
-  sixMonth_pass: props.facilityData.sixMonth_pass,
-  annual_pass: props.facilityData.annual_pass,
-  tier: props.facilityData.tier? props.facilityData.tier : "Select Tier",
-  other:props.facilityData.other
-});
+        useEffect(() => {
+          form.setFieldsValue({
+            admission_fee: props.facilityData.admission_fee ,
+            daily_pass: props.facilityData.daily_pass,
+            monthly_pass: props.facilityData.monthly_pass,
+            threeMonth_pass: props.facilityData.threeMonth_pass,
+            sixMonth_pass: props.facilityData.sixMonth_pass,
+            annual_pass: props.facilityData.annual_pass,
+            tier: props.facilityData.tier? props.facilityData.tier : "Select Tier",
+            other:props.facilityData.other
+          });
+        }, [props])
+
+
+const handlePriceChange = ()=>{
+  
+}
     
     return(
         <div>
@@ -389,7 +463,7 @@ form.setFieldsValue({
          ]}
          >
         <div className="font-semibold  ">
-        <Form form={form} >
+        <Form form={form} onFinish={handleOk}>
         <div className="font-semibold text-center text-2xl mb-10">
           <h1>Membership options</h1>
         </div>
@@ -404,11 +478,7 @@ form.setFieldsValue({
                 {item.label}
 
                 <Checkbox name={item.name }
-                checked={
-                  checkedState[
-                    (item.name ) as keyof typeof checkedState
-                  ]
-                }
+                checked={checkedState[(item.name)  as keyof typeof checkedState]}
                 onChange={handleCheckBox}
                  >
                   {" "}
@@ -431,10 +501,10 @@ form.setFieldsValue({
                   className="w-20 price"
                   name={item.name}
                   type="number"
-                //   onChange={(value:any) =>
-                //     // handlePriceChange(item.name, value as number)
-                //     ""
-                //   }
+                  onChange={(value:any) =>
+                    handlePriceChange(item.name, value as number)
+                  
+                  }
                 />
               </Form.Item>
             </div>
@@ -488,9 +558,20 @@ form.setFieldsValue({
     )
 }
 
-export const UpdateTime = () => {
+//////////////
+
+
+//Time 
+export const UpdateTime = (props :any ) => {
   const {timeEditbtn} = useAppSelector((state) => state.editFacilities);
     const dispatch = useAppDispatch()
+
+    const { facilityTiming } = useAppSelector((state) => state.facility);
+    // console.log("facilityTime", facilityTiming);
+  
+    const handleChangeAllField = () => {
+      dispatch(setAllTimingField(facilityTiming));
+    };
     const handleOk = () => {
         dispatch(setTimeEditbtn(false))
       };
@@ -499,6 +580,7 @@ export const UpdateTime = () => {
         dispatch(setTimeEditbtn(false))
     
       };
+
 
 
   return (
@@ -517,8 +599,94 @@ export const UpdateTime = () => {
          width={600}
          >
           <div className=''>
-         <TimeTable/>
+          <div className="bg-white rounded-md px-5 mx-3 mb-5 ">
+      <div className=" w-[400px] md:w-[500px]  flex justify-between items-center px-4 h-16 border-b-[1px]">
+        <div className="md:w-[150px]">DAY</div>
+        <div className="md:w-[250px] text-center">MORNING</div>
+        <div className="md:w-[250px] text-center">EVENING</div>
+      </div>
 
+      <div className="">
+        {facilityTiming.map((item:any, ind:any) => (
+          <div
+            key={ind}
+            className="border-b-[1px] w-[400px] md:w-[500px] flex justify-between items-center p-4 relative"
+          >
+            <div className="w-[100px]">{item.day}</div>
+            <div className="flex flex-col gap-2">
+              <SwitchHoliday
+                data={item}
+                day={item.day}
+                timetype="morning"
+                defValue={item.morning.holiday}
+              />
+              <TimeMorning
+                data={item}
+                holder={"start"}
+                timetype="morning"
+                day={item.day}
+                disabled={item.morning.holiday === true}
+                defValue={item.morning.start}
+              />
+              <TimeMorning
+                data={item}
+                holder={"end"}
+                timetype="morning"
+                day={item.day}
+                disabled={
+                  item.morning.start === "24 hours" ||
+                  item.morning.holiday === true
+                }
+                defValue={item.morning.end}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <SwitchHoliday
+                data={item}
+                day={item.day}
+                timetype="evening"
+                defValue={item.evening.holiday}
+              />
+              <TimeEvening
+                data={item}
+                holder={"start"}
+                timetype="evening"
+                day={item.day}
+                disabled={
+                  item.morning.start === "24 hours" ||
+                  item.evening.holiday === true
+                }
+                defValue={item.evening.start}
+              />
+              <TimeEvening
+                data={item}
+                holder={"end"}
+                timetype="evening"
+                day={item.day}
+                disabled={
+                  item.morning.start === "24 hours" ||
+                  item.evening.holiday === true
+                }
+                defValue={item.evening.end}
+              />
+            </div>
+            <Tooltip title="Fill all fields with same Time">
+              <div
+                className={`${
+                  item.day === "Monday" ? "flex" : "hidden"
+                } absolute left-3 top-24`}
+              >
+                <IoMdColorFill
+                  size={20}
+                  className="duration-300 scale-[1.2] hover:scale-[1.5]"
+                  // onClick={handleChangeAllField}
+                />
+              </div>
+            </Tooltip>
+          </div>
+        ))}
+      </div>
+    </div>
           </div>
 
          </Modal>
@@ -528,34 +696,24 @@ export const UpdateTime = () => {
 
 }
 
+/////////
 interface Amenity {
   key: string;
   name: string;
   _id: string;
 }
 
-export const UpdateAmenities = ( ) => {
+export const UpdateAmenities = (props :any  ) => {
+  console.log({props});
+  
   const {amenitiesEditBtn} = useAppSelector((state) => state.editFacilities);
-    const dispatch = useAppDispatch()
-    const handleOk = () => {
-        dispatch(setAmenitiesEditBtn(false))
-      };
-    
-      const handleCancel = () => {
-        dispatch(setAmenitiesEditBtn(false))
-    
-      };
-
-      const [selectedTypes, setSelectedTypes] = useState<{ [key: string]: string | null }>({});
-  const {amenities} = useAppSelector((state) => state.facility);
-console.log({amenities, selectedTypes});
-
+  const dispatch = useAppDispatch()
+  const [selectedTypes, setSelectedTypes] = useState<{ [key: string]: string | null }>({});
+  // const {amenities} = useAppSelector((state) => state.facility);
+  // console.log({amenities, selectedTypes});
 
   
-
   const [amentyData, setAmentyData] = useState<Amenity[]>([]);
-
-
   const fetchData = async () => {
     try {
       const res = await ApiClientPrivate.get("/amenities");
@@ -564,32 +722,48 @@ console.log({amenities, selectedTypes});
         initialSelectedTypes[item.name] = null;
       });
       setSelectedTypes(initialSelectedTypes);
+      console.log({props});
+      console.log("723 >>>",res.data);
+      
       setAmentyData(res.data);
     } catch (error) {
       console.log(error);
     }
   };
-
   useEffect(() => {
     fetchData();
-  }, []);
-
-  const handleTypeChange = (name: string, type: string, e:any) => {
+  }, [props]);
+  const handleTypeChange = (name: string, type: string, ) => {
     setSelectedTypes((prevSelectedTypes) => ({
       ...prevSelectedTypes,
       [name]: prevSelectedTypes[name] === type ? null : type,
 
     }));
-    console.log("check",e.target.checked);
-    
-    // Dispatch your action accordingly
-    if (type === 'free' && e.target.checked || type === 'paid' && e.target.checked ) {
-      dispatch(setAmenties({ amenities_name: name, isPaid: type }));
-    }else{
-      dispatch(setAmenties( { amenities_name: name, Paid: e.target.checked }))
+  };
+  
+
+  const handleOk = async () => {
+    try {
+      const id = props.facilityData._id; // Replace with your actual identifier
+      const updates = Object.keys(selectedTypes).map((name) => ({
+        amenities_name: name,
+        isPaid: selectedTypes[name],
+      }));
+      await ApiClientPrivate.put(`facilities/update/${id}`, { amenities: updates })
+      // Dispatch action to update Redux state
+      dispatch(setAmenitiesEditBtn(false));
+    } catch (error) {
+      console.error('Error updating facility:', error);
+      // Handle error appropriately
     }
+  };
+  const handleCancel = () => {
+    dispatch(setAmenitiesEditBtn(false))
 
   };
+
+  
+
   
 
       return (
@@ -607,9 +781,10 @@ console.log({amenities, selectedTypes});
              ]}
              width={600}
              >
-              <div className='p-5'>
+              <div className='p-10'>
                 {/* <AmenitiesForm/> */}
                 {amentyData.map((item) => (
+
         <div key={item._id} className="amentiesCheckBox flex bg-white mb-3 rounded-md shadow-md p-4 justify-between hover:bg-slate-100">
           <div className="w-[150px] md:w-[200px] flex items-center gap-3">
             {item.name}
@@ -617,14 +792,16 @@ console.log({amenities, selectedTypes});
           <div className="flex items-center gap-3 ">
             <div className="PaidSection">Free</div>
             <Checkbox 
-            checked={amenities.length > 0 && amenities?.find(it => it.amenities_name == item.name)?.isPaid === 'free' || selectedTypes[item.name] === 'free'} 
-            onChange={(e:any) => handleTypeChange(item.name, 'free',e)}></Checkbox>
+            
+            checked={selectedTypes[item.name] === 'free'}
+            onChange={() => handleTypeChange(item.name, 'free')}></Checkbox>
           </div>
           <div className="flex items-center gap-3 ">
             <div className="PaidSection">Paid</div>
             <Checkbox 
-            checked={amenities.length > 0 && amenities?.find(it => it.amenities_name == item.name)?.isPaid === 'paid' || selectedTypes[item.name] === 'paid'} 
-            onChange={(e:any) => handleTypeChange(item.name, 'paid', e)}></Checkbox>
+              checked={selectedTypes[item.name] === 'paid'}           
+              onChange={() => handleTypeChange(item.name, 'paid')}>
+              </Checkbox>
           </div>
         </div>
       ))}
@@ -695,7 +872,7 @@ export const UpdateEquipmentModal: React.FC<any> = () => {
      ]}
      width={600}
      >
-    <div>
+    <div className='p-10'>
       {equipmentsData.map((item, ind) => (
         <div
           key={ind}
