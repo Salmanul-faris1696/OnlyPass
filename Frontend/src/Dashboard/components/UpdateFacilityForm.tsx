@@ -1,9 +1,13 @@
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input, InputNumber, Modal, Radio, Select, Upload } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { setBasicEditBtn, setLocationEditBtn, setMembershipEditBtn } from "../Redux/Features/EditFacilityBtn";
+import { useEffect, useState } from 'react';
+import { ApiClientPrivate } from '../../utils/axios';
+import { setAmenitiesEditBtn, setBasicEditBtn, setEquipmentEditBtn, setLocationEditBtn, setMembershipEditBtn, setTimeEditbtn } from "../Redux/Features/EditFacilityBtn";
+import { setAmenties } from '../Redux/Features/FacilityFeature/FacilititySlice';
 import { useAppDispatch, useAppSelector } from "../Redux/hooks";
-import { useState } from 'react';
+import TimeTable from './TimeTable';
+import { imaageURL } from '../../utils/urls';
 
 
 
@@ -297,7 +301,7 @@ interface CheckedState {
 
 
 
-export const UpadteMembershipModal = (props : any) => {
+export const UpdateMembershipModal = (props : any) => {
 
     const {membershipEditbtn} = useAppSelector((state) => state.editFacilities);
     const dispatch = useAppDispatch()
@@ -483,4 +487,243 @@ form.setFieldsValue({
     </div>
     )
 }
+
+export const UpdateTime = () => {
+  const {timeEditbtn} = useAppSelector((state) => state.editFacilities);
+    const dispatch = useAppDispatch()
+    const handleOk = () => {
+        dispatch(setTimeEditbtn(false))
+      };
+    
+      const handleCancel = () => {
+        dispatch(setTimeEditbtn(false))
+    
+      };
+
+
+  return (
+
+    <div className=''>
+        <Modal title=""
+        open={timeEditbtn}
+         onOk={handleOk} 
+         onCancel={handleCancel} 
+         footer={[
+            <Button key='update' type='primary' onClick={handleOk}   className='bg-blue-500'>
+            Update
+          </Button>,
+            
+         ]}
+         width={600}
+         >
+          <div className=''>
+         <TimeTable/>
+
+          </div>
+
+         </Modal>
+    </div>
+
+  )
+
+}
+
+interface Amenity {
+  key: string;
+  name: string;
+  _id: string;
+}
+
+export const UpdateAmenities = ( ) => {
+  const {amenitiesEditBtn} = useAppSelector((state) => state.editFacilities);
+    const dispatch = useAppDispatch()
+    const handleOk = () => {
+        dispatch(setAmenitiesEditBtn(false))
+      };
+    
+      const handleCancel = () => {
+        dispatch(setAmenitiesEditBtn(false))
+    
+      };
+
+      const [selectedTypes, setSelectedTypes] = useState<{ [key: string]: string | null }>({});
+  const {amenities} = useAppSelector((state) => state.facility);
+console.log({amenities, selectedTypes});
+
+
+  
+
+  const [amentyData, setAmentyData] = useState<Amenity[]>([]);
+
+
+  const fetchData = async () => {
+    try {
+      const res = await ApiClientPrivate.get("/amenities");
+      const initialSelectedTypes: { [key: string]: string | null } = {};
+      res.data.forEach((item:any) => {
+        initialSelectedTypes[item.name] = null;
+      });
+      setSelectedTypes(initialSelectedTypes);
+      setAmentyData(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleTypeChange = (name: string, type: string, e:any) => {
+    setSelectedTypes((prevSelectedTypes) => ({
+      ...prevSelectedTypes,
+      [name]: prevSelectedTypes[name] === type ? null : type,
+
+    }));
+    console.log("check",e.target.checked);
+    
+    // Dispatch your action accordingly
+    if (type === 'free' && e.target.checked || type === 'paid' && e.target.checked ) {
+      dispatch(setAmenties({ amenities_name: name, isPaid: type }));
+    }else{
+      dispatch(setAmenties( { amenities_name: name, Paid: e.target.checked }))
+    }
+
+  };
+  
+
+      return (
+
+        <div className=''>
+            <Modal title=""
+            open={amenitiesEditBtn}
+             onOk={handleOk} 
+             onCancel={handleCancel} 
+             footer={[
+                <Button key='update' type='primary' onClick={handleOk}   className='bg-blue-500'>
+                Update
+              </Button>,
+                
+             ]}
+             width={600}
+             >
+              <div className='p-5'>
+                {/* <AmenitiesForm/> */}
+                {amentyData.map((item) => (
+        <div key={item._id} className="amentiesCheckBox flex bg-white mb-3 rounded-md shadow-md p-4 justify-between hover:bg-slate-100">
+          <div className="w-[150px] md:w-[200px] flex items-center gap-3">
+            {item.name}
+          </div>
+          <div className="flex items-center gap-3 ">
+            <div className="PaidSection">Free</div>
+            <Checkbox 
+            checked={amenities.length > 0 && amenities?.find(it => it.amenities_name == item.name)?.isPaid === 'free' || selectedTypes[item.name] === 'free'} 
+            onChange={(e:any) => handleTypeChange(item.name, 'free',e)}></Checkbox>
+          </div>
+          <div className="flex items-center gap-3 ">
+            <div className="PaidSection">Paid</div>
+            <Checkbox 
+            checked={amenities.length > 0 && amenities?.find(it => it.amenities_name == item.name)?.isPaid === 'paid' || selectedTypes[item.name] === 'paid'} 
+            onChange={(e:any) => handleTypeChange(item.name, 'paid', e)}></Checkbox>
+          </div>
+        </div>
+      ))}
+                
+             
+    
+              </div>
+    
+             </Modal>
+        </div>
+    
+      )
+
+}
+
+
+interface Equipment {
+  _id: string;
+  name: string;
+  image: string;
+}
+
+export const UpdateEquipmentModal: React.FC<any> = () => {
+  const { EquipmentEditBtn } = useAppSelector((state) => state.editFacilities);
+  const dispatch = useAppDispatch();
+  const [equipmentsData, setEquipmentsData] = useState<Equipment[]>([]);
+  const { equipments } = useAppSelector((state) => state.facility);
+
+  const fetchData = async () => {
+    try {
+      const res = await ApiClientPrivate.get("/equipments/all-equipment");
+      setEquipmentsData(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  // const onChange = (checked: boolean, id: string, name: string, image: string) => {
+  //   console.log("equipment id:", id, { checked });
+  //   // dispatch(setEquipments({ equipment_id: id, equipment_name: name, equipment_img: image }));
+  // };
+
+  const handleOk = () => {
+    dispatch(setEquipmentEditBtn(false));
+  };
+
+  const handleCancel = () => {
+    dispatch(setEquipmentEditBtn(false));
+  };
+
+
+
+  return (
+    <div className=''>
+    <Modal title=""
+    open={EquipmentEditBtn}
+     onOk={handleOk} 
+     onCancel={handleCancel} 
+     footer={[
+        <Button key='update' type='primary' onClick={handleOk}   className='bg-blue-500'>
+        Update
+      </Button>,
+        
+     ]}
+     width={600}
+     >
+    <div>
+      {equipmentsData.map((item, ind) => (
+        <div
+          key={ind}
+          className="object-section border flex items-center justify-between p-2 mb-4 bg-white rounded-md shadow-md"
+        >
+          <div className="flex items-center gap-3">
+            <div className="image-section">
+              <img
+                src={`${imaageURL}/${item.image}`}
+                alt="image"
+                className="h-20 w-24"
+              />
+            </div>
+            <div className="Name-section">{item.name}</div>
+          </div>
+          <div className="flex justify-end">
+            <Checkbox
+              checked={equipments.length > 0 && equipments?.find((it: any) => it.equipment_id === item._id)}
+              // onChange={(e) => onChange(e.target.checked, item._id, item.name, item.image)}
+            ></Checkbox>
+          </div>
+        </div>
+      ))}
+    </div>
+    
+    </Modal>
+        </div>
+  );
+};
+
 

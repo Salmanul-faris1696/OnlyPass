@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { ApiClientPrivate } from "../../utils/axios";
-import { setBasicEditBtn, setLocationEditBtn, setMembershipEditBtn } from "../Redux/Features/EditFacilityBtn";
+import { setAmenitiesEditBtn, setBasicEditBtn, setEquipmentEditBtn, setLocationEditBtn, setMembershipEditBtn, setTimeEditbtn } from "../Redux/Features/EditFacilityBtn";
 import { useAppDispatch } from "../Redux/hooks";
-import { UpadteMembershipModal, UpdateBasicInfo, UpdateLocation } from "../components/UpdateFacilityForm";
+import {  UpdateMembershipModal, UpdateAmenities, UpdateBasicInfo, UpdateLocation, UpdateTime, UpdateEquipmentModal } from "../components/UpdateFacilityForm";
 import { dataImages, dataLogo, imaageURL } from "./../../utils/urls";
 
 
@@ -151,24 +151,30 @@ const FacilitiesDetails = () => {
     },
     {
       key: "2",
+      plans: " Daily pass",
+      price: facilityData.daily_pass,
+    },
+    {
+      key: "3",
       plans: "Monthly pass",
       price: facilityData.monthly_pass,
     },
     {
-      key: "3",
+      key: "4",
       plans: "3 Month pass",
       price: facilityData.threeMonth_pass,
     },
     {
-      key: "4",
+      key: "5",
       plans: "6 Monthly pass",
       price: facilityData.sixMonth_pass,
     },
     {
-      key: "5",
+      key: "6",
       plans: " Annul pass",
       price: facilityData.annual_pass,
     },
+    
   ];
   const filteredTableData = tableData.filter((item) => item.price !== null);
 
@@ -201,12 +207,23 @@ const FacilitiesDetails = () => {
 
   }
 
-  const UpadteMembership = () => {
+  const UpdateMembership = () => {
     console.log("hello onclik");
     
     dispatch(setMembershipEditBtn(true))
     
 
+  }
+  const updateTime = () => {
+    dispatch(setTimeEditbtn(true))
+  }
+
+  const updateAmenities = () => {
+    dispatch(setAmenitiesEditBtn(true))
+  }
+
+  const updateEquipments = () => {
+    dispatch(setEquipmentEditBtn(true))
   }
 
 
@@ -347,7 +364,7 @@ const FacilitiesDetails = () => {
                 <h1>Membership options</h1>
               </div>
               <div>
-                <FaEdit onClick={UpadteMembership} />
+                <FaEdit onClick={UpdateMembership} />
               </div>
             </div>
             <div className="mt-10">
@@ -381,10 +398,10 @@ const FacilitiesDetails = () => {
           <div className="Time mt-10">
             <div className=" flex  justify-between items-center font-semibold">
               <div className="w-1/2 mb-2">
-                <h1 className="text-lg pb-2 border-b">Time</h1>
+                <h1 className="text-lg pb-2 ">Time</h1>
               </div>
               <div>
-                <FaEdit />
+                <FaEdit onClick={updateTime} />
               </div>
             </div>
            
@@ -467,7 +484,7 @@ const FacilitiesDetails = () => {
               <h1> Amenities</h1>
             </div>
             <div>
-              <FaEdit />
+              <FaEdit onClick={updateAmenities}/>
             </div>
           </div>
           <div className="p-3">
@@ -486,7 +503,7 @@ const FacilitiesDetails = () => {
               <h1>Equipments</h1>
             </div>
             <div>
-              <FaEdit />
+              <FaEdit onClick={updateEquipments} />
             </div>
           </div>
           <div className="p-3">
@@ -511,7 +528,17 @@ const FacilitiesDetails = () => {
         </div>
         <UpdateBasicInfo facilityData = {facilityData}/>
         <UpdateLocation facilityData = {facilityData}/>
-        <UpadteMembershipModal facilityData = {facilityData}/>
+        <UpdateMembershipModal facilityData = {facilityData}/>
+        <UpdateTime 
+        // facilityData = {facilityData}
+        />
+        <UpdateAmenities 
+        // facilityData = {facilityData}
+        />
+        <UpdateEquipmentModal
+        //  facilityData = {facilityData}
+         />
+
       </div>
     </div>
   );

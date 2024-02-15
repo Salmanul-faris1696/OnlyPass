@@ -259,7 +259,7 @@ export const TimeMorning: React.FC<TimeMorningProps> = (props) => {
       },
       // fullDay: props.data.fullDay,
     };
-
+    //@ts-ignore
     timeData[value.timeType][value.holder] = value.time;
 
     // console.log("datati:", timeData);
@@ -439,11 +439,12 @@ export const TimeEvening: React.FC<TimeEveningProps> = (props) => {
       holiday: boolean;
     }
 
-    interface DayData {
+    interface DayData  {
       day: string;
       morning: DayTiming;
       evening: DayTiming;
       // fullDay: boolean;
+      
     }
     const timeData: DayData = {
       day: props.day,
@@ -459,7 +460,7 @@ export const TimeEvening: React.FC<TimeEveningProps> = (props) => {
       },
       // fullDay: props.data.fullDay,
     };
-
+//@ts-ignore
     timeData[value.timeType][value.holder] = value.time;
 
     // console.log("datati:", timeData);
