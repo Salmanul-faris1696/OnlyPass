@@ -3,17 +3,14 @@ import { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { ApiClientPrivate } from "../../utils/axios";
-import { setAmenitiesEditBtn, setBasicEditBtn, setEquipmentEditBtn, setLocationEditBtn, setMembershipEditBtn, setTimeEditbtn } from "../Redux/Features/EditFacilityBtn";
 import { useAppDispatch } from "../Redux/hooks";
-// import {  UpdateMembershipModal, UpdateAmenities, UpdateBasicInfo, UpdateLocation, UpdateTime, UpdateEquipmentModal } from "../components/UpdateFacilityForm";
-import { dataImages, dataLogo, imaageURL } from "./../../utils/urls";
+import UpdateAmenities from "../components/updateFacilities/UpdateAmenities";
 import UpdateBasicInfo from "../components/updateFacilities/UpdateBasicInfo";
+import UpdateEquipments from "../components/updateFacilities/UpdateEquipments";
 import UpdateLocation from "../components/updateFacilities/UpdateLocation";
 import { UpdateMembership } from "../components/updateFacilities/UpdateMembership";
-import UpdateAmenities from "../components/updateFacilities/UpdateAmenities";
-import UpdateEquipments from "../components/updateFacilities/UpdateEquipments";
-// import Amenities from './Amenities';
-
+import { dataImages, dataLogo, imaageURL } from "./../../utils/urls";
+import { useQuery } from "react-query";
 
 
 
@@ -56,10 +53,20 @@ const columns2: TableProps<amenityData>["columns"] = [
 ];
 
 const FacilitiesDetails = () => {
-
-  const dispatch = useAppDispatch()
-  // fectch Facilities data
   const [facilityData, setfacilityData] = useState<any>([]);
+  const fetchFacilityData =  () => {
+   
+    return ApiClientPrivate.get(`/facilities/${id}`);
+      
+   };
+
+  const {isLoading,data:mainData, refetch } = useQuery("fetchData", fetchFacilityData)
+  //  setfacilityData(mainData?.data) 
+  console.log({mainData});
+  
+  // const dispatch = useAppDispatch()
+  // fectch Facilities data
+ 
 
   ////////// Modal State /////////
 
@@ -74,67 +81,74 @@ const FacilitiesDetails = () => {
 
   const { id } = useParams();
   console.log("facilityId ", id);
-  const fetchFacilityData = async () => {
-    try {
-      const res = await ApiClientPrivate.get(`/facilities/${id}`);
-      setfacilityData(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    fetchFacilityData();
-  }, []);
-  console.log("fac_data  ", facilityData);
+  // const fetchFacilityData = async () => {
+  //   try {
+  //     const res = await ApiClientPrivate.get(`/facilities/${id}`);
+  //     setfacilityData(res.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  
+  // useEffect(() => {
+  //   fetchFacilityData();
+  // }, []);
+  // console.log("fac_data  ", facilityData);
+  // useEffect(() => {
+  //   if (mainData) {
+  //     setfacilityData(mainData?.data);
+  //   }
+  // }, [mainData]);
 
   //basicForm data
-  const data = [
+
+  const data = !isLoading ? [
     {
       id: 1,
       label: "Facility Type ",
-      input: facilityData.facility_type,
+      input: mainData?.data?.facility_type,
     },
     {
       id: 2,
       label: " Facility Gender ",
-      input: facilityData.gender,
+      input: mainData?.data?.gender,
     },
   
     {
       id: 3,
       label: "Facility Name ",
-      input: facilityData.facilityName,
+      input: mainData?.data?.facilityName,
     },
     {
       id: 4,
       label: "Contact Person Name ",
-      input: facilityData.contactPerson,
+      input: mainData?.data?.contactPerson,
     },
     {
       id: 5,
       label: "Email Address",
-      input: facilityData.emailAddress,
+      input: mainData?.data?.emailAddress,
     },
     {
       id: 6,
       label: "Phone Number",
-      input: facilityData.phoneNumber,
+      input: mainData?.data?.phoneNumber,
     },
     {
       id: 7,
       label: "Website URL",
-      input: facilityData.websiteURL,
+      input: mainData?.data?.websiteURL,
     },
-  ];
+  ] : [];
 
-  const Facilityimages = facilityData.images;
+  const Facilityimages = mainData?.data?.images;
 
   //Location data
   const data2 = [
     {
       id: 1,
       label: "Pincode",
-      input: facilityData.pin_code,
+      input: mainData?.data?.pin_code,
     },
     {
       id: 2,
@@ -149,7 +163,7 @@ const FacilitiesDetails = () => {
     {
       id: 4,
       label: "latitude_longitude",
-      input: facilityData.latitude_longitude,
+      input: mainData?.data?.latitude_longitude,
     },
   ];
 
@@ -158,32 +172,32 @@ const FacilitiesDetails = () => {
     {
       key: "1",
       plans: "adimission fees",
-      price: facilityData.admission_fee,
+      price: mainData?.data?.admission_fee,
     },
     {
       key: "2",
       plans: " Daily pass",
-      price: facilityData.daily_pass,
+      price: mainData?.data?.daily_pass,
     },
     {
       key: "3",
       plans: "Monthly pass",
-      price: facilityData.monthly_pass,
+      price: mainData?.data?.monthly_pass,
     },
     {
       key: "4",
       plans: "3 Month pass",
-      price: facilityData.threeMonth_pass,
+      price: mainData?.data?.threeMonth_pass,
     },
     {
       key: "5",
       plans: "6 Monthly pass",
-      price: facilityData.sixMonth_pass,
+      price: mainData?.data?.sixMonth_pass,
     },
     {
       key: "6",
       plans: " Annul pass",
-      price: facilityData.annual_pass,
+      price: mainData?.data?.annual_pass,
     },
     
     
@@ -191,7 +205,7 @@ const FacilitiesDetails = () => {
   const filteredTableData = tableData.filter((item) => item.price !== null &&item.price !==0 );
 
   //amenities data
-  const amenityTableData = facilityData.amenities?.map((amenity: any) => ({
+  const amenityTableData = mainData?.data?.amenities?.map((amenity: any) => ({
     id: amenity._id,
     amenity: amenity.amenities_name,
     paid: amenity.isPaid === "paid" ? "Paid" : "Free",
@@ -199,14 +213,14 @@ const FacilitiesDetails = () => {
 
   //equipments data
 
-  const timeData = facilityData.facilityTiming;
+  const timeData = mainData?.data?.facilityTiming;
 
   console.log("Time :", timeData);
 
   return (
     <div className="w-fit md:w-full">
       <div className="text-center p-3  mt-5">
-        <h1 className="font-semibold text-5xl ">{facilityData.facilityName}</h1>
+        <h1 className="font-semibold text-5xl ">{mainData?.data?.facilityName}</h1>
       </div>
       <div className=" section-1 md:flex m-3 sm:px-10 md:px-1">
         <div className=" p-3 w-fit  md:w-[50%]">
@@ -248,7 +262,7 @@ const FacilitiesDetails = () => {
                 <textarea
                   name=""
                   disabled
-                  value={facilityData.description}
+                  value={mainData?.data?.description}
                   id=""
                   cols={40}
                   rows={5}
@@ -263,7 +277,7 @@ const FacilitiesDetails = () => {
               </div>
               <div className="flex   items-center gap-4">
                 <img
-                  src={`${dataLogo}/${facilityData.logoUrl}`}
+                  src={`${dataLogo}/${mainData?.data?.logoUrl}`}
                   alt="gym logo"
                   className="w-32 h-32"
                 />
@@ -304,7 +318,7 @@ const FacilitiesDetails = () => {
               <div className="md:flex  md:gap-3 ">
                 <textarea
                   name=""
-                  value={facilityData.address}
+                  value={mainData?.data?.address}
                   disabled
                   id=""
                   cols={45}
@@ -351,7 +365,7 @@ const FacilitiesDetails = () => {
               />
             </div>
             <div className="other">
-              {facilityData.other ? (
+              {mainData?.data?.other ? (
                 <div className=" flex items-center m-3 p-1">
                   <div className="label w-[150px]">
                     <h1>Others</h1>
@@ -360,7 +374,7 @@ const FacilitiesDetails = () => {
                     <input
                       type="text"
                       disabled
-                      value={facilityData.other}
+                      value={mainData?.data.other}
                       className="border rounded-md p-2 bg-gray-100 w-[250px]"
                     />
                   </div>
@@ -371,7 +385,7 @@ const FacilitiesDetails = () => {
             </div>
 
             <div className="tier">
-              {facilityData.tier ? (
+              {mainData?.data?.tier ? (
                 <div className=" flex items-center m-3 p-1">
                   <div className="label w-[150px]">
                     <h1>Tier</h1>
@@ -380,7 +394,7 @@ const FacilitiesDetails = () => {
                     <input
                       type="text"
                       disabled
-                      value={facilityData.tier}
+                      value={mainData?.data.tier}
                       className="border rounded-md p-2 bg-gray-100 w-[250px]"
                     />
                   </div>
@@ -499,7 +513,7 @@ const FacilitiesDetails = () => {
           </div>
           <div className="p-3 ">
             <div className="   items-center justify-between  mb-4 rounded-md shadow-md p-3">
-              {facilityData.equipments?.map((it: any, ind: number) => (
+              {mainData?.data?.equipments?.map((it: any, ind: number) => (
                 <div
                   key={ind}
                   className="flex items-center gap-3 p-5 mb-2 bg-gray-100 rounded-md shadow-sm"
@@ -524,7 +538,7 @@ const FacilitiesDetails = () => {
         onCancel={() => setBasicModalOpen(false)}
         footer={false}
         >
-          <UpdateBasicInfo facilityData ={facilityData} cancel={() => setBasicModalOpen(false)}/>
+          <UpdateBasicInfo facilityData ={mainData?.data} refetch={()=>refetch()}  cancel={() => setBasicModalOpen(false)}/>
         </Modal>
 
         <Modal title=""
@@ -532,7 +546,7 @@ const FacilitiesDetails = () => {
             onCancel={() => setLocationModalOpen(false)}
             footer={false}
         >
-            <UpdateLocation facilityData ={facilityData} cancel={() => setLocationModalOpen(false)}/>
+            <UpdateLocation facilityData ={mainData?.data} refetch={()=>refetch()}  cancel={() => setLocationModalOpen(false)}/>
 
         </Modal>
 
@@ -541,7 +555,7 @@ const FacilitiesDetails = () => {
           onCancel={() => setMembershipModalOpen(false)}
           footer={false}
         >
-          <UpdateMembership facilityData ={facilityData} cancel={() => setMembershipModalOpen(false)}/>
+          <UpdateMembership facilityData ={mainData?.data} refetch={()=>refetch()}  cancel={() => setMembershipModalOpen(false)}/>
          </Modal>
 
          <Modal title=""
@@ -550,7 +564,7 @@ const FacilitiesDetails = () => {
             footer={false}
             width={600}
           >
-            <UpdateAmenities facilityData ={facilityData} cancel={() => setAmenitiesModalOpen(false)}/>
+            <UpdateAmenities facilityData ={mainData?.data} refetch={()=>refetch()}  cancel={() => setAmenitiesModalOpen(false)}/>
           </Modal>
 
           <Modal title=""
@@ -559,7 +573,7 @@ const FacilitiesDetails = () => {
             footer={false}
             width={600}
            >
-            <UpdateEquipments facilityData ={facilityData} cancel={() => setEquipmentsModalOpen(false)}/>
+            <UpdateEquipments facilityData ={mainData?.data} refetch={()=>refetch()} cancel={() => setEquipmentsModalOpen(false)}/>
           </Modal>
 
         

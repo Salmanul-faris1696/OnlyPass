@@ -25,11 +25,12 @@ export default function UpdateBasicInfo(props:any) {
       try {
         const values = await form.validateFields(); // validate the form fields
   
-        props.cancel()
         // Assuming you have an API endpoint for updating facilities, adjust the URL accordingly
         const id = props.facilityData._id; // Replace 'id' with the actual identifier for your facility
         await ApiClientPrivate.put(`facilities/update/${id}`, values);
         // You may want to handle success, close modal, or update the Redux state accordingly
+        props.cancel()
+        props.refetch()
       } catch (error) {
         console.error('Error updating facility:', error);
         // Handle error appropriately

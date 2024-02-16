@@ -11,6 +11,8 @@ import { Provider } from 'react-redux'
 import { store } from './Dashboard/Redux/store.ts';
 import Form from './Dashboard/Pages/Form.tsx';
 import FacilitiesDetails from './Dashboard/Pages/FacilitiesDetails.tsx';
+import { QueryClient,QueryClientProvider } from 'react-query';
+
 
 
 const router = createBrowserRouter([
@@ -42,12 +44,14 @@ const router = createBrowserRouter([
     element:<FacilitiesDetails/>
   }
 ]);
-
+const queryClient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
     <Provider store={store}>
      <RouterProvider router={router} />
     </Provider>
+    </QueryClientProvider>
   </React.StrictMode>,
 )

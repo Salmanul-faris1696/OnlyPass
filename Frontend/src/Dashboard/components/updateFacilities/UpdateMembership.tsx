@@ -20,6 +20,7 @@ const handleUpdate = async () => {
       const values = await form.validateFields(); // validate the form fields
 
       props.cancel()
+      props.refetch()
       // Assuming you have an API endpoint for updating facilities, adjust the URL accordingly
       const id = props.facilityData._id; // Replace 'id' with the actual identifier for your facility
       await ApiClientPrivate.put(`facilities/update/${id}`, values);

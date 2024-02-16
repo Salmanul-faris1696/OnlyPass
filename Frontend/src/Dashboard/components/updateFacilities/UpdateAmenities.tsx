@@ -73,9 +73,10 @@ const fetchData = async () => {
         amenities_name: name,
         isPaid: selectedTypes[name],
       }));
-      props.cancel()
       await ApiClientPrivate.put(`facilities/update/${id}`, { amenities: updates })
       // Dispatch action to update Redux state
+      props.cancel()
+      props.refetch()
     } catch (error) {
       console.error('Error updating facility:', error);
       // Handle error appropriately

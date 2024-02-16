@@ -59,6 +59,7 @@ const UpdateEquipments = (props: any) => {
       
       // Dispatch action to update Redux state or perform other necessary operations
       props.cancel()
+      props.refetch()
 
     } catch (error) {
       console.error('Error updating facility:', error);
