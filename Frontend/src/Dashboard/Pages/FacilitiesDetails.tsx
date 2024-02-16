@@ -8,6 +8,10 @@ import { useAppDispatch } from "../Redux/hooks";
 // import {  UpdateMembershipModal, UpdateAmenities, UpdateBasicInfo, UpdateLocation, UpdateTime, UpdateEquipmentModal } from "../components/UpdateFacilityForm";
 import { dataImages, dataLogo, imaageURL } from "./../../utils/urls";
 import UpdateBasicInfo from "../components/updateFacilities/UpdateBasicInfo";
+import UpdateLocation from "../components/updateFacilities/UpdateLocation";
+import { UpdateMembership } from "../components/updateFacilities/UpdateMembership";
+import UpdateAmenities from "../components/updateFacilities/UpdateAmenities";
+import UpdateEquipments from "../components/updateFacilities/UpdateEquipments";
 // import Amenities from './Amenities';
 
 
@@ -60,44 +64,13 @@ const FacilitiesDetails = () => {
   ////////// Modal State /////////
 
   const [basicModalOpen, setBasicModalOpen] = useState(false)
-  const [locationModalOPen, setlocationModalOpen] = useState(false)
+  const [locationModalOPen, setLocationModalOpen] = useState(false)
   const [membershipModalOpen, setMembershipModalOpen] = useState(false)
   const [timeModalOpen, setTimeModalOpen] = useState(false)
   const [amenitiesModalOpen, setAmenitiesModalOpen] = useState(false)
-  const [equipmentsModalOpen, setequipmentsModalOpen] = useState(false)
+  const [equipmentsModalOpen, setEquipmentsModalOpen] = useState(false)
 
-////////
-
-  
-  const OpenBasicModal = () => {
-    setBasicModalOpen(true)
-  }
-
-
-  const OpenLoactionModal = () => {
-    setlocationModalOpen(true)
-  }
-
-  const OpenMemebershipModal = () => {
-    console.log("hello onclik");
-    
-    dispatch(setMembershipEditBtn(true))
-    
-
-  }
-  const updateTime = () => {
-    dispatch(setTimeEditbtn(true))
-  }
-
-  const updateAmenities = () => {
-    dispatch(setAmenitiesEditBtn(true))
-  }
-
-  const updateEquipments = () => {
-    dispatch(setEquipmentEditBtn(true))
-  }
-
-  /////////////
+  ////////////////////////////
 
   const { id } = useParams();
   console.log("facilityId ", id);
@@ -230,42 +203,6 @@ const FacilitiesDetails = () => {
 
   console.log("Time :", timeData);
 
-
-
-
-  // const OpenBasicModal = () => {
-  //   console.log("hello onclik");
-  // dispatch(setBasicEditBtn(true))
-  // }
-
-  // const UpadteLocation = () => {
-  //   console.log("hello onclik");
-    
-  //   dispatch(setLocationEditBtn(true))
-    
-
-  // }
-
-  // const UpdateMembership = () => {
-  //   console.log("hello onclik");
-    
-  //   dispatch(setMembershipEditBtn(true))
-    
-
-  // }
-  // const updateTime = () => {
-  //   dispatch(setTimeEditbtn(true))
-  // }
-
-  // const updateAmenities = () => {
-  //   dispatch(setAmenitiesEditBtn(true))
-  // }
-
-  // const updateEquipments = () => {
-  //   dispatch(setEquipmentEditBtn(true))
-  // }
-
-
   return (
     <div className="w-fit md:w-full">
       <div className="text-center p-3  mt-5">
@@ -279,7 +216,7 @@ const FacilitiesDetails = () => {
                 <h1>Basic information</h1>
               </div>
               <div >
-                <FaEdit  onClick={OpenBasicModal}/>
+                <FaEdit  onClick={() => setBasicModalOpen(true)}/>
               </div>
             </div>
 
@@ -356,7 +293,7 @@ const FacilitiesDetails = () => {
                 <h1>Location</h1>
               </div>
               <div>
-                <FaEdit  onClick={OpenLoactionModal}/>
+                <FaEdit  onClick={() => setLocationModalOpen(true)}/>
               </div>
             </div>
 
@@ -403,7 +340,7 @@ const FacilitiesDetails = () => {
                 <h1>Membership options</h1>
               </div>
               <div>
-                <FaEdit onClick={OpenMemebershipModal} />
+                <FaEdit onClick={() => setMembershipModalOpen(true)} />
               </div>
             </div>
             <div className="mt-10">
@@ -460,7 +397,7 @@ const FacilitiesDetails = () => {
                 <h1 className="text-lg pb-2 ">Time</h1>
               </div>
               <div>
-                <FaEdit onClick={updateTime} />
+                <FaEdit onClick={() => setTimeModalOpen(true)} />
               </div>
             </div>
            
@@ -538,7 +475,7 @@ const FacilitiesDetails = () => {
               <h1> Amenities</h1>
             </div>
             <div>
-              <FaEdit onClick={updateAmenities}/>
+              <FaEdit onClick={() => setAmenitiesModalOpen(true)}/>
             </div>
           </div>
           <div className="p-3">
@@ -557,7 +494,7 @@ const FacilitiesDetails = () => {
               <h1>Equipments</h1>
             </div>
             <div>
-              <FaEdit onClick={updateEquipments} />
+              <FaEdit onClick={() => setEquipmentsModalOpen(true)} />
             </div>
           </div>
           <div className="p-3 ">
@@ -590,14 +527,42 @@ const FacilitiesDetails = () => {
           <UpdateBasicInfo facilityData ={facilityData} cancel={() => setBasicModalOpen(false)}/>
         </Modal>
 
-        {/* <UpdateBasicInfo facilityData = {facilityData}/>
-        <UpdateLocation facilityData = {facilityData}/>
-        <UpdateMembershipModal facilityData = {facilityData}/>
-        <UpdateTime facilityData = {facilityData}/>
-        <UpdateAmenities facilityData = {facilityData.amenities} />
-        <UpdateEquipmentModal */}
-        {/* //  facilityData = {facilityData} */}
-         {/* /> */}
+        <Modal title=""
+          open={locationModalOPen} 
+            onCancel={() => setLocationModalOpen(false)}
+            footer={false}
+        >
+            <UpdateLocation facilityData ={facilityData} cancel={() => setLocationModalOpen(false)}/>
+
+        </Modal>
+
+        <Modal title=""
+          open={membershipModalOpen}
+          onCancel={() => setMembershipModalOpen(false)}
+          footer={false}
+        >
+          <UpdateMembership facilityData ={facilityData} cancel={() => setMembershipModalOpen(false)}/>
+         </Modal>
+
+         <Modal title=""
+            open={amenitiesModalOpen}
+            onCancel={() => setAmenitiesModalOpen(false)}
+            footer={false}
+            width={600}
+          >
+            <UpdateAmenities facilityData ={facilityData} cancel={() => setAmenitiesModalOpen(false)}/>
+          </Modal>
+
+          <Modal title=""
+            open={equipmentsModalOpen}
+            onCancel={() => setEquipmentsModalOpen(false)}
+            footer={false}
+            width={600}
+           >
+            <UpdateEquipments facilityData ={facilityData} cancel={() => setAmenitiesModalOpen(false)}/>
+          </Modal>
+
+        
     </div>
   );
 };

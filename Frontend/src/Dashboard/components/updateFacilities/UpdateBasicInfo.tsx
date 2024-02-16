@@ -1,17 +1,12 @@
-import { Button, Form, Input, Radio, Upload } from "antd";
-import { useAppDispatch, useAppSelector } from "../../Redux/hooks";
 import { UploadOutlined } from '@ant-design/icons';
+import { Button, Form, Input, Radio, Upload } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { ApiClientPrivate } from "../../../utils/axios";
-import { setBasicEditBtn } from "../../Redux/Features/EditFacilityBtn";
 
 export default function UpdateBasicInfo(props:any) {
     const [form]= Form.useForm()
-    const {basicEditBtn} = useAppSelector((state) => state.editFacilities);
-    const dispatch = useAppDispatch()
-    console.log({basicEditBtn});
-    // const dispatch = useAppDispatch()
-    console.log("fadRfdf:", );
+    
+    // console.log("fadRfdf:", );
     form.setFieldsValue({
         facility_type:props.facilityData.facility_type,
         gender:props.facilityData.gender,
@@ -41,7 +36,7 @@ export default function UpdateBasicInfo(props:any) {
       }
     };
 
-  console.log("hello,,,ggggggggggg");
+  // console.log("hello,,,ggggggggggg");
 
   
 
@@ -174,7 +169,7 @@ export default function UpdateBasicInfo(props:any) {
         </div>
         <div className="flex justify-center">
             <Button type="primary" htmlType="submit" className="bg-blue-600" onClick={handleUpdate}>
-                Submit
+                Update
             </Button>
         </div>
       </Form>
