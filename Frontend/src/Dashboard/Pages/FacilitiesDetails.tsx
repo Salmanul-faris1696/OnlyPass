@@ -559,7 +559,7 @@ const FacilitiesDetails = () => {
             footer={false}
             width={600}
            >
-            <UpdateEquipments facilityData ={facilityData} cancel={() => setAmenitiesModalOpen(false)}/>
+            <UpdateEquipments facilityData ={facilityData} cancel={() => setEquipmentsModalOpen(false)}/>
           </Modal>
 
         
