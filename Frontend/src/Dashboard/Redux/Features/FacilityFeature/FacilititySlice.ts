@@ -44,7 +44,7 @@ export interface FacilitiesState {
 }
 
 const initialState: FacilitiesState = {
-  facility_type: "",
+  facility_type: "access",
   gender: "",
   tier: "",
   facilityName: "",
@@ -73,13 +73,13 @@ const initialState: FacilitiesState = {
     {
       day: "Monday",
       morning: {
-        start: "",
-        end: "",
+        start: "6:00 am",
+        end: "11:00 am",
         holiday: false,
       },
       evening: {
-        start: "",
-        end: "",
+        start: "4:00 pm",
+        end: "11:30 pm",
         holiday: false,
       },
       // fullDay: false,
@@ -87,13 +87,13 @@ const initialState: FacilitiesState = {
     {
       day: "Tuesday",
       morning: {
-        start: "",
-        end: "",
+        start: "6:00 am",
+        end: "11:00 am",
         holiday: false,
       },
       evening: {
-        start: "",
-        end: "",
+        start: "4:00 pm",
+        end: "11:30 pm",
         holiday: false,
       },
       // fullDay: false,
@@ -101,13 +101,13 @@ const initialState: FacilitiesState = {
     {
       day: "Wednesday",
       morning: {
-        start: "",
-        end: "",
+        start: "6:00 am",
+        end: "11:00 am",
         holiday: false,
       },
       evening: {
-        start: "",
-        end: "",
+        start: "4:00 pm",
+        end: "11:30 pm",
         holiday: false,
       },
       // fullDay: false,
@@ -115,13 +115,13 @@ const initialState: FacilitiesState = {
     {
       day: "Thursday",
       morning: {
-        start: "",
-        end: "",
+        start: "6:00 am",
+        end: "11:00 am",
         holiday: false,
       },
       evening: {
-        start: "",
-        end: "",
+        start: "4:00 pm",
+        end: "11:30 pm",
         holiday: false,
       },
       // fullDay: false,
@@ -129,13 +129,13 @@ const initialState: FacilitiesState = {
     {
       day: "Friday",
       morning: {
-        start: "",
-        end: "",
+        start: "6:00 am",
+        end: "11:00 am",
         holiday: false,
       },
       evening: {
-        start: "",
-        end: "",
+        start: "4:00 pm",
+        end: "11:30 pm",
         holiday: false,
       },
       // fullDay: false,
@@ -143,13 +143,13 @@ const initialState: FacilitiesState = {
     {
       day: "Saturday",
       morning: {
-        start: "",
-        end: "",
+        start: "6:00 am",
+        end: "11:00 am",
         holiday: false,
       },
       evening: {
-        start: "",
-        end: "",
+        start: "4:00 pm",
+        end: "11:30 pm",
         holiday: false,
       },
       // fullDay: false,
@@ -294,6 +294,10 @@ export const FacilitySlice = createSlice({
   // If Monday's timing is not found, return the current state
   return state;
     },
+
+    reset:(state) => {
+      Object.assign(state ,initialState)
+    }
   },
 });
 
@@ -305,4 +309,13 @@ export const {
   setfacilityTiming,
   setAllTimingField,
 } = FacilitySlice.actions;
+
+
 export default FacilitySlice.reducer;
+
+export const resetFacility =()=> {
+  return {
+    type : 'facility/reset'
+  }
+
+}

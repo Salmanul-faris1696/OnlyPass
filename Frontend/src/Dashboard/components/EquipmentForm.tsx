@@ -7,6 +7,7 @@ import { prevButton } from "../Redux/Features/ButtonSlice";
 import { Button } from "antd/es/radio";
 import { useAppSelector } from "../Redux/hooks";
 import {  setEquipments } from "../Redux/Features/FacilityFeature/FacilititySlice";
+import { useNavigate } from "react-router-dom";
 
 interface Equipment {
   _id: string;
@@ -18,10 +19,8 @@ const EquipmentForm = () => {
   const [equipmentsData, setEquipmetsData] = useState<Equipment[]>([]);
   const {equipments} = useAppSelector((state) => state.facility);
   const dispatch = useDispatch();
-  // const handleNext = () => {
-  //     dispatch(nextButton());
-  //   };
-
+  const navigate =useNavigate()
+ 
   const handlePrevious = () => {
     dispatch(prevButton());
   };
@@ -48,6 +47,7 @@ const EquipmentForm = () => {
   const handleDone = async () => {
     console.log("done", reduxState);
     message.success("Processing complete!");
+    navigate("/Facilities")
 
     try {
       // create Facility
@@ -82,11 +82,12 @@ const EquipmentForm = () => {
 
         <div className="List-Section">
           {equipmentsData.map((item,ind) => (
+            <label>
             <div
               key={ind}
               className="object-section border flex items-center justify-between p-2 mb-4 bg-white rounded-md shadow-md"
             >
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 " >
                 <div className="image-section">
                   <img
                     src={`${imaageURL}/${item.image}`}
@@ -103,6 +104,7 @@ const EquipmentForm = () => {
                 ></Checkbox>
               </div>
             </div>
+            </label>
           ))}
         </div>
       </div>

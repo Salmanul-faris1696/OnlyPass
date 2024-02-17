@@ -87,7 +87,7 @@ const UpdateLocation = (props:any) => {
       </div>
       <div className="flex justify-center">
             <Button type="primary" htmlType="submit" className="bg-blue-600" onClick={handleUpdate}>
-                Submit
+                Update
             </Button>
         </div>
 

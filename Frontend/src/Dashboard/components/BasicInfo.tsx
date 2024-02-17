@@ -1,6 +1,6 @@
 import { UploadOutlined } from "@ant-design/icons";
 import type { UploadProps } from "antd";
-import { Button, Form, Input, Radio, Upload, message } from "antd";
+import { Button, Form, Input, Radio, Space, Upload, message  } from "antd";
 import { useDispatch } from "react-redux";
 import { useDebounce } from "../../Hook/CustomHook";
 import { ApiClientPrivate } from "../../utils/axios";
@@ -42,34 +42,30 @@ const BasicInfo = () => {
 
   const normFileImages = async (e: any) => {
     try {
-    // Assuming ApiClientPrivate is an Axios instance
-    const formData = new FormData();
-    formData.append("facility_images", e.file.originFileObj);
-    console.log("imgggggg",e);
-    
+        const formData = new FormData();
 
-    const response = await ApiClientPrivate.post(
-      "/images/upload-img",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+        e.fileList.forEach((file: any, index: number) => {
+            formData.append("facility_images", file.originFileObj, `image${index}`);
+        });
 
-    console.log("Image upload response:", response.data.facility_images);
-    dispatch(addData({ images: response.data.facility_images }));
+        const response = await ApiClientPrivate.post(
+            "/images/upload-img",
+            formData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            }
+        );
+
+        console.log("Image upload response:", response.data);
+        dispatch(addData({ images: response.data }));
     } catch (error : any) {
-      if (error.name === "AbortError") {
-        // Request was aborted, handle as needed (e.g., user canceled upload)
-        console.log("Upload aborted:", error.message);
-      } else {
-        // Handle other errors
+        // Handle errors
         console.error("Image upload error:", error);
-      }
     }
-  };
+};
+
 
   const normFileLogo = async (e: any) => {
     try {
@@ -149,7 +145,7 @@ const BasicInfo = () => {
     <div className="font-semibold  ">
       <Form
         form={form}
-        // onFinish={onFinish}
+        onFinish={handleNext}
         onChange={handleInputChange}
         className=""
         labelCol={{ span: 7 }}
@@ -165,8 +161,8 @@ const BasicInfo = () => {
               name={"facility_type"}
               rules={[{ required: true, message: "Please Select your Type!" }]}
             >
-              <Radio.Group name="facility_type" >
-                <Radio  value="acess" > Access </Radio>
+              <Radio.Group name="facility_type" defaultValue="access">
+                <Radio  value="access" > Access </Radio>
                 <Radio value="pass" > Pass </Radio>
               </Radio.Group>
             </Form.Item>
@@ -222,10 +218,19 @@ const BasicInfo = () => {
             <Form.Item
               label=" Phone No "
               name={"phoneNumber"}
-              rules={[{ required: true, message: "Please Enter phone number" }]}
+              rules={[
+                { required: true, message: "Please enter phone number" },
+                { pattern: /^[0-9]+$/, message: "Please enter valid phone number" },
+                { min: 10, message: "Phone number must be at least 10 digits" },
+                { max: 10, message: "Phone number must be at most 10 digits" },
+              ]} 
               className="text-left"
             >
-              <Input type="tel" name="phoneNumber" className="md:w-[350px]" />
+
+              <Space.Compact className="md:w-[350px]">
+                <Input type="tel" name="phoneNumber" className="w-[15%]" defaultValue={"+91"} disabled />
+                <Input type="tel" name="phoneNumber" className="w-[80%]"  maxLength={10} />
+              </Space.Compact>
             </Form.Item>
 
             <Form.Item label="Website url" className="" name={"websiteURL"}>
@@ -249,8 +254,12 @@ const BasicInfo = () => {
               </div>
             </Form.Item>
 
-            <Form.Item label="Description" name={"description"}>
-              <TextArea name="description" rows={4} className="w-[350px]" />
+            <Form.Item label="Description" name={"description"}
+            rules={[{min:10,
+               max: 100, message: 'Description must be at most 100 characters' }]}
+            >
+              <TextArea name="description" rows={4} className="w-[350px]" maxLength={150} />
+            
             </Form.Item>
 
             <div className=" ">
@@ -263,6 +272,7 @@ const BasicInfo = () => {
                   onChange={() =>
                     debouncedNormFileImages(form.getFieldValue("images"))
                   }
+                  multiple
                 >
                   <Button icon={<UploadOutlined />}>Click to Upload</Button>
                   <h1 className="text-red-600">(preview size is 16:9)</h1>
@@ -276,8 +286,6 @@ const BasicInfo = () => {
             type="primary"
             className="bg-blue-600 "
             htmlType="submit"
-            onClick={handleNext}
-      
           >
             Next
           </Button>

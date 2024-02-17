@@ -110,7 +110,9 @@ const handleOtherchange = (e:any) => {
     
   return (
     <div className="max-w-[500px] mx-auto mt-8">
-      <Form form={form} >
+      <Form form={form}
+      onFinish={handleNext}
+      >
         <div className="font-semibold text-center text-2xl mb-10">
           <h1>Membership options</h1>
         </div>
@@ -145,14 +147,25 @@ const handleOtherchange = (e:any) => {
                     (item.name ) as keyof typeof checkedState
                   ]
                 }
-                // wrapperCol={{ span: 6 }}
+                rules={
+                  checkedState[item.name as keyof typeof checkedState]
+                    ? [
+                        {
+                          required: true,
+                          message: "Enter price",
+                        },
+                      
+                      ]
+                    : undefined // Set to undefined if no rule should be applied
+                  }
               >
-                <InputNumber
+                <Input
                   className="w-20 price"
                   name={item.name}
-                  type="number"
+                  type="tel"
+                  maxLength={5}
                   onChange={(value) =>
-                    handlePriceChange(item.name, value as number)
+                    handlePriceChange(item.name, +value.target.value)
                   }
                 />
               </Form.Item>
@@ -172,7 +185,6 @@ const handleOtherchange = (e:any) => {
             label="Facility Tier"
             name="tier"
             className="text-start"
-            rules={[{ required: true, message: "Please Select your Tier!" }]}
             labelCol={{ span: 7 }}
           >
             <Select
@@ -198,16 +210,16 @@ const handleOtherchange = (e:any) => {
               ]}
             />
           </Form.Item>
-      </Form>
-
-      <div className="flex gap-3 justify-center">
-        <Button type="primary" className="bg-blue-600 " onClick={handleNext}>
+      <div className="flex gap-3 justify-center ">
+        <Button type="primary" className="bg-blue-600 " htmlType="submit">
           Next
         </Button>
         <Button className="bg-white " onClick={handlePrevious}>
           Previous
         </Button>
       </div>
+      </Form>
+
     </div>
   );
 };

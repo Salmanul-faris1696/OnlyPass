@@ -88,7 +88,7 @@ const getPincodeInfo = async (pin:number) => {
       <div className="font-semibold ">
         <Form
           form={form}
-          onFinish={(values) => console.log({ values })}
+          onFinish={handleNext}
           onChange={handleInputChange}
           labelCol={{ span: 7 }}
           className="text-start"
@@ -114,11 +114,17 @@ const getPincodeInfo = async (pin:number) => {
               </Form.Item>
               {/* Pin code ...........! */}
               <Form.Item label="Pin Code" name={"pin_code"} 
-              rules={[{ required: true, message: "Enter pin code" }]}>
+             rules={[
+              { required: true, message: "Please enter Pin-code" },
+              { pattern: /^[0-9]+$/, message: "Please enter valid Pin number" },
+              { min: 6, message: "Pin number must be at least 6 digits" },
+              { max: 6, message: "Pin number must be at most 6 digits" },
+            ]} >
                 <Input
                   name="pin_code"
-                  type="number"
+                  type="tel"
                   className="w-[100px]"
+                  maxLength={6}
                   value={pincode}
                   onChange={handlePincodeChange}
                 />
@@ -139,7 +145,10 @@ const getPincodeInfo = async (pin:number) => {
               </Form.Item>
             </div>
           </div>
-        </Form>
+
+
+
+
 
         <div>
           <div className="font-semibold text-center text-2xl my-10">
@@ -151,13 +160,15 @@ const getPincodeInfo = async (pin:number) => {
         </div>
 
         <div className="flex gap-3 justify-center">
-          <Button type="primary" className="bg-blue-600 " onClick={handleNext}>
+          <Button type="primary" className="bg-blue-600 " htmlType="submit">
             Next
           </Button>
           <Button className="bg-white " onClick={handlePrevious}>
             Previous
           </Button>
         </div>
+        </Form>
+
       </div>
     </div>
   );

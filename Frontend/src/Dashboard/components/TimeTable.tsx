@@ -280,7 +280,7 @@ export const TimeMorning: React.FC<TimeMorningProps> = (props) => {
         placeholder={props.holder}
         className="md:w-[150px] w-[120px] border rounded-md px-2 py-1 focus:outline outline-blue-400 focus:shadow-md placeholder-gray-300 placeholder:font-light "
         onClick={handleTimeClick}
-        value={selectedTime || props.defValue}
+        value={props.disabled? "": selectedTime || props.defValue}
         disabled={props.disabled}
         readOnly
       />
@@ -334,9 +334,6 @@ interface TimeEveningProps {
 }
 
 const timePM = [
-  {
-    time: "24 Hours",
-  },
   {
     time: "12:00 pm",
   },
@@ -479,7 +476,7 @@ export const TimeEvening: React.FC<TimeEveningProps> = (props) => {
         placeholder={props.holder}
         className="md:w-[150px] w-[120px] border rounded-md px-2 py-1 focus:outline outline-blue-400 focus:shadow-md placeholder-gray-300 placeholder:font-light"
         onClick={handleTimeClick}
-        value={selectedTime || props.defValue}
+        value={props.disabled? "":selectedTime || props.defValue}
         disabled={props.disabled}
         readOnly
       />

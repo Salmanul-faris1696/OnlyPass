@@ -19,12 +19,12 @@ const handleUpdate = async () => {
     try {
       const values = await form.validateFields(); // validate the form fields
 
-      props.cancel()
-      props.refetch()
       // Assuming you have an API endpoint for updating facilities, adjust the URL accordingly
       const id = props.facilityData._id; // Replace 'id' with the actual identifier for your facility
       await ApiClientPrivate.put(`facilities/update/${id}`, values);
       // You may want to handle success, close modal, or update the Redux state accordingly
+      props.cancel()
+      props.refetch()
     } catch (error) {
       console.error('Error updating facility:', error);
       // Handle error appropriately
@@ -33,12 +33,12 @@ const handleUpdate = async () => {
     
 
       const [checkedState, setCheckedState] = useState<CheckedState>({
-        admission_fee: props.facilityData.admission_fee !=="" ? true : false,
-        daily_pass: props.facilityData.daily_pass  !=="" ? true : false,
-        monthly_pass: props.facilityData.monthly_pass  !=="" ?true :false,
-        threeMonth_pass:props.facilityData.threeMonth_pass !=="" ?true :   false,
-        sixMonth_pass:props.facilityData.sixMonth_pass  !=="" ?true : false,
-        annual_pass:props.facilityData.annual_pass  !=="" ?true : false,
+        admission_fee: props.facilityData.admission_fee !==0  ? true : false,
+        daily_pass: props.facilityData.daily_pass  !==0 ? true : false,
+        monthly_pass: props.facilityData.monthly_pass  !==0 ?true :false,
+        threeMonth_pass:props.facilityData.threeMonth_pass !==0  ?true :   false,
+        sixMonth_pass:props.facilityData.sixMonth_pass  !==0 ?true : false,
+        annual_pass:props.facilityData.annual_pass  !==0 ?true : false,
       });
 
       console.log(checkedState);
@@ -209,7 +209,7 @@ const handlePriceChange = ()=>{
       </Form.Item>
       <div className="flex justify-center">
             <Button type="primary" htmlType="submit" className="bg-blue-600" onClick={handleUpdate}>
-                Submit
+                update
             </Button>
         </div>
   </Form>

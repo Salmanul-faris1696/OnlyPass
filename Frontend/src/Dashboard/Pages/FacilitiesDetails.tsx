@@ -11,6 +11,8 @@ import UpdateLocation from "../components/updateFacilities/UpdateLocation";
 import { UpdateMembership } from "../components/updateFacilities/UpdateMembership";
 import { dataImages, dataLogo, imaageURL } from "./../../utils/urls";
 import { useQuery } from "react-query";
+import UpdateTime from "../components/updateFacilities/UpdateTime";
+import { resetFacility } from "../Redux/Features/FacilityFeature/FacilititySlice";
 
 
 
@@ -53,7 +55,8 @@ const columns2: TableProps<amenityData>["columns"] = [
 ];
 
 const FacilitiesDetails = () => {
-  const [facilityData, setfacilityData] = useState<any>([]);
+  // const [facilityData, setfacilityData] = useState<any>([]);
+  const dispatch = useAppDispatch()
   const fetchFacilityData =  () => {
    
     return ApiClientPrivate.get(`/facilities/${id}`);
@@ -64,11 +67,7 @@ const FacilitiesDetails = () => {
   //  setfacilityData(mainData?.data) 
   console.log({mainData});
   
-  // const dispatch = useAppDispatch()
-  // fectch Facilities data
- 
-
-  ////////// Modal State /////////
+////////// Modal State /////////
 
   const [basicModalOpen, setBasicModalOpen] = useState(false)
   const [locationModalOPen, setLocationModalOpen] = useState(false)
@@ -81,26 +80,10 @@ const FacilitiesDetails = () => {
 
   const { id } = useParams();
   console.log("facilityId ", id);
-  // const fetchFacilityData = async () => {
-  //   try {
-  //     const res = await ApiClientPrivate.get(`/facilities/${id}`);
-  //     setfacilityData(res.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-  
-  // useEffect(() => {
-  //   fetchFacilityData();
-  // }, []);
-  // console.log("fac_data  ", facilityData);
-  // useEffect(() => {
-  //   if (mainData) {
-  //     setfacilityData(mainData?.data);
-  //   }
-  // }, [mainData]);
 
-  //basicForm data
+
+  if(timeModalOpen === false) dispatch(resetFacility())
+
 
   const data = !isLoading ? [
     {
@@ -450,9 +433,9 @@ const FacilitiesDetails = () => {
                               <p className="font-medium text-base md:w-[100px] w-[200px] xl:w-[200px]   ">Holiday</p>
                             ) : time.morning.holiday === true ? (
                               <p className="font-medium text-base md:w-[100px] w-[200px] xl:w-[200px]  ">Off</p>
-                            ):(
+                            ): time.morning.start !== '24 hours'?(
                               <p className="font-medium text-base md:w-[100px] w-[200px] xl:w-[200px] "> {time.morning.start} to {time.morning.end}</p>
-                            )
+                            ):<p className="font-medium text-base md:w-[100px] w-[200px] xl:w-[200px] ">24 hours</p>
                             }
 
 
@@ -462,12 +445,12 @@ const FacilitiesDetails = () => {
                         
                           {time.morning.holiday === true &&
                             time.evening.holiday === true ? (
-                                <p className="font-medium text-base md:w-[100px] w-[200px] xl:w-[200px] ">Holiday</p>
+                              ""
                             ) : time.evening.holiday === true ? (
                               <p className="font-medium text-base md:w-[100px] w-[200px] xl:w-[200px]  ">Off</p>
-                            ):(
+                            ):  time.morning.start !== '24 hours'?(
                               <p className="font-medium text-base md:w-[100px] w-[200px] xl:w-[200px]  "> {time.evening.start} to {time.evening.end}</p>
-                            )
+                            ):""
                             }
 
 
@@ -574,6 +557,15 @@ const FacilitiesDetails = () => {
             width={600}
            >
             <UpdateEquipments facilityData ={mainData?.data} refetch={()=>refetch()} cancel={() => setEquipmentsModalOpen(false)}/>
+          </Modal>
+
+          <Modal title=""
+            open={timeModalOpen}
+            onCancel={() => setTimeModalOpen(false)}
+            footer={false}
+            width={600}
+          >
+            <UpdateTime facilityData ={mainData?.data} refetch={()=>refetch()} cancel={() => setTimeModalOpen(false)} />
           </Modal>
 
         
