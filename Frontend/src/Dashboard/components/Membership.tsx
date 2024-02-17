@@ -1,4 +1,4 @@
-import { Button, Checkbox, Form, Input, InputNumber, Select } from "antd";
+import { Button, Checkbox, Form, Input, Select } from "antd";
 import { useDispatch } from "react-redux";
 import { nextButton, prevButton } from "../Redux/Features/ButtonSlice";
 import {  useState } from "react";

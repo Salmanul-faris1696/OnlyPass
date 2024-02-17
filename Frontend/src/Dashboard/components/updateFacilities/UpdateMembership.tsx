@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { ApiClientPrivate } from '../../../utils/axios';
 import { Button, Checkbox, Form, Input, InputNumber, Select } from 'antd';
+import { useEffect, useState } from 'react';
+import { ApiClientPrivate } from '../../../utils/axios';
 
 
 interface CheckedState {
@@ -112,9 +112,7 @@ const handleUpdate = async () => {
         }, [props])
 
 
-const handlePriceChange = ()=>{
-  
-}
+
   return (
     <div>
    

@@ -1,5 +1,5 @@
 import { Modal, Table, TableProps } from "antd";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { ApiClientPrivate } from "../../utils/axios";
