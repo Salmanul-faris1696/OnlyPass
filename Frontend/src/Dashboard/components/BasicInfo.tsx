@@ -45,7 +45,7 @@ const BasicInfo = () => {
         const formData = new FormData();
 
         e.fileList.forEach((file: any, index: number) => {
-            formData.append("facility_images", file.originFileObj, `image${index}`);
+            formData.append("facility_images", file.originFileObj);
         });
 
         const response = await ApiClientPrivate.post(
@@ -59,7 +59,10 @@ const BasicInfo = () => {
         );
 
         console.log("Image upload response:", response.data);
-        dispatch(addData({ images: response.data }));
+        const facilityImagesArray = response.data.map((item: any) => item.facility_images);
+
+        // Dispatch the facility_images array to Redux
+        dispatch(addData({ images: facilityImagesArray }));
     } catch (error : any) {
         // Handle errors
         console.error("Image upload error:", error);
@@ -244,7 +247,7 @@ const BasicInfo = () => {
                 onChange={(e) =>
                   debouncedNormFileLogo(e)
                 }
-                action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+              
                 listType="picture"
                 // defaultFileList={[...fileList]}
               >
