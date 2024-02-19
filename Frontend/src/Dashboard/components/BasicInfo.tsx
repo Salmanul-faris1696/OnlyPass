@@ -1,5 +1,5 @@
 import { UploadOutlined } from "@ant-design/icons";
-import type { UploadProps } from "antd";
+import type { UploadFile, UploadProps } from "antd";
 import { Button, Form, Input, Radio, Space, Upload, message  } from "antd";
 import { useDispatch } from "react-redux";
 import { useDebounce } from "../../Hook/CustomHook";
@@ -7,13 +7,26 @@ import { ApiClientPrivate } from "../../utils/axios";
 import { nextButton } from "../Redux/Features/ButtonSlice";
 import { addData } from "../Redux/Features/FacilityFeature/FacilititySlice";
 import { useAppSelector } from "../Redux/hooks";
+import { useState } from "react";
+import { dataLogo } from "../../utils/urls";
 const { TextArea } = Input;
 
 
 const BasicInfo = () => {
   const dispatch = useDispatch();
   const reduxState = useAppSelector((state) => state.facility);
-  console.log({ reduxState });
+  // console.log({ reduxState });
+  const [remove , setRemove] = useState(reduxState.logoUrl? true:false)
+  const [fileList, setFileList] = useState<UploadFile[]>(reduxState.logoUrl? [
+    {
+      uid: '1',
+      name: reduxState.logoUrl,
+      status: 'done',
+      url: reduxState.logoUrl ? `${dataLogo}/${reduxState.logoUrl}` : "",
+    },
+  ]:[])
+
+
 
   const [form] = Form.useForm();
 
@@ -44,7 +57,7 @@ const BasicInfo = () => {
     try {
         const formData = new FormData();
 
-        e.fileList.forEach((file: any, index: number) => {
+        e.fileList.forEach((file: any, ) => {
             formData.append("facility_images", file.originFileObj);
         });
 
@@ -78,6 +91,7 @@ const BasicInfo = () => {
       console.log("logooooooooo",e.file.originFileObj);
       
       // Make the POST request to upload the logo
+      if(remove !== true){
       const response = await ApiClientPrivate.post(
         "/images/upload-logo",
         formData,
@@ -90,7 +104,8 @@ const BasicInfo = () => {
 
       console.log("Logo upload :", response.data.facility_images);
       dispatch(addData({ ["logoUrl"]: response.data.facility_images }));
-
+      }
+      setRemove(true)
       // Return the file list (or any other value you need)
       return e.fileList;
     } catch (error) {
@@ -106,13 +121,17 @@ const BasicInfo = () => {
   // This is using for avoid re rendering while the files upload........!
   const debouncedNormFileLogo = useDebounce(normFileLogo, 500);
   const debouncedNormFileImages = useDebounce(normFileImages, 500);
-
+  // console.log(setFileList);
+  
   const props: UploadProps = {
     name: "file",
+    
     action: "https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188",
     headers: {
       authorization: "authorization-text",
     },
+    
+    
     onChange(info) {
       if (info.file.status === "done") {
         message.success(`${info.file.name} file uploaded successfully`);
@@ -130,17 +149,20 @@ const BasicInfo = () => {
     },
   };
 
-  // const fileList: UploadFile[] = [
-  
-  //   {
-  //     uid: '-1',
-  //     name: 'yyy.png',
-  //     status: 'done',
-  //     url: () => {
+  const handleLogoRemove = () => {
+    dispatch(addData({ logoUrl: "" }));
+    setFileList([]); 
+    console.log("salman");
+    
+    setRemove(false)
+  };
 
-  //     }
-  //   },
-  // ]
+
+  
+
+ 
+
+  
   
   
 
@@ -232,7 +254,7 @@ const BasicInfo = () => {
 
               <Space.Compact className="md:w-[350px]">
                 <Input type="tel" name="phoneNumber" className="w-[15%]" defaultValue={"+91"} disabled />
-                <Input type="tel" name="phoneNumber" className="w-[80%]"  maxLength={10} />
+                <Input type="tel" name="phoneNumber" className="w-[85%]"  maxLength={10} />
               </Space.Compact>
             </Form.Item>
 
@@ -243,15 +265,19 @@ const BasicInfo = () => {
             <Form.Item label="Logo" name={"logo"}>
               <div className="w-[200px]">
               <Upload
+                
                 maxCount={1}
-                onChange={(e) =>
-                  debouncedNormFileLogo(e)
-                }
-              
+                onChange={(e) =>{ if(remove === false) debouncedNormFileLogo(e)}}
+                action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
                 listType="picture"
-                // defaultFileList={[...fileList]}
+                onRemove={handleLogoRemove}
+                // fileList={fileList}
+                
+                
+                defaultFileList={[...fileList]}
               >
-              <Button icon={<UploadOutlined />}>Upload</Button>
+              <Button disabled={remove === true}
+              icon={<UploadOutlined />}>Upload</Button>
               </Upload>
               
               </div>

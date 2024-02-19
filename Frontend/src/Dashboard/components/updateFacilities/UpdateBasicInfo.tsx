@@ -1,9 +1,22 @@
 import { UploadOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Radio, Upload } from "antd";
+import { Button, Form, Input, Radio, Upload, UploadFile, UploadProps, message } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { ApiClientPrivate } from "../../../utils/axios";
+import { useState } from 'react';
+import { dataLogo } from '../../../utils/urls';
+import { useDebounce } from '../../../Hook/CustomHook';
 
 export default function UpdateBasicInfo(props:any) {
+
+  const [remove , setRemove] = useState(props.facilityData.logoUrl? true:false)
+  const [fileList, setFileList] = useState<UploadFile[]>(props.facilityData.logoUrl? [
+    {
+      uid: '1',
+      name: props.facilityData.logoUrl,
+      status: 'done',
+      url: props.facilityData.logoUrl ? `${dataLogo}/${props.facilityData.logoUrl}` : "",
+    },
+  ]:[])
     const [form]= Form.useForm()
     
     // console.log("fadRfdf:", );
@@ -37,7 +50,79 @@ export default function UpdateBasicInfo(props:any) {
       }
     };
 
-  // console.log("hello,,,ggggggggggg");
+    const normFileLogo = async (e: any) => {
+      try {
+        // Assuming ApiClientPrivate is an Axios instance
+        const formData = new FormData();
+        formData.append("logo", e.file.originFileObj);
+        console.log("logooooooooo",e.file.originFileObj);
+        
+        // Make the POST request to upload the logo
+        if(remove !== true){
+        const response = await ApiClientPrivate.post(
+          "/images/upload-logo",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        const id = props.facilityData._id; // Replace 'id' with the actual identifier for your facility
+        await ApiClientPrivate.put(`facilities/update/${id}` ,{logoUrl:response.data.facility_images})
+
+
+  
+        // console.log("Logo upload :", response.data.facility_images);
+        // dispatch(addData({ ["logoUrl"]: response.data.facility_images }));
+        }
+        setRemove(true)
+        // Return the file list (or any other value you need)
+        return e.fileList;
+      } catch (error) {
+        // Handle errors during logo upload 
+        console.error("Logo upload error:", error);
+  
+        // Return the file list or handle errors based on your requirements
+        return e.fileList;
+      }
+    };
+  const debouncedNormFileLogo = useDebounce(normFileLogo, 500);
+
+  const propsimg: UploadProps = {
+    name: "file",
+    
+    action: "https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188",
+    headers: {
+      authorization: "authorization-text",
+    },
+    
+    
+    onChange(info) {
+      if (info.file.status === "done") {
+        message.success(`${info.file.name} file uploaded successfully`);
+      } else if (info.file.status === "error") {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+    progress: {
+      strokeColor: {
+        "0%": "#108ee9",
+        "100%": "#87d068",
+      },
+      strokeWidth: 3,
+      format: (percent) => percent && `${parseFloat(percent.toFixed(2))}`,
+    },
+  };
+
+  const handleLogoRemove = () => {
+    // dispatch(addData({ logoUrl: "" }));
+    
+    setFileList([]); 
+    // console.log("salman");
+    setRemove(false)
+  };
+
 
   
 
@@ -130,16 +215,19 @@ export default function UpdateBasicInfo(props:any) {
             <Form.Item label="Logo" name={"logo"}>
               <div className="w-[200px]">
               <Upload
+                
                 maxCount={1}
-                // onChange={(e) =>
-                // //   debouncedNormFileLogo(e)
-                // ""
-                // }
+                onChange={(e) =>{ if(remove === false) debouncedNormFileLogo(e)}}
                 action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
                 listType="picture"
-                // defaultFileList={[...fileList]}
+                onRemove={handleLogoRemove}
+                // fileList={fileList}
+                
+                
+                defaultFileList={[...fileList]}
               >
-              <Button icon={<UploadOutlined />}>Upload</Button>
+              <Button disabled={remove === true}
+              icon={<UploadOutlined />}>Upload</Button>
               </Upload>
               
               </div>
