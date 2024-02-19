@@ -191,7 +191,8 @@ export const FacilitySlice = createSlice({
         }
       });
       if (action.payload.images) {
-        state.images = state.images.concat(action.payload.images);
+        // state.images = state.images.concat(action.payload.images);
+        state.images = action.payload.images
       }
     },
     setTier: (state, action) => {

@@ -1,22 +1,29 @@
 import { UploadOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Radio, Upload, UploadFile, UploadProps, message } from "antd";
+import { Button, Form, Input, Radio, Space, Upload, UploadFile, UploadProps, message } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { ApiClientPrivate } from "../../../utils/axios";
 import { useState } from 'react';
-import { dataLogo } from '../../../utils/urls';
+import { dataImages, dataLogo } from '../../../utils/urls';
 import { useDebounce } from '../../../Hook/CustomHook';
 
 export default function UpdateBasicInfo(props:any) {
+console.log("images : ",props.facilityData.images);
 
   const [remove , setRemove] = useState(props.facilityData.logoUrl? true:false)
   const [fileList, setFileList] = useState<UploadFile[]>(props.facilityData.logoUrl? [
     {
       uid: '1',
       name: props.facilityData.logoUrl,
-      status: 'done',
+      // status: 'done',
       url: props.facilityData.logoUrl ? `${dataLogo}/${props.facilityData.logoUrl}` : "",
     },
   ]:[])
+  const [imgFileList, setImgFileList]= useState<UploadFile[]>(props.facilityData.images.length > 0 ? props.facilityData.images.map((it:any,ind:number) => ({
+    uid: ind.toString(),
+    name: it,
+    // status: 'done',
+    url: props.facilityData.images ? `${dataImages}/${it}` : "",
+})) : [] )
     const [form]= Form.useForm()
     
     // console.log("fadRfdf:", );
@@ -87,33 +94,67 @@ export default function UpdateBasicInfo(props:any) {
         return e.fileList;
       }
     };
-  const debouncedNormFileLogo = useDebounce(normFileLogo, 500);
-
-  const propsimg: UploadProps = {
-    name: "file",
-    
-    action: "https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188",
-    headers: {
-      authorization: "authorization-text",
-    },
-    
-    
-    onChange(info) {
-      if (info.file.status === "done") {
-        message.success(`${info.file.name} file uploaded successfully`);
-      } else if (info.file.status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
+    const normFileImages = async (e: any) => {
+      try {
+          const formData = new FormData();
+  
+          e.fileList.forEach((file: any, ) => {
+              formData.append("facility_images", file.originFileObj);
+          });
+  
+          const response = await ApiClientPrivate.post(
+              "/images/upload-img",
+              formData,
+              {
+                  headers: {
+                      "Content-Type": "multipart/form-data",
+                  },
+              }
+          );
+  
+          console.log("Image upload response:", response.data);
+          const facilityImagesArray = response.data.map((item: any) => item.facility_images);
+          console.log("sadfd====", facilityImagesArray);
+          
+          
+              
+        const id = props.facilityData._id; // Replace 'id' with the actual identifier for your facility
+          await ApiClientPrivate.put(`facilities/update/${id}` ,{images:facilityImagesArray})
+      } catch (error : any) {
+          // Handle errors
+          console.error("Image upload error:", error);
       }
-    },
-    progress: {
-      strokeColor: {
-        "0%": "#108ee9",
-        "100%": "#87d068",
-      },
-      strokeWidth: 3,
-      format: (percent) => percent && `${parseFloat(percent.toFixed(2))}`,
-    },
   };
+
+
+  const debouncedNormFileLogo = useDebounce(normFileLogo, 500);
+  const debouncedNormFileImages = useDebounce(normFileImages, 500);
+
+  // const propsimg: UploadProps = {
+  //   name: "file",
+    
+  //   action: "https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188",
+  //   headers: {
+  //     authorization: "authorization-text",
+  //   },
+    
+    
+  //   onChange(info) {
+  //     if (info.file.status === "done") {
+  //       message.success(`${info.file.name} file uploaded successfully`);
+  //     } else if (info.file.status === "error") {
+  //       message.error(`${info.file.name} file upload failed.`);
+  //     }
+  //   },
+  //   progress: {
+  //     strokeColor: {
+  //       "0%": "#108ee9",
+  //       "100%": "#87d068",
+  //     },
+  //     strokeWidth: 3,
+  //     format: (percent) => percent && `${parseFloat(percent.toFixed(2))}`,
+  //   },
+  // };
 
   const handleLogoRemove = () => {
     // dispatch(addData({ logoUrl: "" }));
@@ -202,10 +243,20 @@ export default function UpdateBasicInfo(props:any) {
             <Form.Item
               label=" Phone No "
               name={"phoneNumber"}
-              rules={[{ required: true, message: "Please Enter phone number" }]}
+              rules={[
+                { required: true, message: "Please enter phone number" },
+                { pattern: /^[0-9]+$/, message: "Please enter valid phone number" },
+                { min: 10, message: "Phone number must be at least 10 digits" },
+                { max: 10, message: "Phone number must be at most 10 digits" },
+              ]} 
               className="text-left"
+              
             >
-              <Input type="tel" name="phoneNumber" className="md:w-[350px]" />
+
+              <Space.Compact className="md:w-[350px]">
+                <Input type="tel" name="phonCode" className="w-[15%]" defaultValue={"+91"} disabled />
+                <Input type="tel" name="phoneNumber" className="w-[85%]"  value={props.facilityData.phoneNumber} maxLength={10}  />
+              </Space.Compact>
             </Form.Item>
 
             <Form.Item label="Website url" className="" name={"websiteURL"}>
@@ -242,12 +293,14 @@ export default function UpdateBasicInfo(props:any) {
                 label="Images (min.5 Nos)"
                 name={"images"}
               >
-                <Upload
-                  {...props}
+               <Upload
+                  // {...props}
                   onChange={() =>
-                    // debouncedNormFileImages(form.getFieldValue("images"))
-                    ""
+                    debouncedNormFileImages(form.getFieldValue("images"))
                   }
+                  multiple
+                  listType='picture'
+                  defaultFileList={imgFileList}
                 >
                   <Button icon={<UploadOutlined />}>Click to Upload</Button>
                   <h1 className="text-red-600">(preview size is 16:9)</h1>

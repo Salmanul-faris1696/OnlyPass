@@ -7,7 +7,7 @@ import { ApiClientPrivate } from "../../utils/axios";
 import { nextButton } from "../Redux/Features/ButtonSlice";
 import { addData } from "../Redux/Features/FacilityFeature/FacilititySlice";
 import { useAppSelector } from "../Redux/hooks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { dataLogo } from "../../utils/urls";
 const { TextArea } = Input;
 
@@ -17,6 +17,12 @@ const BasicInfo = () => {
   const reduxState = useAppSelector((state) => state.facility);
   // console.log({ reduxState });
   const [remove , setRemove] = useState(reduxState.logoUrl? true:false)
+  const [imgFileList, setImgFileList]= useState<UploadFile[]>(reduxState.images.length > 0 ? reduxState.images.map((it:any,ind:number) => ({
+      uid: ind.toString(),
+      name: it,
+      status: 'done',
+      url: reduxState.logoUrl ? `${dataLogo}/${reduxState.logoUrl}` : "",
+  })) : [] )
   const [fileList, setFileList] = useState<UploadFile[]>(reduxState.logoUrl? [
     {
       uid: '1',
@@ -25,12 +31,8 @@ const BasicInfo = () => {
       url: reduxState.logoUrl ? `${dataLogo}/${reduxState.logoUrl}` : "",
     },
   ]:[])
-
-
-
   const [form] = Form.useForm();
-
-  // this for input values should not be lost.........!
+ // this for input values should not be lost.........!
   form.setFieldsValue({
     facilityName: reduxState.facilityName,
     contactPerson: reduxState.contactPerson,
@@ -123,48 +125,40 @@ const BasicInfo = () => {
   const debouncedNormFileImages = useDebounce(normFileImages, 500);
   // console.log(setFileList);
   
-  const props: UploadProps = {
-    name: "file",
+  // const props: UploadProps = {
+  //   name: "file",
     
-    action: "https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188",
-    headers: {
-      authorization: "authorization-text",
-    },
+  //   action: "https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188",
+  //   headers: {
+  //     authorization: "authorization-text",
+  //   },
     
     
-    onChange(info) {
-      if (info.file.status === "done") {
-        message.success(`${info.file.name} file uploaded successfully`);
-      } else if (info.file.status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    },
-    progress: {
-      strokeColor: {
-        "0%": "#108ee9",
-        "100%": "#87d068",
-      },
-      strokeWidth: 3,
-      format: (percent) => percent && `${parseFloat(percent.toFixed(2))}`,
-    },
-  };
+  //   onChange(info) {
+  //     if (info.file.status === "done") {
+  //       message.success(`${info.file.name} file uploaded successfully`);
+  //     } else if (info.file.status === "error") {
+  //       message.error(`${info.file.name} file upload failed.`);
+  //     }
+  //   },
+  //   progress: {
+  //     strokeColor: {
+  //       "0%": "#108ee9",
+  //       "100%": "#87d068",
+  //     },
+  //     strokeWidth: 3,
+  //     format: (percent) => percent && `${parseFloat(percent.toFixed(2))}`,
+  //   },
+  // };
 
   const handleLogoRemove = () => {
     dispatch(addData({ logoUrl: "" }));
-    setFileList([]); 
+    // setFileList([]); 
     console.log("salman");
     
     setRemove(false)
   };
 
-
-  
-
- 
-
-  
-  
-  
 
   return (
     <div className="font-semibold  ">
@@ -250,11 +244,12 @@ const BasicInfo = () => {
                 { max: 10, message: "Phone number must be at most 10 digits" },
               ]} 
               className="text-left"
+              
             >
 
               <Space.Compact className="md:w-[350px]">
-                <Input type="tel" name="phoneNumber" className="w-[15%]" defaultValue={"+91"} disabled />
-                <Input type="tel" name="phoneNumber" className="w-[85%]"  maxLength={10} />
+                <Input type="tel" name="phonCode" className="w-[15%]" defaultValue={"+91"} disabled />
+                <Input type="tel" name="phoneNumber" className="w-[85%]"  value={reduxState.phoneNumber} maxLength={10}  />
               </Space.Compact>
             </Form.Item>
 
@@ -297,11 +292,12 @@ const BasicInfo = () => {
                 name={"images"}
               >
                 <Upload
-                  {...props}
+                  // {...props}
                   onChange={() =>
                     debouncedNormFileImages(form.getFieldValue("images"))
                   }
                   multiple
+                  defaultFileList={imgFileList}
                 >
                   <Button icon={<UploadOutlined />}>Click to Upload</Button>
                   <h1 className="text-red-600">(preview size is 16:9)</h1>
