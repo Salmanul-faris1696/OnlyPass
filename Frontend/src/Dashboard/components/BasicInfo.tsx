@@ -1,14 +1,14 @@
 import { UploadOutlined } from "@ant-design/icons";
-import type { UploadFile, UploadProps } from "antd";
-import { Button, Form, Input, Radio, Space, Upload, message  } from "antd";
+import type { UploadFile } from "antd";
+import { Button, Form, Input, Radio, Space, Upload } from "antd";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useDebounce } from "../../Hook/CustomHook";
 import { ApiClientPrivate } from "../../utils/axios";
+import { dataLogo } from "../../utils/urls";
 import { nextButton } from "../Redux/Features/ButtonSlice";
 import { addData } from "../Redux/Features/FacilityFeature/FacilititySlice";
 import { useAppSelector } from "../Redux/hooks";
-import { useEffect, useState } from "react";
-import { dataLogo } from "../../utils/urls";
 const { TextArea } = Input;
 
 
@@ -17,13 +17,13 @@ const BasicInfo = () => {
   const reduxState = useAppSelector((state) => state.facility);
   // console.log({ reduxState });
   const [remove , setRemove] = useState(reduxState.logoUrl? true:false)
-  const [imgFileList, setImgFileList]= useState<UploadFile[]>(reduxState.images.length > 0 ? reduxState.images.map((it:any,ind:number) => ({
+  const [imgFileList]= useState<UploadFile[]>(reduxState.images.length > 0 ? reduxState.images.map((it:any,ind:number) => ({
       uid: ind.toString(),
       name: it,
       status: 'done',
       url: reduxState.logoUrl ? `${dataLogo}/${reduxState.logoUrl}` : "",
   })) : [] )
-  const [fileList, setFileList] = useState<UploadFile[]>(reduxState.logoUrl? [
+  const [fileList] = useState<UploadFile[]>(reduxState.logoUrl? [
     {
       uid: '1',
       name: reduxState.logoUrl,
