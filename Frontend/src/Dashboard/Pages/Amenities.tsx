@@ -1,8 +1,10 @@
-import { Button, Input, Modal, Switch, Table } from 'antd';
+import { Button, Input, Modal, Switch, Table, Upload } from 'antd';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { PiPlusCircle } from 'react-icons/pi';
 import { ApiClientPrivate } from '../../utils/axios';
 import { MdDeleteForever } from "react-icons/md";
+import { UploadOutlined } from '@ant-design/icons';
+import { iconURL } from '../../utils/urls';
 
 interface Amenity {
   key: string;
@@ -14,6 +16,8 @@ const Amenities: React.FC = () => {
   const [filteredData, setFilteredData] = useState<Amenity[]>([]);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [newAmenityName, setNewAmenityName] = useState<string>('');
+  const [newAmenityIcon, setnewAmenityIcon] = useState<File | null>(null);
+
 
   const fetchData = async () => {
     try {
@@ -29,6 +33,11 @@ const Amenities: React.FC = () => {
   useEffect(() => {
     fetchData(); 
   }, []); 
+
+
+console.log("data>>>",amentyData);
+
+
 
   const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -57,12 +66,26 @@ const Amenities: React.FC = () => {
       key: 'sNo',
       width: 50,
     },
+    // {
+    //   // title: 'Name',
+    //   // dataIndex: '  ',
+    //   key: 'icon',
+      
+    //   render: (record: any) => 
+    // },
+
+    
     {
       title: 'Name',
-      dataIndex: 'name',
+      // dataIndex: 'name',
       key: 'name',
-      width: 300,
-      render: (text: string) => <a>{text}</a>,
+      width: 200,
+      render: (record: any) =>(
+        <div className='flex items-center gap-3'>
+          <img src={`${iconURL}/${record.icon} ` } alt={record} style={{ width: '25px' }}  />
+          <a>{record.name}</a>
+          </div>
+        ) ,
     },
     {
       title: 'Enable/ Disable',
@@ -123,24 +146,42 @@ const Amenities: React.FC = () => {
       setIsModalVisible(false);
       setNewAmenityName('')
   
-      const res = await ApiClientPrivate.post("/amenities/create",{name :newAmenityName })
-      if(res){
-        window.location.reload()
-      }
-      console.log("added");
+      const formData = new FormData();
+      formData.append('name', newAmenityName);
+      formData.append('icon', newAmenityIcon as File);
 
-      setNewAmenityName('');
-      console.log(105, )
-      
-      
+      await ApiClientPrivate.post("/amenities/create", formData, {
+        headers: {
+          'Content-Type': 'form-data',
+        },
+      });
+
+      // Fetch updated data from the server after adding a new equipment
+      fetchData();
+      setNewAmenityName('')
+
+      // console.log('Equipment added:', newEquipmentName, newEquipmentImage);
+      setIsModalVisible(false);
+        
     } catch (error) {
-      console.log(error);
-      
-      
+      console.error('Error adding equipment:', error);
     }
    
+  };
 
-
+  const onAmenityChange = (info: any) => {
+    // console.log("hello");
+    
+    try {
+      // if (info.file.status === 'done') {
+        const imageUrl = info.file;
+        // console.log({ suiii: info});
+        
+        setnewAmenityIcon(imageUrl);
+      // }
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    }
   };
 
   return (
@@ -193,7 +234,17 @@ const Amenities: React.FC = () => {
           placeholder='Enter Amenity Name'
           onChange={(e) => setNewAmenityName(e.target.value)}
           value={newAmenityName}
+          className='mb-3'
         />
+
+          <Upload
+          name='amenityicon'
+          showUploadList={false}
+          beforeUpload={() => false}
+          onChange={onAmenityChange}
+        >
+          <Button icon={<UploadOutlined />}>Upload Image</Button>
+        </Upload>
       </Modal>
     </div>
   );
