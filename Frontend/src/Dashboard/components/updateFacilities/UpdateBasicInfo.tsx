@@ -267,7 +267,7 @@ export default function UpdateBasicInfo(props: any) {
                   type="tel"
                   name="phoneNumber"
                   className="w-[85%]"
-                  value={props.facilityData.phoneNumber}
+                  defaultValue={props.facilityData.phoneNumber}
                   maxLength={10}
                 />
               </Space.Compact>

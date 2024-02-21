@@ -9,7 +9,7 @@ import UpdateBasicInfo from "../components/updateFacilities/UpdateBasicInfo";
 import UpdateEquipments from "../components/updateFacilities/UpdateEquipments";
 import UpdateLocation from "../components/updateFacilities/UpdateLocation";
 import { UpdateMembership } from "../components/updateFacilities/UpdateMembership";
-import { dataImages, dataLogo, imaageURL } from "./../../utils/urls";
+import { dataImages, dataLogo, iconURL, imaageURL } from "./../../utils/urls";
 import { useQuery } from "react-query";
 import UpdateTime from "../components/updateFacilities/UpdateTime";
 import { resetFacility } from "../Redux/Features/FacilityFeature/FacilititySlice";
@@ -43,9 +43,14 @@ const columns: TableProps<DataType>["columns"] = [
 const columns2: TableProps<amenityData>["columns"] = [
   {
     title: "Amenties",
-    dataIndex: "amenity",
+    // dataIndex: "amenity",
     key: "amenity",
-    render: (text) => <a>{text}</a>,
+    render: (record: any) =>(
+      <div className='flex items-center gap-3'>
+        <img src={`${iconURL}/${record.icon}` } alt={record} style={{ width: '25px' }}  />
+        <a>{record.amenity}</a>
+        </div>
+      ) ,
   },
   {
     title: "Paid",
@@ -190,6 +195,7 @@ const FacilitiesDetails = () => {
   //amenities data
   const amenityTableData = mainData?.data?.amenities?.map((amenity: any) => ({
     id: amenity._id,
+    icon:amenity.iconUrl,
     amenity: amenity.amenities_name,
     paid: amenity.isPaid === "paid" ? "Paid" : "Free",
   }));

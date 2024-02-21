@@ -65,21 +65,12 @@ console.log("data>>>",amentyData);
       dataIndex: "key",
       key: 'sNo',
       width: 50,
-    },
-    // {
-    //   // title: 'Name',
-    //   // dataIndex: '  ',
-    //   key: 'icon',
-      
-    //   render: (record: any) => 
-    // },
-
-    
+    },  
     {
       title: 'Name',
       // dataIndex: 'name',
       key: 'name',
-      width: 200,
+      width: 250,
       render: (record: any) =>(
         <div className='flex items-center gap-3'>
           <img src={`${iconURL}/${record.icon} ` } alt={record} style={{ width: '25px' }}  />
