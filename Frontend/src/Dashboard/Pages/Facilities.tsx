@@ -79,6 +79,11 @@ const Facilities: React.FC = () => {
       key: 'address',
     },
     {
+      title: 'Phone Number',
+      dataIndex: 'phoneNumber',
+      key: 'phoneNumber',
+    },
+    {
         title: 'Onlypass',
         key: 'action',
         render: () => (
@@ -104,9 +109,16 @@ const Facilities: React.FC = () => {
   return (
     <div>
       {/* headerSection */}
-      <div className='headerSection mt-24 '>
-        <div className=' p-6 bg-slate-100 font-bold  text-2xl flex justify-between w-[450px] sm:w-auto '>
-          <h1>Facilities</h1>
+      <div className='headerSection  '>
+        <div className=' p-6 bg-[#F2F2F2] font-bold  text-2xl flex justify-between w-[450px] sm:w-auto '>
+          <div>
+              <h1>Facilities</h1>
+              <div>
+
+
+              </div>
+
+          </div>
           <div className='bg-black w-fit text-white text-sm flex p-2 rounded-lg hover:shadow-lg'>
             <Link to={"/Form"}>
             <button className='md:flex md:items-center gap-2 hidden'>
