@@ -1,25 +1,23 @@
 import type { DatePickerProps } from 'antd';
-import { DatePicker, Space, Switch, Table, Tag } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { DatePicker, Space, Table, Tag } from 'antd';
+import React from 'react';
 import { RiSearchLine } from 'react-icons/ri';
-import { Link } from 'react-router-dom';
-import svg3 from "../../../public/svg3-onlypass.svg";
 import svg2 from "../../../public/svg2-onlypass.svg";
+import svg3 from "../../../public/svg3-onlypass.svg";
 import svg4 from "../../../public/svg4-onlypass.svg";
 
-import { ApiClientPrivate } from '../../utils/axios';
 
 import { FaArrowDown } from 'react-icons/fa';
 import { FaArrowUp } from "react-icons/fa6";
 
 // const { Search } = Input;
 
-interface CustomerData {
-  key:string
-  _id: string;
-  facilityName: string;
-  address: string;
-}
+// interface CustomerData {
+//   key:string
+//   _id: string;
+//   facilityName: string;
+//   address: string;
+// }
 
 const Customer: React.FC = () => {
 //   const [facilityData, setFacilityData] = useState<FacilityData[]>([])
@@ -67,9 +65,9 @@ const Customer: React.FC = () => {
 
  
 
-  const onChange = (checked: boolean) => {
-    console.log(`switch to ${checked}`);
-  };
+  // const onChange = (checked: boolean) => {
+  //   console.log(`switch to ${checked}`);
+  // };
   const columns = [
     // {
     //   title: 's.No',
