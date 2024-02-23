@@ -12,6 +12,7 @@ import { store } from './Dashboard/Redux/store.ts';
 import Form from './Dashboard/Pages/Form.tsx';
 import FacilitiesDetails from './Dashboard/Pages/FacilitiesDetails.tsx';
 import { QueryClient,QueryClientProvider } from 'react-query';
+import Customer from './Dashboard/components/Customer.tsx';
 
 
 
@@ -33,6 +34,9 @@ const router = createBrowserRouter([
       },{
         path:"/Facilities",
         element:<Facilities/>
+      },{
+        path:"/Customer",
+        element:<Customer/>
       }
     ] , 
   },

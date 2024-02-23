@@ -1,10 +1,12 @@
 import type { DatePickerProps } from 'antd';
-import { DatePicker, Space, Switch, Table } from 'antd';
+import { DatePicker, Space, Switch, Table, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { RiSearchLine } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
-import svg1 from "../../../public/svg1-onlypass.svg";
+import svg3 from "../../../public/svg3-onlypass.svg";
 import svg2 from "../../../public/svg2-onlypass.svg";
+import svg4 from "../../../public/svg4-onlypass.svg";
+
 import { ApiClientPrivate } from '../../utils/axios';
 
 import { FaArrowDown } from 'react-icons/fa';
@@ -12,58 +14,59 @@ import { FaArrowUp } from "react-icons/fa6";
 
 // const { Search } = Input;
 
-interface FacilityData {
+interface CustomerData {
   key:string
   _id: string;
   facilityName: string;
   address: string;
 }
 
-const Facilities: React.FC = () => {
-  const [facilityData, setFacilityData] = useState<FacilityData[]>([])
-  const [filteredData, setFilteredData] = useState<FacilityData[]>([]);
+const Customer: React.FC = () => {
+//   const [facilityData, setFacilityData] = useState<FacilityData[]>([])
+//   const [filteredData, setFilteredData] = useState<FacilityData[]>([]);
 
     // Data fetching.....!
-    const fetchFacility = async () => {
-      try {
-        const res = await ApiClientPrivate.get("/facilities");
-        console.log({'aaaaa':res.data});
+    // const fetchFacility = async () => {
+    //   try {
+    //     const res = await ApiClientPrivate.get("/facilities");
+    //     console.log({'aaaaa':res.data});
 
-        setFacilityData(res.data);
-        setFilteredData(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    //     setFacilityData(res.data);
+    //     setFilteredData(res.data);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
 
-    useEffect(() => {
-      fetchFacility();
-    }, []);
+    // useEffect(() => {
+    //   fetchFacility();
+    // }, []);
 
     const onChangeDatePicker: DatePickerProps['onChange'] = (date, dateString) => {
       console.log(date, dateString);
 
     };
 
-  const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    const lowerCasedValue = value.toLowerCase();
-    const filtered = facilityData.filter(
-      (item) =>
-        item.facilityName.toLowerCase().includes(lowerCasedValue) ||
-        item.address.toLowerCase().includes(lowerCasedValue) 
+//   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     const value = e.target.value;
+//     const lowerCasedValue = value.toLowerCase();
+//     const filtered = facilityData.filter(
+//       (item) =>
+//         item.facilityName.toLowerCase().includes(lowerCasedValue) ||
+//         item.address.toLowerCase().includes(lowerCasedValue) 
        
-    );
+//     );
 
-    setFilteredData(filtered);
-  };
+//     setFilteredData(filtered);
+//   };
 
-    const tableData = filteredData?.map((It: any, i: number) => ({
-      ...It,
-      key: i + 1,
-    }));
+    // const tableData = filteredData?.map((It: any, i: number) => ({
+    //   ...It,
+    //   key: i + 1,
+    // }));
 
  
+
   const onChange = (checked: boolean) => {
     console.log(`switch to ${checked}`);
   };
@@ -73,17 +76,23 @@ const Facilities: React.FC = () => {
       dataIndex: 'key',
       key: 'sNo',
     },
+    // {
+    //   title: 'Name',
+    //   dataindex:'name',
+    //   key: 'name',
+    // //   render: (record:any) => (
+    // //     <Link to={`/FacilitiesDetails/${record._id}`}>{record.facilityName}</Link>
+    // //   ),
+    // },
     {
-      title: 'Facilities',
-      key: 'facilityName',
-      render: (record:any) => (
-        <Link to={`/FacilitiesDetails/${record._id}`}>{record.facilityName}</Link>
-      ),
-    },
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+      },
     {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
+      title: 'Gender',
+      dataIndex: 'gender',
+      key: 'gender',
     },
     {
       title: 'Phone Number',
@@ -91,18 +100,32 @@ const Facilities: React.FC = () => {
       key: 'phoneNumber',
     },
     {
-        title: 'Onlypass',
-        key: 'action',
-        render: () => (
-          <Switch defaultChecked onChange={onChange} />
-        ),
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+        title: 'Type',
+        dataIndex: 'type',
+        key: 'type',
       },
 
       {
-        title: 'Justgyms',
-        key: 'action',
-        render: () => (
-          <Switch defaultChecked onChange={onChange} className='' />
+        title: 'Membership',
+        key: 'membership',
+        dataIndex: 'membership',
+        render: (membership:any) => (
+          <>
+            {membership.map((tag:any) => {
+              let color = tag === "Inactive" ? 'red' : 'green';
+              
+              return (
+                <Tag color={color} key={tag}>
+                  {tag.toUpperCase()}
+                </Tag>
+              );
+            })}
+          </>
         ),
       },
       
@@ -110,7 +133,32 @@ const Facilities: React.FC = () => {
   ];
 
   
-  // console.log("facility: ", facilityData);  
+  // console.log("facility: ", facilityData); 
+  const dummyCustomer  =[
+   {
+    key:1,
+    name:"salman" ,
+    gender:'male',
+    phoneNumber:"7559889699",
+    email:"salmanSb0786@gmail.com",
+    type:"onlypass",    
+    membership:['Active']
+
+
+   },
+   {
+    key:2,
+    name:"Mohammed Niyad" ,
+    gender:'male',
+    phoneNumber:"7894561230",
+    email:"niyad123@gmail.com",
+    type:"onlypass",    
+    membership:['Inactive']
+
+
+   },
+
+  ]
 
 
   return (
@@ -120,13 +168,13 @@ const Facilities: React.FC = () => {
           <div className='flex justify-between items-center py-10 '>
 
             <div className='text-3xl font-semibold '>
-              <h1>Facilities</h1>
+              <h1>Customer</h1>
             </div>
 
             <div className='relative'>
               <input type="text"
               placeholder='Search'
-              onChange={onChangeSearch}
+            //   onChange={onChangeSearch}
               className='w-[500px] h-[40px] text-sm pl-8 outline-none'
               
               />
@@ -161,21 +209,21 @@ const Facilities: React.FC = () => {
           <div className='flex justify-evenly bg-white mb-10  py-8'>
             <div className='flex gap-5 border-r-2 pr-10 '>
                <div>
-                <img src={svg1} alt="" />
+                <img src={svg4} alt="" />
                </div>
                 <div>
-                  <p className='text-[#ACACAC]'>Total no.of Facilities </p>
-                  <h1 className='text-3xl font-semibold'>1,248</h1>
+                  <p className='text-[#ACACAC]'>Total Customers</p>
+                  <h1 className='text-3xl font-semibold'>5,423</h1>
                   <p className='flex items-center gap-2'><span className='text-[#00ac4f] flex items-center gap-2 font-bold'><FaArrowUp  />16%</span> this month</p>
                 </div>
             </div>
             <div className='flex gap-5 border-r-2 pr-10'>
                <div>
-                <img src={svg1} alt="" />
+                <img src={svg3} alt="" />
                </div>
                 <div>
-                  <p className='text-[#ACACAC]'>Live with Onlypass </p>
-                  <h1 className='text-3xl font-semibold'>1003</h1>
+                  <p className='text-[#ACACAC]'>Membership Sold</p>
+                  <h1 className='text-3xl font-semibold'>1893</h1>
                   <p className='flex items-center gap-2'><span className='text-[#D0004B] flex items-center gap-2 font-bold'><FaArrowDown  />1%</span> this month</p>
                 </div>
             </div>
@@ -184,8 +232,8 @@ const Facilities: React.FC = () => {
                 <img src={svg2} alt="" />
                </div>
                 <div>
-                  <p className='text-[#ACACAC]'>Coverage (kerala) </p>
-                  <h1 className='text-3xl font-semibold'>91/1034</h1>
+                  <p className='text-[#ACACAC]'> Active Now</p>
+                  <h1 className='text-3xl font-semibold'>183</h1>
                   <p className='flex items-center gap-2'><span className='text-[#D0004B] flex items-center gap-2 font-bold'><FaArrowDown  />39%</span> this month</p>
                 </div>
             </div>
@@ -198,8 +246,10 @@ const Facilities: React.FC = () => {
 
             </div>
             <Table
+
               columns={columns}
-              dataSource={tableData}
+              dataSource={dummyCustomer}
+            //   dataSource={tableData}
               pagination={{ pageSize: 10 }}
               className=''
             />
@@ -209,4 +259,4 @@ const Facilities: React.FC = () => {
   );
 };
 
-export default Facilities;
+export default Customer;
