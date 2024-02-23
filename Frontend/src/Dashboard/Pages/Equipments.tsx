@@ -167,7 +167,7 @@ const Equipments: React.FC = () => {
       <div className='Card-Section grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid lg:grid-cols-4 gap-3'>
         {filteredData.map(({ _id,  image, name }) => (
           <div className='mx-auto' key={_id}>
-            <Card className='w-[250px]  p-1 shadow-md'>
+            <Card className='lg:w-[250px]   p-1 shadow-md'>
               <div className='flex'>
                 <img alt={name} src={`${imaageURL}/${image}`} className='p-2  border-b-2 w-[200px] h-[200px]' />
                 <div className='-mt-4 ml-1 w-fit' onClick={()=>deleteEquipment(_id)}><MdDeleteForever size={16} className='hover:text-red-500 duration-300 scale-100 hover:scale-125' /></div>

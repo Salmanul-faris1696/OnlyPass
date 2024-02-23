@@ -12,8 +12,8 @@ import { store } from './Dashboard/Redux/store.ts';
 import Form from './Dashboard/Pages/Form.tsx';
 import FacilitiesDetails from './Dashboard/Pages/FacilitiesDetails.tsx';
 import { QueryClient,QueryClientProvider } from 'react-query';
-import Customer from './Dashboard/components/Customer.tsx';
-import Payment from './Dashboard/components/Payment.tsx';
+import Customer from './Dashboard/Pages/Customer.tsx';
+import Payment from './Dashboard/Pages/Payment.tsx';
 
 
 

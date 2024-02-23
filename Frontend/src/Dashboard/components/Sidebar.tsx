@@ -185,7 +185,7 @@ const Sidebar = () => {
                 </div>
                 <div onClick={()=>setSidebarOpen(!sidebarOpen)}>
                     {sidebarIcons.map((it:any,ind:any)=>(
-                        <NavLink to={it.path}  key={ind} className={({isActive}) => `${isActive? 'text-white bg-black':"hover:bg-slate-100"} py-3 rounded-lg my-10 flex justify-center `}>
+                        <NavLink to={it.path}  key={ind} className={({isActive}) => `${isActive? 'text-white bg-black':"hover:bg-slate-100"} py-3 rounded-lg my-5 flex justify-center `}>
                             {it.icon}
                         </NavLink>
                     ))}
@@ -210,7 +210,7 @@ const Sidebar = () => {
             <div className='mt-5 text-[#5C5C5C] ' >
                 {sideBarItems.map((it:any) =>(
             
-                    <div className="mb-9">
+                    <div className="mb-7">
                 <NavLink to={it.path} key={it.id}
                 onClick={()=>openSubMenu(it.id)}
                 className={`${

@@ -117,7 +117,7 @@ const Facilities: React.FC = () => {
     <div>
       {/* headerSection */}
         <div className=' bg-[#F2F2F2] px-16 pb-10 '>
-          <div className='flex justify-between items-center py-10 '>
+          <div className='flex justify-between gap-3 items-center py-10 '>
 
             <div className='text-3xl font-semibold '>
               <h1>Facilities</h1>
@@ -127,7 +127,7 @@ const Facilities: React.FC = () => {
               <input type="text"
               placeholder='Search'
               onChange={onChangeSearch}
-              className='w-[500px] h-[40px] text-sm pl-8 outline-none'
+              className='lg:w-[400px] md:w-[300px] w-[200px] h-[40px] text-sm pl-8 outline-none'
               
               />
                 <div className="absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none">
@@ -135,7 +135,7 @@ const Facilities: React.FC = () => {
                 </div>
             </div>
 
-            <div className='flex text-sm items-center font-medium gap-5 text-[#7e7e7e] '>
+            <div className='flex text-sm items-center font-medium gap-2 text-[#7e7e7e] '>
 
               <div >
                 <h1>
@@ -159,34 +159,34 @@ const Facilities: React.FC = () => {
 
           {/* Facility REsult Show */}
           <div className='flex justify-evenly bg-white mb-10  py-8'>
-            <div className='flex gap-5 border-r-2 pr-10 '>
-               <div>
-                <img src={svg1} alt="" />
+            <div className='flex gap-5 border-r-2 px-3 xl:px-10 xl:pr-10 w-1/3 items-center '>
+               <div className='hidden lg:block'>
+                <img src={svg1} alt=""  />
                </div>
-                <div>
-                  <p className='text-[#ACACAC]'>Total no.of Facilities </p>
-                  <h1 className='text-3xl font-semibold'>1,248</h1>
-                  <p className='flex items-center gap-2'><span className='text-[#00ac4f] flex items-center gap-2 font-bold'><FaArrowUp  />16%</span> this month</p>
+                <div className=''>
+                  <p className='text-[#ACACAC] lg:text-xs'>Total no.of Facilities </p>
+                  <h1 className='text-3xl font-semibold '>1,248</h1>
+                  <p className='flex items-center Xl:gap-2 lg:gap-1 lg:text-sm'><span className='text-[#00ac4f] flex items-center xl:gap-2 lg:gap-1 lg:text-sm font-bold'><FaArrowUp  />16%</span> this month</p>
                 </div>
             </div>
-            <div className='flex gap-5 border-r-2 pr-10'>
-               <div>
+            <div className='flex gap-5 border-r-2 px-3 xl:px-10 xl:pr-10  w-1/3 items-center'>
+               <div className='hidden lg:block'>
                 <img src={svg1} alt="" />
                </div>
                 <div>
-                  <p className='text-[#ACACAC]'>Live with Onlypass </p>
+                  <p className='text-[#ACACAC] lg:text-xs'>Live with Onlypass </p>
                   <h1 className='text-3xl font-semibold'>1003</h1>
-                  <p className='flex items-center gap-2'><span className='text-[#D0004B] flex items-center gap-2 font-bold'><FaArrowDown  />1%</span> this month</p>
+                  <p className='flex items-center Xl:gap-2 lg:gap-1 lg:text-sm'><span className='text-[#D0004B] flex items-center xl:gap-2 lg:gap-1 lg:text-sm font-bold'><FaArrowDown  />1%</span> this month</p>
                 </div>
             </div>
-            <div className='flex gap-5  pr-10 '>
-               <div>
+            <div className='flex gap-5 px-3 xl:px-10 xl:pr-10 w-1/3 items-center'>
+               <div className='hidden lg:block'>
                 <img src={svg2} alt="" />
                </div>
                 <div>
-                  <p className='text-[#ACACAC]'>Coverage (kerala) </p>
+                  <p className='text-[#ACACAC] lg:text-xs'>Coverage (kerala) </p>
                   <h1 className='text-3xl font-semibold'>91/1034</h1>
-                  <p className='flex items-center gap-2'><span className='text-[#D0004B] flex items-center gap-2 font-bold'><FaArrowDown  />39%</span> this month</p>
+                  <p className='flex items-center Xl:gap-2 lg:gap-1 lg:text-sm'><span className='text-[#D0004B] flex items-center xl:gap-2 lg:gap-1 lg:text-sm font-bold'><FaArrowDown  />39%</span> this month</p>
                 </div>
             </div>
           </div>
