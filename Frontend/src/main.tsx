@@ -13,6 +13,7 @@ import Form from './Dashboard/Pages/Form.tsx';
 import FacilitiesDetails from './Dashboard/Pages/FacilitiesDetails.tsx';
 import { QueryClient,QueryClientProvider } from 'react-query';
 import Customer from './Dashboard/components/Customer.tsx';
+import Payment from './Dashboard/components/Payment.tsx';
 
 
 
@@ -37,6 +38,9 @@ const router = createBrowserRouter([
       },{
         path:"/Customer",
         element:<Customer/>
+      },{
+        path:"/Payment",
+        element:<Payment/>
       }
     ] , 
   },

@@ -14,14 +14,14 @@ import { FaArrowUp } from "react-icons/fa6";
 
 // const { Search } = Input;
 
-interface CustomerData {
-  key:string
-  _id: string;
-  facilityName: string;
-  address: string;
-}
+// interface CustomerData {
+//   key:string
+//   _id: string;
+//   facilityName: string;
+//   address: string;
+// }
 
-const Customer: React.FC = () => {
+const Payment: React.FC = () => {
 //   const [facilityData, setFacilityData] = useState<FacilityData[]>([])
 //   const [filteredData, setFilteredData] = useState<FacilityData[]>([]);
 
@@ -85,39 +85,40 @@ const Customer: React.FC = () => {
     // //   ),
     // },
     {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
+        title: 'Date & Time',
+        dataIndex: 'dateAndTime',
+        key: 'dateAndTime',
       },
     {
-      title: 'Gender',
-      dataIndex: 'gender',
-      key: 'gender',
+      title: 'Transaction ID',
+      dataIndex: 'transactionId',
+      key: 'transactionId',
     },
     {
-      title: 'Phone Number',
-      dataIndex: 'phoneNumber',
-      key: 'phoneNumber',
+      title: 'Faciity / Customer Name',
+      dataIndex: 'name',
+      key: 'name',
     },
     {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
+      title: 'Description',
+      dataIndex: 'description',
+      key: 'description',
     },
     {
-        title: 'Type',
-        dataIndex: 'type',
-        key: 'type',
+        title: 'Amount',
+        dataIndex: 'amount',
+        key: 'ampunt',
       },
 
       {
-        title: 'Membership',
-        key: 'membership',
-        dataIndex: 'membership',
-        render: (membership:any) => (
+        title: 'Status',
+        key: 'sts',
+        dataIndex: 'sts',
+        render: (sts:any) => (
           <>
-            {membership.map((tag:any) => {
-              let color = tag === "Inactive" ? 'red' : 'green';
+            {sts.map((tag:any) => {
+             let color = tag === "Active" || tag === "Debited" ? 'green' : 'red';
+
               
               return (
                 <Tag color={color} key={tag}>
@@ -137,26 +138,60 @@ const Customer: React.FC = () => {
   const dummyCustomer  =[
    {
     key:1,
-    name:"salman" ,
-    gender:'male',
-    phoneNumber:"7559889699",
-    email:"salmanSb0786@gmail.com",
-    type:"onlypass",    
-    membership:['Active']
+    dateAndTime:"20/02/2024" ,
+    transactionId:'#123456',
+    name:"salman",
+    description:"Payment received for Gold membership",
+    amount:"2,000.00",    
+    sts:['Active']
 
 
    },
    {
     key:2,
-    name:"Mohammed Niyad" ,
-    gender:'male',
-    phoneNumber:"7894561230",
-    email:"niyad123@gmail.com",
-    type:"onlypass",    
-    membership:['Inactive']
+    dateAndTime:"23/02/2024" ,
+    transactionId:'#1278956',
+    name:"Niyad",
+    description:"Payment received for platinium membership",
+    amount:"5,000.00",    
+    sts:['Debited']
 
 
    },
+   {
+    key:3,
+    dateAndTime:"03/03/2024" ,
+    transactionId:'#755988',
+    name:"Hulk Fit",
+    description:"hulkFit2@gmail.com",
+    amount:"3,199.00",    
+    sts:['Credited']
+
+
+   },
+   {
+    key:4,
+    dateAndTime:"05/03/2024" ,
+    transactionId:'#11111',
+    name:"sahad",
+    description:"refunded",
+    amount:"199.00",    
+    sts:['Refunded']
+
+
+   },
+   {
+    key:5,
+    dateAndTime:"12/03/2024" ,
+    transactionId:'#22222',
+    name:"Ali",
+    description:"Pending",
+    amount:"299.00",    
+    sts:['Pending']
+
+
+   },
+   
 
   ]
 
@@ -168,7 +203,7 @@ const Customer: React.FC = () => {
           <div className='flex justify-between items-center py-10 '>
 
             <div className='text-3xl font-semibold '>
-              <h1>Customer</h1>
+              <h1>Payments</h1>
             </div>
 
             <div className='relative'>
@@ -212,8 +247,8 @@ const Customer: React.FC = () => {
                 <img src={svg4} alt="" />
                </div>
                 <div>
-                  <p className='text-[#ACACAC]'>Total Customers</p>
-                  <h1 className='text-3xl font-semibold'>5,423</h1>
+                  <p className='text-[#ACACAC]'>Total Amount Recieved</p>
+                  <h1 className='text-3xl font-semibold'>53,423.00</h1>
                   <p className='flex items-center gap-2'><span className='text-[#00ac4f] flex items-center gap-2 font-bold'><FaArrowUp  />16%</span> this month</p>
                 </div>
             </div>
@@ -222,8 +257,8 @@ const Customer: React.FC = () => {
                 <img src={svg3} alt="" />
                </div>
                 <div>
-                  <p className='text-[#ACACAC]'>Membership Sold</p>
-                  <h1 className='text-3xl font-semibold'>1893</h1>
+                  <p className='text-[#ACACAC]'>Total Amount Paid</p>
+                  <h1 className='text-3xl font-semibold'>18,950.00</h1>
                   <p className='flex items-center gap-2'><span className='text-[#D0004B] flex items-center gap-2 font-bold'><FaArrowDown  />1%</span> this month</p>
                 </div>
             </div>
@@ -232,8 +267,8 @@ const Customer: React.FC = () => {
                 <img src={svg2} alt="" />
                </div>
                 <div>
-                  <p className='text-[#ACACAC]'> Active Now</p>
-                  <h1 className='text-3xl font-semibold'>183</h1>
+                  <p className='text-[#ACACAC]'> Membership Sold</p>
+                  <h1 className='text-3xl font-semibold'>117</h1>
                   <p className='flex items-center gap-2'><span className='text-[#D0004B] flex items-center gap-2 font-bold'><FaArrowDown  />39%</span> this month</p>
                 </div>
             </div>
@@ -242,7 +277,7 @@ const Customer: React.FC = () => {
           {/* Table Section */}
           <div className='w-fit sm:w-auto bg-white p-10 mb-8'>
             <div className='font-bold pb-5 text-lg'>
-              <h1>All Customers </h1>
+              <h1>All Payments </h1>
 
             </div>
             <Table
@@ -259,4 +294,4 @@ const Customer: React.FC = () => {
   );
 };
 
-export default Customer;
+export default Payment;

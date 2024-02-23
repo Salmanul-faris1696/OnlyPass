@@ -68,11 +68,11 @@ const Facilities: React.FC = () => {
     console.log(`switch to ${checked}`);
   };
   const columns = [
-    {
-      title: 's.No',
-      dataIndex: 'key',
-      key: 'sNo',
-    },
+    // {
+    //   title: 's.No',
+    //   dataIndex: 'key',
+    //   key: 'sNo',
+    // },
     {
       title: 'Facilities',
       key: 'facilityName',
