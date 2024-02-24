@@ -19,7 +19,6 @@ const Amenities: React.FC = () => {
   const [newAmenityName, setNewAmenityName] = useState<string>('');
   const [newAmenityIcon, setnewAmenityIcon] = useState<File | null>(null);
 
-
   const fetchData = async () => {
     try {
       const res = await ApiClientPrivate.get("/amenities");
@@ -34,10 +33,6 @@ const Amenities: React.FC = () => {
   useEffect(() => {
     fetchData(); 
   }, []); 
-
-
-console.log("data>>>",amentyData);
-
 
 
   const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -111,15 +106,9 @@ console.log("data>>>",amentyData);
     } catch (error) {
       alert(
         "cannot delete amenities "
-
       )
-      
-      
     }
   }
-
-  
-
   const showModal = () => {
     setNewAmenityName('');
     setIsModalVisible(true);
@@ -129,15 +118,10 @@ console.log("data>>>",amentyData);
     setIsModalVisible(false);
     setNewAmenityName('')
   };
-
   const handleAddAmenity = async () => {
-
     try {
       const newData = [...amentyData, { key: (amentyData.length + 1).toString(), name: newAmenityName }];
       console.log(newData);
-      
-      // setAmentyData(newData);
-      // setFilteredData(newData);
       setIsModalVisible(false);
       setNewAmenityName('')
   
@@ -165,15 +149,10 @@ console.log("data>>>",amentyData);
   };
 
   const onAmenityChange = (info: any) => {
-    // console.log("hello");
     
     try {
-      // if (info.file.status === 'done') {
-        const imageUrl = info.file;
-        // console.log({ suiii: info});
-        
+        const imageUrl = info.file;        
         setnewAmenityIcon(imageUrl);
-      // }
     } catch (error) {
       console.error('Error uploading image:', error);
     }
@@ -185,7 +164,6 @@ console.log("data>>>",amentyData);
       <div className='headerSection '>
         <div className=' py-10 text-3xl font-semibold flex justify-between '>
           <h1>Amenities</h1>
-
           <div className='relative'>
               <input type="text"
               placeholder='Search'
@@ -197,10 +175,6 @@ console.log("data>>>",amentyData);
                     <RiSearchLine className="text-gray-500" size={18} />
                 </div>
             </div>
-
-
-
-
           <div className='bg-black w-fit text-white text-sm flex p-2 rounded-lg hover:shadow-lg'>
             <button className='md:flex md:items-center gap-2 hidden ' onClick={showModal}>
               <PiPlusCircle size={20} /> New Amenities
@@ -210,15 +184,7 @@ console.log("data>>>",amentyData);
             </button>
           </div>
         </div>
-      </div>
-      {/* Search bar
-      <div className='m-3 p-2'>
-        <Input
-          placeholder='Search amenities'
-          style={{ width: 200, marginBottom: 16 }}
-          onChange={onChangeSearch}
-        />
-      </div> */}
+      </div> 
       {/* table-Secion */}
       <div>
         <Table
@@ -228,14 +194,12 @@ console.log("data>>>",amentyData);
           className='m-3 p-2  shadow-lg '
         />
       </div>
+      
       <Modal
         title='Add New Amenity'
         open={isModalVisible}
         onCancel={handleCancel}
         footer={[
-          // <Button key='cancel' onClick={handleCancel}>
-          //   Cancel
-          // </Button>,
           <Button key='add' type='primary' onClick={handleAddAmenity}  disabled={!newAmenityName.trim()} className='bg-blue-500'>
             Add
           </Button>,

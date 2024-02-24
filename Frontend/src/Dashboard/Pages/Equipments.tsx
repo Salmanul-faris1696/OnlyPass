@@ -13,51 +13,37 @@ interface Equipment {
   _id:string;
   image:string
 }
-
 const { Meta } = Card;
-
 const Equipments: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [newEquipmentName, setNewEquipmentName] = useState<string>('');
   const [newEquipmentImage, setNewEquipmentImage] = useState<File | null>(null);
   const[equipmentsData , setEquipmetsData]=useState([]); 
   const [filteredData, setFilteredData] = useState<Equipment[]>([]);
-
-
   const fetchData= async () =>{
     try {
       const res=await ApiClientPrivate.get("/equipments/all-equipment");
       console.log(res.data);
-      
       setEquipmetsData(res.data)
       setFilteredData(res.data); 
-      
     } catch (errpr) {
       console.log(errpr);
-      
     }
   } 
-
   useEffect(() => {
     fetchData();
   }, []);
 
-  console.log('equi' , equipmentsData);
-  
-
-
-  const onChange = (checked: boolean) => {
+  // console.log('equi' , equipmentsData);
+    const onChange = (checked: boolean) => {
     console.log(`switch to ${checked}`);
   };
-
   const showModal = () => {
     setIsModalVisible(true);
   };
-
   const handleAddEquipment = async () => {
     try {
-      console.log("fiii",{newEquipmentImage});
-      
+      // console.log("fiii",{newEquipmentImage});
       const formData = new FormData();
       formData.append('name', newEquipmentName);
       formData.append('image', newEquipmentImage as File);
@@ -67,19 +53,14 @@ const Equipments: React.FC = () => {
           'Content-Type': 'form-data',
         },
       });
-
       // Fetch updated data from the server after adding a new equipment
       fetchData();
-
       console.log('Equipment added:', newEquipmentName, newEquipmentImage);
       setIsModalVisible(false);
     } catch (error) {
       console.error('Error adding equipment:', error);
     }
   };
-
-
-
   const handleCancel = () => {
     setIsModalVisible(false);
   };
@@ -87,17 +68,13 @@ const Equipments: React.FC = () => {
   const onEquipmentNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setNewEquipmentName(e.target.value);
   };
-
   const onEquipmentImageChange = (info: any) => {
-    // console.log("hello");
     
     try {
-      // if (info.file.status === 'done') {
         const imageUrl = info.file;
         console.log({ suiii: info});
         
         setNewEquipmentImage(imageUrl);
-      // }
     } catch (error) {
       console.error('Error uploading image:', error);
     }
@@ -122,10 +99,7 @@ const Equipments: React.FC = () => {
    } catch (error) {
      alert(
        "cannot delete amenities "
-
      )
-     
-     
    }
   }
 
@@ -142,17 +116,11 @@ const Equipments: React.FC = () => {
               placeholder='Search'
               onChange={onChangeSearch}
               className='lg:w-[500px] w-[250px] h-[40px] text-sm pl-8 outline-none'
-              
               />
                 <div className="absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none">
                     <RiSearchLine className="text-gray-500" size={18} />
                 </div>
             </div>
-
-
-
-
-
           <div className='bg-black w-fit text-white text-sm flex p-2 rounded-lg hover:shadow-lg'>
             <button className='md:flex md:items-center gap-2 hidden ' onClick={showModal}>
               <PiPlusCircle size={20} /> New Equipments
@@ -180,7 +148,6 @@ const Equipments: React.FC = () => {
           </div>
         ))}
       </div>
-
       <Modal
         title='Add New Equipment'
         open={isModalVisible}

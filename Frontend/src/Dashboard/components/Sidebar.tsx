@@ -179,13 +179,13 @@ const Sidebar = () => {
     <div id="sidebar" className="flex gap-3">
         {/* <<<<<< SIDE MINIMIZE ICON >>>>>>> */}
         <div className={`${sidebarOpen === true? "hidden": "block"}`}>
-            <div className="w-24 px-5">
+            <div className="md:w-24 px-2 md:px-5">
                 <div className="mb-10 pt-10 flex justify-center">
                 <TbSettings2 size={40} />
                 </div>
                 <div onClick={()=>setSidebarOpen(!sidebarOpen)}>
                     {sidebarIcons.map((it:any,ind:any)=>(
-                        <NavLink to={it.path}  key={ind} className={({isActive}) => `${isActive? 'text-white bg-black':"hover:bg-slate-100"} py-3 rounded-lg my-5 flex justify-center `}>
+                        <NavLink to={it.path}  key={ind} className={({isActive}) => `${isActive? 'text-white bg-black':"hover:bg-slate-100"} py-1 md:py-3 rounded-lg my-5 flex justify-center `}>
                             {it.icon}
                         </NavLink>
                     ))}
