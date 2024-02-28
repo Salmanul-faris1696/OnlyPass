@@ -55,7 +55,7 @@ const PageHeader = (props:any) => {
         <div className='flex justify-between bg-white mb-3 md:mb-7 lg:mb-16 py-3 md:py-5 lg:py-10 p-2'>
             {
                 props.details.map((it:any) => (
-                    <div className='flex items-center p-2 gap-1 border-r-2 w-1/3 justify-center '>
+                    <div className='flex items-center p-2 gap-1 border-r w-1/3 justify-center last:border-none '>
                         <div>
                             {
                                 screen <= 854 ?(<Avatar size={60}  src={it.icon} />) : screen <= 1006 && screen >= 854 ? (<Avatar size={70}  src={it.icon} />) : (<Avatar size={90}  src={it.icon} />)

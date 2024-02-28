@@ -117,7 +117,7 @@ const Facilities: React.FC = () => {
       <div className=' bg-[#F2F2F2] px-2 sm:px-10 md:px-16 pb-10 '>
           <PageHeader details={details} name={"Facility"} searchFunction = {onChangeSearch}/>
           {/* Table Section */}
-          <div className='w-fit sm:w-auto bg-white p-10 mb-8 overflow-scroll'>
+          <div className='w-fit sm:w-auto bg-white p-10 mb-8 '>
             <div className='font-bold pb-5 text-lg'>
               <h1>All Facilities </h1>
             </div>

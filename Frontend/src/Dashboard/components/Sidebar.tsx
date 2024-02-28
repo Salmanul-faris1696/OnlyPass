@@ -176,7 +176,7 @@ const Sidebar = () => {
 
   return (
 
-    <div id="sidebar" className="flex gap-3">
+    <div id="sidebar" className="flex gap-3 h-screen overflow-y-scroll ">
         {/* <<<<<< SIDE MINIMIZE ICON >>>>>>> */}
         <div className={`${sidebarOpen === true? "hidden": "block"}`}>
             <div className="md:w-24 px-2 md:px-5">
