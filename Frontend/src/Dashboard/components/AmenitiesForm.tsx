@@ -15,8 +15,8 @@ interface Amenity {
 
 const AmenitiesForm = () => {
   const [selectedTypes, setSelectedTypes] = useState<{ [key: string]: string | null }>({});
-  const {amenities} = useAppSelector((state) => state.facility);
-console.log({amenities, selectedTypes});
+  const { amenities } = useAppSelector((state) => state.facility);
+  console.log({ amenities, selectedTypes });
 
   const dispatch = useDispatch();
 
@@ -30,12 +30,11 @@ console.log({amenities, selectedTypes});
 
   const [amentyData, setAmentyData] = useState<Amenity[]>([]);
 
-
   const fetchData = async () => {
     try {
-      const res = await ApiClientPrivate.get("/amenities");
+      const res = await ApiClientPrivate.get('/amenities');
       const initialSelectedTypes: { [key: string]: string | null } = {};
-      res.data.forEach((item:any) => {
+      res.data.forEach((item: any) => {
         initialSelectedTypes[item.name] = null;
       });
       setSelectedTypes(initialSelectedTypes);
@@ -49,23 +48,20 @@ console.log({amenities, selectedTypes});
     fetchData();
   }, []);
 
-  const handleTypeChange = (name: string,iconUrl:string, type: string, e:any) => {
+  const handleTypeChange = (name: string, iconUrl: string, type: string, e: any) => {
     setSelectedTypes((prevSelectedTypes) => ({
       ...prevSelectedTypes,
-      [name]: prevSelectedTypes[name] === type ? null : type,
-
+      [name]: prevSelectedTypes[name] === type ? null : type
     }));
     // console.log("check",e.target.checked);
-    
-    // Dispatch your action accordingly
-    if (type === 'free' && e.target.checked || type === 'paid' && e.target.checked ) {
-      dispatch(setAmenties({ amenities_name: name, isPaid: type,iconUrl:iconUrl }));
-    }else{
-      dispatch(setAmenties( { amenities_name: name, Paid: e.target.checked, iconUrl:iconUrl }))
-    }
 
+    // Dispatch your action accordingly
+    if ((type === 'free' && e.target.checked) || (type === 'paid' && e.target.checked)) {
+      dispatch(setAmenties({ amenities_name: name, isPaid: type, iconUrl: iconUrl }));
+    } else {
+      dispatch(setAmenties({ amenities_name: name, Paid: e.target.checked, iconUrl: iconUrl }));
+    }
   };
-  
 
   return (
     <div className="max-w-[500px] mx-auto mt-8">
@@ -73,24 +69,36 @@ console.log({amenities, selectedTypes});
         <h1>Amenities</h1>
       </div>
 
-      {amentyData.map((item:any) => (
-        <div key={item._id} className="amentiesCheckBox flex bg-white mb-3 rounded-md shadow-md p-4 justify-between hover:bg-slate-100">
-          
+      {amentyData.map((item: any) => (
+        <div
+          key={item._id}
+          className="amentiesCheckBox flex bg-white mb-3 rounded-md shadow-md p-4 justify-between hover:bg-slate-100"
+        >
           <div className="w-[150px] md:w-[200px] flex items-center gap-3">
-            <img src={`${iconURL}/${item.icon}`}alt="" className='w-5' />
+            <img src={`${iconURL}/${item.icon}`} alt="" className="w-5" />
             {item.name}
           </div>
           <div className="flex items-center gap-3 ">
             <div className="PaidSection">Free</div>
-            <Checkbox 
-            checked={amenities.length > 0 && amenities?.find(it => it.amenities_name == item.name)?.isPaid === 'free' || selectedTypes[item.name] === 'free'} 
-            onChange={(e:any) => handleTypeChange(item.name, item.icon, 'free',e)}></Checkbox>
+            <Checkbox
+              checked={
+                (amenities.length > 0 &&
+                  amenities?.find((it) => it.amenities_name == item.name)?.isPaid === 'free') ||
+                selectedTypes[item.name] === 'free'
+              }
+              onChange={(e: any) => handleTypeChange(item.name, item.icon, 'free', e)}
+            ></Checkbox>
           </div>
           <div className="flex items-center gap-3 ">
             <div className="PaidSection">Paid</div>
-            <Checkbox 
-            checked={amenities.length > 0 && amenities?.find(it => it.amenities_name == item.name)?.isPaid === 'paid' || selectedTypes[item.name] === 'paid'} 
-            onChange={(e:any) => handleTypeChange(item.name, item.icon, 'paid', e)}></Checkbox>
+            <Checkbox
+              checked={
+                (amenities.length > 0 &&
+                  amenities?.find((it) => it.amenities_name == item.name)?.isPaid === 'paid') ||
+                selectedTypes[item.name] === 'paid'
+              }
+              onChange={(e: any) => handleTypeChange(item.name, item.icon, 'paid', e)}
+            ></Checkbox>
           </div>
         </div>
       ))}

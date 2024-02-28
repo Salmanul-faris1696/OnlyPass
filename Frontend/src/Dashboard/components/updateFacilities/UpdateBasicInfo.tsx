@@ -1,31 +1,25 @@
-import { UploadOutlined } from "@ant-design/icons";
-import {Button,Form,Input,Radio,Space, Upload, UploadFile,UploadProps,} from "antd";
-import TextArea from "antd/es/input/TextArea";
-import { ApiClientPrivate } from "../../../utils/axios";
-import { useState } from "react";
-import { dataImages, dataLogo } from "../../../utils/urls";
-import { useDebounce } from "../../../Hook/CustomHook";
+import { UploadOutlined } from '@ant-design/icons';
+import { Button, Form, Input, Radio, Space, Upload, UploadFile, UploadProps } from 'antd';
+import TextArea from 'antd/es/input/TextArea';
+import { ApiClientPrivate } from '../../../utils/axios';
+import { useState } from 'react';
+import { dataImages, dataLogo } from '../../../utils/urls';
+import { useDebounce } from '../../../Hook/CustomHook';
 
 export default function UpdateBasicInfo(props: any) {
-  const [facilityImages, setFacilityImages] = useState(
-    props.facilityData.images
-  );
+  const [facilityImages, setFacilityImages] = useState(props.facilityData.images);
   // console.log("log images:", facilityImages);
 
-  const [remove, setRemove] = useState(
-    props.facilityData.logoUrl ? true : false
-  );
+  const [remove, setRemove] = useState(props.facilityData.logoUrl ? true : false);
   const [fileList, setFileList] = useState<UploadFile[]>(
     props.facilityData.logoUrl
       ? [
           {
-            uid: "1",
+            uid: '1',
             name: props.facilityData.logoUrl,
             // status: 'done',
-            url: props.facilityData.logoUrl
-              ? `${dataLogo}/${props.facilityData.logoUrl}`
-              : "",
-          },
+            url: props.facilityData.logoUrl ? `${dataLogo}/${props.facilityData.logoUrl}` : ''
+          }
         ]
       : []
   );
@@ -35,7 +29,7 @@ export default function UpdateBasicInfo(props: any) {
           uid: ind.toString(),
           name: it,
           // status: 'done',
-          url: props.facilityData.images ? `${dataImages}/${it}` : "",
+          url: props.facilityData.images ? `${dataImages}/${it}` : ''
         }))
       : []
   );
@@ -52,7 +46,7 @@ export default function UpdateBasicInfo(props: any) {
     websiteURL: props.facilityData.websiteURL,
     logo: props.facilityData.logoUrl,
     description: props.facilityData.description,
-    images: props.facilityData.Facilityimages,
+    images: props.facilityData.Facilityimages
   });
 
   const handleUpdate = async () => {
@@ -69,7 +63,7 @@ export default function UpdateBasicInfo(props: any) {
       props.cancel();
       props.refetch();
     } catch (error) {
-      console.error("Error updating facility:", error);
+      console.error('Error updating facility:', error);
       // Handle error appropriately
     }
   };
@@ -78,23 +72,19 @@ export default function UpdateBasicInfo(props: any) {
     try {
       // Assuming ApiClientPrivate is an Axios instance
       const formData = new FormData();
-      formData.append("logo", e.file.originFileObj);
-      console.log("logooooooooo", e.file.originFileObj);
+      formData.append('logo', e.file.originFileObj);
+      console.log('logooooooooo', e.file.originFileObj);
 
       // Make the POST request to upload the logo
       if (remove !== true) {
-        const response = await ApiClientPrivate.post(
-          "/images/upload-logo",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
+        const response = await ApiClientPrivate.post('/images/upload-logo', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
           }
-        );
+        });
         const id = props.facilityData._id; // Replace 'id' with the actual identifier for your facility
         await ApiClientPrivate.put(`facilities/update/${id}`, {
-          logoUrl: response.data.facility_images,
+          logoUrl: response.data.facility_images
         });
       }
       setRemove(true);
@@ -102,52 +92,42 @@ export default function UpdateBasicInfo(props: any) {
       return e.fileList;
     } catch (error) {
       // Handle errors during logo upload
-      console.error("Logo upload error:", error);
+      console.error('Logo upload error:', error);
 
       // Return the file list or handle errors based on your requirements
       return e.fileList;
     }
   };
-  const normFileImages: UploadProps["onChange"] = async (
-    info,
-    createing?: string
-  ) => {
+  const normFileImages: UploadProps['onChange'] = async (info, createing?: string) => {
     try {
-      console.log("Uploading............", info, createing);
+      console.log('Uploading............', info, createing);
 
       const formData = new FormData();
 
       info.fileList.forEach((file: any) => {
-        formData.append("facility_images", file.originFileObj);
-        console.log("file obj:", file.orginalFileObj);
+        formData.append('facility_images', file.originFileObj);
+        console.log('file obj:', file.orginalFileObj);
       });
 
-      const response = await ApiClientPrivate.post(
-        "/images/upload-img",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+      const response = await ApiClientPrivate.post('/images/upload-img', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
         }
-      );
+      });
       const updatedImagesArray = [
         ...props.facilityData.images,
-        ...response.data.map((item: any) => item.facility_images),
+        ...response.data.map((item: any) => item.facility_images)
       ];
-      console.log("Updated images array:", updatedImagesArray);
+      console.log('Updated images array:', updatedImagesArray);
       setFacilityImages(updatedImagesArray);
     } catch (error: any) {
       // Handle errors
-      console.error("Image upload error:", error);
+      console.error('Image upload error:', error);
     }
   };
 
   const debouncedNormFileLogo = useDebounce(normFileLogo, 500);
-  const debouncedNormFileImages = useDebounce(
-    (e) => normFileImages(e),
-    500
-  );
+  const debouncedNormFileImages = useDebounce((e) => normFileImages(e), 500);
 
   const handleLogoRemove = () => {
     // dispatch(addData({ logoUrl: "" }));
@@ -157,11 +137,9 @@ export default function UpdateBasicInfo(props: any) {
     setRemove(false);
   };
   const handleImgsRemove = (file: UploadFile) => {
-    console.log("Removing...........");
+    console.log('Removing...........');
 
-    const newImgFileList = facilityImages.filter(
-      (item: any) => item !== file.name
-    );
+    const newImgFileList = facilityImages.filter((item: any) => item !== file.name);
     setFacilityImages(newImgFileList);
     // Also remove the image from the backend, if necessary
   };
@@ -180,8 +158,8 @@ export default function UpdateBasicInfo(props: any) {
             <Form.Item
               label="Facility Type :"
               className="text-left"
-              name={"facility_type"}
-              rules={[{ required: true, message: "Please Select your Type!" }]}
+              name={'facility_type'}
+              rules={[{ required: true, message: 'Please Select your Type!' }]}
             >
               <Radio.Group name="facility_type">
                 <Radio value="acess"> Access </Radio>
@@ -194,8 +172,8 @@ export default function UpdateBasicInfo(props: any) {
             <Form.Item
               label="Gender :"
               className="text-start"
-              name={"gender"}
-              rules={[{ required: true, message: "Please Select your Type!" }]}
+              name={'gender'}
+              rules={[{ required: true, message: 'Please Select your Type!' }]}
             >
               <Radio.Group name="gender">
                 <Radio value="gents"> Gents </Radio>
@@ -210,11 +188,9 @@ export default function UpdateBasicInfo(props: any) {
           <div>
             <Form.Item
               label="Facility Name"
-              name={"facilityName"}
+              name={'facilityName'}
               className="text-left"
-              rules={[
-                { required: true, message: "Please Enter Facilicty name" },
-              ]}
+              rules={[{ required: true, message: 'Please Enter Facilicty name' }]}
             >
               <Input
                 name="facilityName"
@@ -224,34 +200,30 @@ export default function UpdateBasicInfo(props: any) {
             </Form.Item>
             <Form.Item
               label="Email"
-              name={"emailAddress"}
-              rules={[
-                { required: true, message: "Please Enter Email Address" },
-              ]}
+              name={'emailAddress'}
+              rules={[{ required: true, message: 'Please Enter Email Address' }]}
               className=""
             >
               <Input name="emailAddress" className="md:w-[350px]" />
             </Form.Item>
             <Form.Item
               label="Contact Person"
-              name={"contactPerson"}
-              rules={[
-                { required: true, message: "Please Enter Contact person name" },
-              ]}
+              name={'contactPerson'}
+              rules={[{ required: true, message: 'Please Enter Contact person name' }]}
             >
               <Input name="contactPerson" className="md:w-[350px]" />
             </Form.Item>
             <Form.Item
               label=" Phone No "
-              name={"phoneNumber"}
+              name={'phoneNumber'}
               rules={[
-                { required: true, message: "Please enter phone number" },
+                { required: true, message: 'Please enter phone number' },
                 {
                   pattern: /^[0-9]+$/,
-                  message: "Please enter valid phone number",
+                  message: 'Please enter valid phone number'
                 },
-                { min: 10, message: "Phone number must be at least 10 digits" },
-                { max: 10, message: "Phone number must be at most 10 digits" },
+                { min: 10, message: 'Phone number must be at least 10 digits' },
+                { max: 10, message: 'Phone number must be at most 10 digits' }
               ]}
               className="text-left"
             >
@@ -260,7 +232,7 @@ export default function UpdateBasicInfo(props: any) {
                   type="tel"
                   name="phonCode"
                   className="w-[15%]"
-                  defaultValue={"+91"}
+                  defaultValue={'+91'}
                   disabled
                 />
                 <Input
@@ -273,11 +245,11 @@ export default function UpdateBasicInfo(props: any) {
               </Space.Compact>
             </Form.Item>
 
-            <Form.Item label="Website url" className="" name={"websiteURL"}>
+            <Form.Item label="Website url" className="" name={'websiteURL'}>
               <Input name="websiteURL" className="md:w-[350px]" />
             </Form.Item>
 
-            <Form.Item label="Logo" name={"logo"}>
+            <Form.Item label="Logo" name={'logo'}>
               <div className="w-[200px]">
                 <Upload
                   maxCount={1}
@@ -298,7 +270,7 @@ export default function UpdateBasicInfo(props: any) {
               </div>
             </Form.Item>
 
-            <Form.Item label="Description" name={"description"}>
+            <Form.Item label="Description" name={'description'}>
               <TextArea name="description" rows={4} className="w-[350px]" />
             </Form.Item>
 
@@ -307,7 +279,7 @@ export default function UpdateBasicInfo(props: any) {
                 label="Images (min.5 Nos)"
                 getValueFromEvent={debouncedNormFileImages}
                 valuePropName="fileList"
-                name={"images"}
+                name={'images'}
               >
                 <Upload
                   // {...props}
@@ -326,12 +298,7 @@ export default function UpdateBasicInfo(props: any) {
           </div>
         </div>
         <div className="flex justify-center">
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="bg-blue-600"
-            onClick={handleUpdate}
-          >
+          <Button type="primary" htmlType="submit" className="bg-blue-600" onClick={handleUpdate}>
             Update
           </Button>
         </div>

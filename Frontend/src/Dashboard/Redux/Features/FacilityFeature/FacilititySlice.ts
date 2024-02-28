@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 // import type { RootState } from "../../store";
 
 export interface FacilitiesState {
@@ -44,135 +44,135 @@ export interface FacilitiesState {
 }
 
 const initialState: FacilitiesState = {
-  facility_type: "access",
-  gender: "",
-  tier: "",
-  facilityName: "",
-  contactPerson: "",
-  emailAddress: "",
-  phoneNumber: "",
-  websiteURL: "",
-  logoUrl: "",
-  description: "",
+  facility_type: 'access',
+  gender: '',
+  tier: '',
+  facilityName: '',
+  contactPerson: '',
+  emailAddress: '',
+  phoneNumber: '',
+  websiteURL: '',
+  logoUrl: '',
+  description: '',
   images: [],
-  address: "",
-  pin_code: "",
-  state: "India",
-  country: "Kerala",
-  latitude_longitude: "",
-  admission_fee: "",
-  daily_pass: "",
-  monthly_pass: "",
-  threeMonth_pass: "",
-  sixMonth_pass: "",
-  annual_pass: "",
-  other: "",
+  address: '',
+  pin_code: '',
+  state: 'India',
+  country: 'Kerala',
+  latitude_longitude: '',
+  admission_fee: '',
+  daily_pass: '',
+  monthly_pass: '',
+  threeMonth_pass: '',
+  sixMonth_pass: '',
+  annual_pass: '',
+  other: '',
   equipments: [],
   amenities: [],
   facilityTiming: [
     {
-      day: "Monday",
+      day: 'Monday',
       morning: {
-        start: "6:00 am",
-        end: "11:00 am",
-        holiday: false,
+        start: '6:00 am',
+        end: '11:00 am',
+        holiday: false
       },
       evening: {
-        start: "4:00 pm",
-        end: "11:30 pm",
-        holiday: false,
-      },
+        start: '4:00 pm',
+        end: '11:30 pm',
+        holiday: false
+      }
       // fullDay: false,
     },
     {
-      day: "Tuesday",
+      day: 'Tuesday',
       morning: {
-        start: "6:00 am",
-        end: "11:00 am",
-        holiday: false,
+        start: '6:00 am',
+        end: '11:00 am',
+        holiday: false
       },
       evening: {
-        start: "4:00 pm",
-        end: "11:30 pm",
-        holiday: false,
-      },
+        start: '4:00 pm',
+        end: '11:30 pm',
+        holiday: false
+      }
       // fullDay: false,
     },
     {
-      day: "Wednesday",
+      day: 'Wednesday',
       morning: {
-        start: "6:00 am",
-        end: "11:00 am",
-        holiday: false,
+        start: '6:00 am',
+        end: '11:00 am',
+        holiday: false
       },
       evening: {
-        start: "4:00 pm",
-        end: "11:30 pm",
-        holiday: false,
-      },
+        start: '4:00 pm',
+        end: '11:30 pm',
+        holiday: false
+      }
       // fullDay: false,
     },
     {
-      day: "Thursday",
+      day: 'Thursday',
       morning: {
-        start: "6:00 am",
-        end: "11:00 am",
-        holiday: false,
+        start: '6:00 am',
+        end: '11:00 am',
+        holiday: false
       },
       evening: {
-        start: "4:00 pm",
-        end: "11:30 pm",
-        holiday: false,
-      },
+        start: '4:00 pm',
+        end: '11:30 pm',
+        holiday: false
+      }
       // fullDay: false,
     },
     {
-      day: "Friday",
+      day: 'Friday',
       morning: {
-        start: "6:00 am",
-        end: "11:00 am",
-        holiday: false,
+        start: '6:00 am',
+        end: '11:00 am',
+        holiday: false
       },
       evening: {
-        start: "4:00 pm",
-        end: "11:30 pm",
-        holiday: false,
-      },
+        start: '4:00 pm',
+        end: '11:30 pm',
+        holiday: false
+      }
       // fullDay: false,
     },
     {
-      day: "Saturday",
+      day: 'Saturday',
       morning: {
-        start: "6:00 am",
-        end: "11:00 am",
-        holiday: false,
+        start: '6:00 am',
+        end: '11:00 am',
+        holiday: false
       },
       evening: {
-        start: "4:00 pm",
-        end: "11:30 pm",
-        holiday: false,
-      },
+        start: '4:00 pm',
+        end: '11:30 pm',
+        holiday: false
+      }
       // fullDay: false,
     },
     {
-      day: "Sunday",
+      day: 'Sunday',
       morning: {
-        start: "",
-        end: "",
-        holiday: true,
+        start: '',
+        end: '',
+        holiday: true
       },
       evening: {
-        start: "",
-        end: "",
-        holiday: true,
-      },
+        start: '',
+        end: '',
+        holiday: true
+      }
       // fullDay: false,
-    },
-  ],
+    }
+  ]
 };
 
 export const FacilitySlice = createSlice({
-  name: "facility",
+  name: 'facility',
   initialState,
   reducers: {
     addData: (
@@ -180,19 +180,17 @@ export const FacilitySlice = createSlice({
       // action: PayloadAction<Partial<FacilitiesState>>
       action: PayloadAction<Partial<any>>
     ) => {
-      console.log("niyad", action.payload);
+      console.log('niyad', action.payload);
 
-      const payloadKeys = Object.keys(action.payload) as Array<
-        keyof FacilitiesState
-      >; // Type assertion
+      const payloadKeys = Object.keys(action.payload) as Array<keyof FacilitiesState>; // Type assertion
       payloadKeys.forEach((key) => {
-        if (key !== "images") {
+        if (key !== 'images') {
           state[key] = action.payload[key]!;
         }
       });
       if (action.payload.images) {
         // state.images = state.images.concat(action.payload.images);
-        state.images = action.payload.images
+        state.images = action.payload.images;
       }
     },
     setTier: (state, action) => {
@@ -237,11 +235,11 @@ export const FacilitySlice = createSlice({
         state.equipments.push({
           equipment_id,
           equipment_name,
-          equipment_img,
+          equipment_img
         });
       }
 
-      console.log("Equipments", state.equipments);
+      console.log('Equipments', state.equipments);
     },
     setfacilityTiming: (state, action) => {
       // console.log(action.payload);
@@ -253,14 +251,14 @@ export const FacilitySlice = createSlice({
               ...timing.morning,
               start: action.payload.morning.start,
               end: action.payload.morning.end,
-              holiday: action.payload.morning.holiday,
+              holiday: action.payload.morning.holiday
             },
             evening: {
               ...timing.evening,
               start: action.payload.evening.start,
               end: action.payload.evening.end,
-              holiday: action.payload.evening.holiday,
-            },
+              holiday: action.payload.evening.holiday
+            }
             // fullDay: action.payload.fullDay,
           };
         }
@@ -269,37 +267,37 @@ export const FacilitySlice = createSlice({
 
       return {
         ...state,
-        facilityTiming: updatedFacilityTiming,
+        facilityTiming: updatedFacilityTiming
       };
     },
     setAllTimingField: (state, action) => {
-      console.log("hello", action.payload);
-        // Extract Monday's timing from the payload
-  const mondayTiming = action.payload.find((item:any) => item.day === 'Monday');
-  
-  // If Monday's timing is found
-  if (mondayTiming) {
-    // Update all days' timing with Monday's timing
-    const updatedFacilityTiming = state.facilityTiming.map((timing) => ({
-      ...timing,
-      morning: { ...mondayTiming.morning },
-      evening: { ...mondayTiming.evening },
-    }));
-  
-    return {
-      ...state,
-      facilityTiming: updatedFacilityTiming,
-    };
-  }
+      console.log('hello', action.payload);
+      // Extract Monday's timing from the payload
+      const mondayTiming = action.payload.find((item: any) => item.day === 'Monday');
 
-  // If Monday's timing is not found, return the current state
-  return state;
+      // If Monday's timing is found
+      if (mondayTiming) {
+        // Update all days' timing with Monday's timing
+        const updatedFacilityTiming = state.facilityTiming.map((timing) => ({
+          ...timing,
+          morning: { ...mondayTiming.morning },
+          evening: { ...mondayTiming.evening }
+        }));
+
+        return {
+          ...state,
+          facilityTiming: updatedFacilityTiming
+        };
+      }
+
+      // If Monday's timing is not found, return the current state
+      return state;
     },
 
-    reset:(state) => {
-      Object.assign(state ,initialState)
+    reset: (state) => {
+      Object.assign(state, initialState);
     }
-  },
+  }
 });
 
 export const {
@@ -308,15 +306,13 @@ export const {
   setAmenties,
   setEquipments,
   setfacilityTiming,
-  setAllTimingField,
+  setAllTimingField
 } = FacilitySlice.actions;
-
 
 export default FacilitySlice.reducer;
 
-export const resetFacility =()=> {
+export const resetFacility = () => {
   return {
-    type : 'facility/reset'
-  }
-
-}
+    type: 'facility/reset'
+  };
+};

@@ -1,9 +1,6 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
 
-export const useDebounce = <F extends (...args: any[]) => any>(
-  func: F,
-  delay: number
-): F => {
+export const useDebounce = <F extends (...args: any[]) => any>(func: F, delay: number): F => {
   const debouncedFunction = useMemo(() => {
     let timeoutId: ReturnType<typeof setTimeout>;
 
@@ -17,7 +14,6 @@ export const useDebounce = <F extends (...args: any[]) => any>(
 
   return debouncedFunction as F;
 };
-
 
 // Usage:
 // const debouncedNormFileLogo = useDebounce(normFileLogo, 500);
