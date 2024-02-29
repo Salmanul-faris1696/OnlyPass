@@ -10,10 +10,13 @@ import { NavLink, useLocation } from 'react-router-dom';
 import image1 from '../../../public/javad.jpg';
 import { useEffect, useState } from 'react';
 import { TbHexagonPlus } from 'react-icons/tb';
+import {  Modal } from 'antd';
+import Form from '../Pages/Form';
 
 const Sidebar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState({ id: '0', open: false });
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openSubMenu = (id: string) => {
     setSelectedItem({
@@ -317,8 +320,20 @@ const Sidebar = () => {
               {location.pathname.startsWith(it.path) &&
                 it.subMenu &&
                 it.subMenu.map((subMenuItem: any) => (
-                  <NavLink
-                    to={subMenuItem.path}
+                  // <NavLink
+                  //   to={subMenuItem.path}
+                  //   key={subMenuItem.id}
+                  //   className={`bg-slate-100 p-3 mt-1 ml-10 font-name text-md  items-center  gap-3 rounded-md  ${
+                  //     selectedItem.id === it.id && selectedItem.open === true ? 'flex ' : 'hidden '
+                  //   } `}
+                  // >
+                  //   <div className="flex gap-3 items-center">
+                  //     {subMenuItem.subIcon}
+                  //     <h1>{subMenuItem.name}</h1>
+                  //   </div>
+                  // </NavLink>
+                  <div
+                    onClick={()=> subMenuItem.name === 'Add Facility'? setIsModalOpen(true): setIsModalOpen(false) }
                     key={subMenuItem.id}
                     className={`bg-slate-100 p-3 mt-1 ml-10 font-name text-md  items-center  gap-3 rounded-md  ${
                       selectedItem.id === it.id && selectedItem.open === true ? 'flex ' : 'hidden '
@@ -328,7 +343,7 @@ const Sidebar = () => {
                       {subMenuItem.subIcon}
                       <h1>{subMenuItem.name}</h1>
                     </div>
-                  </NavLink>
+                  </div>
                 ))}
             </div>
           ))}
@@ -348,6 +363,13 @@ const Sidebar = () => {
             </span>
           </div>
         </div>
+      </div>
+
+      <div className='modalForForm  ]'>
+        <Modal title="Basic Modal"  className="" width={700} open={isModalOpen} onCancel={()=> setIsModalOpen(false)} footer = {false}>
+        <Form/>
+      </Modal>
+
       </div>
     </div>
   );

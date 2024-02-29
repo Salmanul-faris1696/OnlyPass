@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import buttonReducer from '../Redux/Features/ButtonSlice';
 import facilityReducer from '../Redux/Features/FacilityFeature/FacilititySlice';
-import editBtnReducer from '../Redux/Features/EditFacilityBtn';
+import updateBtnReducer from './Features/updateFacilityBtn';
 
 export const store = configureStore({
   reducer: {
     button: buttonReducer,
     facility: facilityReducer,
-    editFacilities: editBtnReducer
+    updateFacilities: updateBtnReducer 
   }
 });
 

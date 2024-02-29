@@ -7,7 +7,7 @@ const FDlocationInfo = ({data , mainData , refetch} :any) => {
   const [locationModalOPen, setLocationModalOpen] = useState(false);
   return <div>
 
-    <div className="Location">
+    <div className="Location p-3 w-full">
              <div className=" flex  justify-between items-center font-semibold">
                <div>
                  <h1>Location</h1>
@@ -50,7 +50,6 @@ const FDlocationInfo = ({data , mainData , refetch} :any) => {
        >
          <UpdateLocation
            facilityData={mainData?.data}
-           refetch={() => refetch()}
            cancel={() => setLocationModalOpen(false)}
          />
        </Modal>

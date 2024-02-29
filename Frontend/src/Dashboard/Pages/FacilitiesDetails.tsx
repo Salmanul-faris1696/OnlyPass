@@ -11,6 +11,9 @@ import FDequipmentsInfo from '../components/FD data components/FDequipmentsInfo'
 import { ApiClientPrivate } from '../../utils/axios';
 import { useQuery } from 'react-query';
 import {  useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../Redux/hooks';
+import { useEffect } from 'react';
+import { setAmenitiesUpdateBtn, setBasicUpdateBtn, setEquipmentUpdateBtn, setLocationUpdateBtn, setMembershipUpdateBtn, setTimeUpdatebtn } from '../Redux/Features/updateFacilityBtn';
 
 const FacilitiesDetails: React.FC = () => {
   const details = [
@@ -33,8 +36,13 @@ const FacilitiesDetails: React.FC = () => {
       percentage1: '39'
     }
   ];
-  
 
+  const dispatch = useAppDispatch()
+  
+  const { basicUpdateBtn, locationUpdateBtn, membershipUpdatebtn, timeUpdatebtn, amenitiesUpdateBtn, EquipmentUpdateBtn } = useAppSelector((state) => state.updateFacilities);
+  
+  console.log("redux>>>>>>>>:", basicUpdateBtn);
+  
 
   const { id } = useParams();
   const fetchFacilityData = () => {
@@ -43,7 +51,44 @@ const FacilitiesDetails: React.FC = () => {
 
   const { isLoading, data: mainData, refetch } = useQuery('fetchData', fetchFacilityData);
   
-  console.log(">>>log1" ,mainData);
+  // console.log(">>>log1" ,mainData);
+
+useEffect(() => {
+  const fetchData = async () => {
+    if (basicUpdateBtn) {
+      await refetch();
+      dispatch(setBasicUpdateBtn(false));
+    }
+    
+    if (locationUpdateBtn) {
+      await refetch();
+      dispatch(setLocationUpdateBtn(false));
+    }
+
+    if (membershipUpdatebtn) {
+      await refetch();
+      dispatch(setMembershipUpdateBtn(false));
+    }
+
+    if (timeUpdatebtn) {
+      await refetch();
+      dispatch(setTimeUpdatebtn(false));
+    }
+
+    if (amenitiesUpdateBtn) {
+      await refetch();
+      dispatch(setAmenitiesUpdateBtn(false));
+    }
+
+    if (EquipmentUpdateBtn) {
+      await refetch();
+      dispatch(setEquipmentUpdateBtn(false));
+    }
+  };
+
+  fetchData();
+}, [basicUpdateBtn, locationUpdateBtn, membershipUpdatebtn, timeUpdatebtn, amenitiesUpdateBtn, EquipmentUpdateBtn, refetch, dispatch]);
+
   
 
   const data = !isLoading ? [
@@ -172,28 +217,40 @@ const FacilitiesDetails: React.FC = () => {
 
           <div className='flex gap-5'>
             <div className="components_div w-full h-screen overflow-y-scroll ">
-              <div id='basicInfo'> 
-                <FDbasicInfo data={data} mainData ={mainData} refetch={refetch()}  />
+              <div id='basicInfo' className='mb-5'> 
+                <FDbasicInfo data={data} mainData={mainData}
+                  // refetch={refetch()}
+                />
               </div>
 
-              <div id='location'>
-                  <FDlocationInfo data={data2} mainData ={mainData} refetch={refetch()} />  
+              <div id='location'  className='mb-10'>
+                  <FDlocationInfo data={data2} mainData ={mainData} 
+                  // refetch={refetch()}
+                   />  
               </div>
 
-              <div id='membership'>
-                <FDmembershipInfo mainData = {mainData} refetch={refetch()} />
+              <div id='membership' className='mb-10'>
+                <FDmembershipInfo mainData = {mainData} 
+                // refetch={refetch()}
+                 />
               </div>
 
-              <div id='time'>
-                 <FDtimeInfo mainData = {mainData} refetch={refetch()}/>
+              <div id='time' className='mb-10'>
+                 <FDtimeInfo mainData = {mainData} 
+                //  refetch={refetch()}
+                 />
               </div>
 
-              <div id='amenities'>
-                  <FDamenitiesInfo mainData = {mainData} refetch={refetch()} />
+              <div id='amenities ' className='mb-10'>
+                  <FDamenitiesInfo mainData = {mainData} 
+                  // refetch={refetch()}
+                   />
               </div>
 
-              <div id='equipment'>
-                 <FDequipmentsInfo  mainData = {mainData} refetch={refetch()} />
+              <div id='equipment' className='mb-10'>
+                 <FDequipmentsInfo  mainData = {mainData} 
+                //  refetch={refetch()}
+                  />
               </div>
 
 

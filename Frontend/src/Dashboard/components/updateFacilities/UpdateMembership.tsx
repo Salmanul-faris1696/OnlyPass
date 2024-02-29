@@ -1,6 +1,8 @@
 import { Button, Checkbox, Form, Input, InputNumber, Select } from 'antd';
 import { useEffect, useState } from 'react';
 import { ApiClientPrivate } from '../../../utils/axios';
+import { setMembershipUpdateBtn } from '../../Redux/Features/updateFacilityBtn';
+import { useAppDispatch } from '../../Redux/hooks';
 
 interface CheckedState {
   admission_fee: boolean;
@@ -12,6 +14,8 @@ interface CheckedState {
 }
 export const UpdateMembership = (props: any) => {
   const [form] = Form.useForm();
+    const dispatch = useAppDispatch()
+
 
   const handleUpdate = async () => {
     try {
@@ -22,7 +26,8 @@ export const UpdateMembership = (props: any) => {
       await ApiClientPrivate.put(`facilities/update/${id}`, values);
       // You may want to handle success, close modal, or update the Redux state accordingly
       props.cancel();
-      props.refetch();
+            dispatch(setMembershipUpdateBtn(true))
+
     } catch (error) {
       console.error('Error updating facility:', error);
       // Handle error appropriately
@@ -30,12 +35,12 @@ export const UpdateMembership = (props: any) => {
   };
 
   const [checkedState, setCheckedState] = useState<CheckedState>({
-    admission_fee: props.facilityData.admission_fee !== 0 ? true : false,
-    daily_pass: props.facilityData.daily_pass !== 0 ? true : false,
-    monthly_pass: props.facilityData.monthly_pass !== 0 ? true : false,
-    threeMonth_pass: props.facilityData.threeMonth_pass !== 0 ? true : false,
-    sixMonth_pass: props.facilityData.sixMonth_pass !== 0 ? true : false,
-    annual_pass: props.facilityData.annual_pass !== 0 ? true : false
+    admission_fee: props.facilityData.admission_fee !== 0 || null ? true : false,
+    daily_pass: props.facilityData.daily_pass !== 0 || null ?  true : false,
+    monthly_pass: props.facilityData.monthly_pass !== 0 || null ? true : false,
+    threeMonth_pass: props.facilityData.threeMonth_pass !== 0 || null ? true : false,
+    sixMonth_pass: props.facilityData.sixMonth_pass !== 0 || null ? true : false,
+    annual_pass: props.facilityData.annual_pass !== 0 || null ? true : false
   });
 
   console.log(checkedState);
@@ -82,14 +87,14 @@ export const UpdateMembership = (props: any) => {
     if (checked === false) {
       console.log({ name });
 
-      form.setFieldsValue({
-        admission_fee: name === 'admission_fee' ? null : props.facilityData.admission_fee,
-        daily_pass: name === 'daily_pass' ? null : props.facilityData.daily_pass,
-        monthly_pass: name === 'monthly_pass' ? null : props.facilityData.monthly_pass,
-        threeMonth_pass: name === 'threeMonth_pass' ? null : props.facilityData.threeMonth_pass,
-        sixMonth_pass: name === 'sixMonth_pass' ? null : props.facilityData.sixMonth_pass,
-        annual_pass: name === 'annual_pass' ? null : props.facilityData.annual_pass
-      });
+      // form.setFieldsValue({
+      //   admission_fee: name === 'admission_fee' ? null : props.facilityData.admission_fee,
+      //   daily_pass: name === 'daily_pass' ? null : props.facilityData.daily_pass,
+      //   monthly_pass: name === 'monthly_pass' ? null : props.facilityData.monthly_pass,
+      //   threeMonth_pass: name === 'threeMonth_pass' ? null : props.facilityData.threeMonth_pass,
+      //   sixMonth_pass: name === 'sixMonth_pass' ? null : props.facilityData.sixMonth_pass,
+      //   annual_pass: name === 'annual_pass' ? null : props.facilityData.annual_pass
+      // });
     }
     console.log(form.getFieldValue('admission_fee'));
   };

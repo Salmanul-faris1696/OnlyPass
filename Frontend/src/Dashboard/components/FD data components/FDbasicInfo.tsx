@@ -14,9 +14,9 @@ const FDbasicInfo = ({ data, mainData,refetch }: any) => {
 	<div>
 	
        <div className="md:flex sm:px-10 md:px-1">
-         <div className=" p-3 ">
-           <div className="basic_info">
-             <div className=" flex justify-between items-center font-semibold">
+         <div className=" p-3 w-full ">
+           <div className="basic_info ">
+             <div className=" flex justify-between items-center font-semibold ">
                <div>
                  <h1>Basic information</h1>
                </div>
@@ -89,7 +89,6 @@ const FDbasicInfo = ({ data, mainData,refetch }: any) => {
        >
          <UpdateBasicInfo
            facilityData={mainData?.data}
-           refetch={() => refetch()}
            cancel={() => setBasicModalOpen(false)}
          />
        </Modal>

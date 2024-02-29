@@ -5,6 +5,8 @@ import { ApiClientPrivate } from '../../../utils/axios';
 import { useState } from 'react';
 import { dataImages, dataLogo } from '../../../utils/urls';
 import { useDebounce } from '../../../Hook/CustomHook';
+import { useAppDispatch } from '../../Redux/hooks';
+import { setBasicUpdateBtn } from '../../Redux/Features/updateFacilityBtn';
 
 export default function UpdateBasicInfo(props: any) {
   const [facilityImages, setFacilityImages] = useState(props.facilityData.images);
@@ -34,6 +36,7 @@ export default function UpdateBasicInfo(props: any) {
       : []
   );
   const [form] = Form.useForm();
+  const dispatch = useAppDispatch()
 
   // console.log("fadRfdf:", );
   form.setFieldsValue({
@@ -61,7 +64,9 @@ export default function UpdateBasicInfo(props: any) {
       await ApiClientPrivate.put(`facilities/update/${id}`, values);
       // You may want to handle success, close modal, or update the Redux state accordingly
       props.cancel();
-      props.refetch();
+      dispatch(setBasicUpdateBtn(true))
+
+      // props.refetch();
     } catch (error) {
       console.error('Error updating facility:', error);
       // Handle error appropriately

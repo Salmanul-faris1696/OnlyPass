@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
 import { ApiClientPrivate } from '../../../utils/axios';
 import { Button, Checkbox } from 'antd';
+import { setAmenitiesUpdateBtn } from '../../Redux/Features/updateFacilityBtn';
+import { useAppDispatch } from '../../Redux/hooks';
+import { iconURL } from '../../../utils/urls';
 
 interface Amenity {
   key: string;
   name: string;
   _id: string;
+  icon:string
 }
 
 const UpdateAmenities = (props: any) => {
@@ -23,6 +27,10 @@ const UpdateAmenities = (props: any) => {
   });
 
   const [amentyData, setAmentyData] = useState<Amenity[]>([]);
+  const dispatch = useAppDispatch()
+  console.log(".." , amentyData);
+  
+
 
   const fetchData = async () => {
     try {
@@ -58,22 +66,27 @@ const UpdateAmenities = (props: any) => {
   console.log('selected Type :', selectedTypes);
   console.log('amentyData :', amentyData);
 
-  const handleUpdate = async () => {
-    try {
-      const id = props.facilityData._id; // Replace with your actual identifier
-      const updates = Object.keys(selectedTypes).map((name) => ({
-        amenities_name: name,
-        isPaid: selectedTypes[name]
+const handleUpdate = async () => {
+  try {
+    const id = props.facilityData._id;
+    const updates = amentyData
+      .filter((item) => selectedTypes.hasOwnProperty(item.name))
+      .map((item) => ({
+        amenities_name: item.name,
+        isPaid: selectedTypes[item.name],
+        iconUrl: item.icon,
       }));
-      await ApiClientPrivate.put(`facilities/update/${id}`, { amenities: updates });
-      // Dispatch action to update Redux state
-      props.cancel();
-      props.refetch();
-    } catch (error) {
-      console.error('Error updating facility:', error);
-      // Handle error appropriately
-    }
-  };
+
+    await ApiClientPrivate.put(`facilities/update/${id}`, { amenities: updates });
+
+    // Dispatch action to update Redux state
+    props.cancel();
+    dispatch(setAmenitiesUpdateBtn(true));
+  } catch (error) {
+    console.error('Error updating facility:', error);
+    // Handle error appropriately
+  }
+};
 
   return (
     <div className="">
@@ -84,7 +97,10 @@ const UpdateAmenities = (props: any) => {
             key={item._id}
             className="amentiesCheckBox flex bg-white mb-3 rounded-md shadow-md p-4 justify-between hover:bg-slate-100"
           >
-            <div className="w-[150px] md:w-[200px] flex items-center gap-3">{item.name}</div>
+            <div className="w-[150px] md:w-[200px] flex items-center gap-3">
+              <img src={`${iconURL}/${item.icon }`} alt="" className="w-5" />
+              {item.name}
+            </div>
             <div className="flex items-center gap-3 ">
               <div className="PaidSection">Free</div>
               <Checkbox

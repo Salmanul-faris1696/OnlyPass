@@ -8,6 +8,7 @@ import { SwitchHoliday, TimeEvening, TimeMorning } from '../TimeTable';
 import { IoMdColorFill } from 'react-icons/io';
 import { ApiClientPrivate } from '../../../utils/axios';
 import { useEffect } from 'react';
+import { setTimeUpdatebtn } from '../../Redux/Features/updateFacilityBtn';
 
 const UpdateTime = (props: any) => {
   const dispatch = useAppDispatch();
@@ -27,9 +28,10 @@ const UpdateTime = (props: any) => {
       const id = props.facilityData._id;
       await ApiClientPrivate.put(`facilities/update/${id}`, { facilityTiming: facilityTiming });
       props.cancel();
-      props.refetch();
+         dispatch(setTimeUpdatebtn(true))
+
     } catch (error) {
-      ``;
+      
       alert(error);
     }
   };

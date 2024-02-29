@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { ApiClientPrivate } from '../../../utils/axios';
 import { imaageURL } from '../../../utils/urls';
 import { Button, Checkbox } from 'antd';
+import { setEquipmentUpdateBtn } from '../../Redux/Features/updateFacilityBtn';
+import { useAppDispatch } from '../../Redux/hooks';
 
 interface Equipment {
   _id: string;
@@ -12,6 +14,8 @@ interface Equipment {
 
 const UpdateEquipments = (props: any) => {
   const [equipmentsData, setEquipmentsData] = useState<Equipment[]>([]);
+    const dispatch = useAppDispatch()
+
 
   const fetchData = async () => {
     try {
@@ -62,7 +66,8 @@ const UpdateEquipments = (props: any) => {
 
       // Dispatch action to update Redux state or perform other necessary operations
       props.cancel();
-      props.refetch();
+         dispatch(setEquipmentUpdateBtn(true))
+
     } catch (error) {
       console.error('Error updating facility:', error);
       // Handle error appropriately

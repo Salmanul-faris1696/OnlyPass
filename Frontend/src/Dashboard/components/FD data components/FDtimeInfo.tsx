@@ -13,14 +13,15 @@ const FDtimeInfo = ({ mainData,refetch }: any) => {
   if(timeModalOpen === false )dispatch(resetFacility())
   return (
     <div>
-     <div className="Time mt-10">
+     <div className="Time p-3 w-full ">
             <div className=" flex  justify-between items-center font-semibold">
               <div className=" mb-2">
                 <h1 className="text-lg pb-2 ">Time</h1>
               </div>
-              <div>
-                <FaEdit onClick={() => setTimeModalOpen(true)} />
-              </div>
+              <div onClick={() => setTimeModalOpen(true)} className='flex items-center gap-1 bg-[#F2F2F2] w-[84px] h-[24px] px-2 justify-center'>
+                 <FaEdit /> 
+				 <p>Edit</p>
+               </div>
             </div>
 
             <div className="timetable ">
@@ -95,7 +96,6 @@ const FDtimeInfo = ({ mainData,refetch }: any) => {
        >
          <UpdateTime
            facilityData={mainData?.data}
-           refetch={() => refetch()}
            cancel={() => setTimeModalOpen(false)}
          />
        </Modal>

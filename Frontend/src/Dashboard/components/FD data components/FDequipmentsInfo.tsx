@@ -7,16 +7,17 @@ import UpdateEquipments from '../updateFacilities/UpdateEquipments';
 const FDequipmentsInfo = ({mainData , refetch} :any) => {
      const [equipmentsModalOpen, setEquipmentsModalOpen] = useState(false);
   return <div>
-     <div className="equipments ">
+     <div className="equipments p-3 w-full">
            <div className=" flex  justify-between items-center font-semibold ">
              <div>
                <h1>Equipments</h1>
              </div>
-             <div>
-               <FaEdit onClick={() => setEquipmentsModalOpen(true)} />
-             </div>
+              <div onClick={() => setEquipmentsModalOpen(true)} className='flex items-center gap-1 bg-[#F2F2F2] w-[84px] h-[24px] px-2 justify-center'>
+                 <FaEdit /> 
+				 <p>Edit</p>
+               </div>
            </div>
-           <div className="p-3 ">
+           <div className="mt-5">
              <div className="   items-center justify-between  mb-4 rounded-md shadow-md p-3">
                {mainData?.data?.equipments?.map((it: any, ind: number) => (
                  <div
@@ -45,7 +46,6 @@ const FDequipmentsInfo = ({mainData , refetch} :any) => {
        >
          <UpdateEquipments
            facilityData={mainData?.data}
-           refetch={() => refetch()}
            cancel={() => setEquipmentsModalOpen(false)}
          />
        </Modal>

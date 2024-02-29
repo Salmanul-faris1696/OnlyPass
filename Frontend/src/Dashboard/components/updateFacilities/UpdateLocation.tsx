@@ -1,9 +1,14 @@
 import { Button, Form, Input } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { ApiClientPrivate } from '../../../utils/axios';
+import { setLocationUpdateBtn } from '../../Redux/Features/updateFacilityBtn';
+import { useAppDispatch } from '../../Redux/hooks';
 
 const UpdateLocation = (props: any) => {
   const [form] = Form.useForm();
+    const dispatch = useAppDispatch()
+
+
 
   const handleUpdate = async () => {
     try {
@@ -14,7 +19,8 @@ const UpdateLocation = (props: any) => {
       await ApiClientPrivate.put(`facilities/update/${id}`, values);
       // You may want to handle success, close modal, or update the Redux state accordingly
       props.cancel();
-      props.refetch();
+      dispatch(setLocationUpdateBtn(true))
+
     } catch (error) {
       console.error('Error updating facility:', error);
       // Handle error appropriately

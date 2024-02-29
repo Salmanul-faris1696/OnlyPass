@@ -24,7 +24,7 @@ import { FaEdit } from 'react-icons/fa';
 
 
 
-const FDmembershipInfo = ({mainData , refetch}:any) => {
+const FDmembershipInfo = ({mainData }:any) => {
 
   const tableData: DataType[] = [
      {
@@ -63,7 +63,7 @@ const FDmembershipInfo = ({mainData , refetch}:any) => {
   const [membershipModalOpen, setMembershipModalOpen] = useState(false);
   return <div>
 
-    <div className="Membership mt-10">
+    <div className="Membership mt-10 p-3 w-full">
              <div className=" flex  justify-between items-center font-semibold ">
                <div>
                  <h1>Membership options</h1>
@@ -124,7 +124,6 @@ const FDmembershipInfo = ({mainData , refetch}:any) => {
        >
          <UpdateMembership
            facilityData={mainData?.data}
-           refetch={() => refetch()}
            cancel={() => setMembershipModalOpen(false)}
          />
        </Modal>

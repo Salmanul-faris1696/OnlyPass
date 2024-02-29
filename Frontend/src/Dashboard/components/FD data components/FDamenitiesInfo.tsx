@@ -39,16 +39,17 @@ const FDamenitiesInfo = ({ mainData, refetch }: any) => {
     paid: amenity.isPaid === 'paid' ? 'Paid' : 'Free'
   }));
   return <div>
-     <div className="Amenities  ">
+     <div className="Amenities p-3 w-full ">
            <div className=" flex  justify-between items-center font-semibold ">
              <div>
                <h1> Amenities</h1>
              </div>
-             <div>
-               <FaEdit onClick={() => setAmenitiesModalOpen(true)} />
-             </div>
+              <div onClick={() => setAmenitiesModalOpen(true)} className='flex items-center gap-1 bg-[#F2F2F2] w-[84px] h-[24px] px-2 justify-center'>
+                 <FaEdit /> 
+				 <p>Edit</p>
+               </div>
            </div>
-           <div className="p-3">
+           <div className=" mt-5">
              <Table columns={columns2} dataSource={amenityTableData} pagination={false} />
            </div>
     </div>
@@ -62,7 +63,6 @@ const FDamenitiesInfo = ({ mainData, refetch }: any) => {
        >
          <UpdateAmenities
            facilityData={mainData?.data}
-           refetch={() => refetch()}
            cancel={() => setAmenitiesModalOpen(false)}
          />
        </Modal>
