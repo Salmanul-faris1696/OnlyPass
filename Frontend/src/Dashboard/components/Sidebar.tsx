@@ -10,13 +10,16 @@ import { NavLink, useLocation } from 'react-router-dom';
 import image1 from '../../../public/javad.jpg';
 import { useEffect, useState } from 'react';
 import { TbHexagonPlus } from 'react-icons/tb';
-import {  Modal } from 'antd';
+import { Modal } from 'antd';
+import { FaMoneyCheckDollar } from "react-icons/fa6";
 import Form from '../Pages/Form';
+import AddMembershipPlans from './AddMembershipPlans';
 
 const Sidebar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState({ id: '0', open: false });
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMembershipModalOpen , setIsMembershipModalOpen] =useState(false)
 
   const openSubMenu = (id: string) => {
     setSelectedItem({
@@ -170,7 +173,8 @@ const Sidebar = () => {
             />
           ),
           path: '/Form'
-        }
+        },
+        
         // Add more submenus as needed
       ]
     },
@@ -228,8 +232,12 @@ const Sidebar = () => {
         />
       ),
       MenuItem: 'Membership Plans',
-      path: '/Membershipplans'
+      path: '/Membershipplans',
     },
+
+
+
+
     {
       id: '8',
       icon: (
@@ -344,6 +352,9 @@ const Sidebar = () => {
                       <h1>{subMenuItem.name}</h1>
                     </div>
                   </div>
+                  
+
+                  
                 ))}
             </div>
           ))}
@@ -371,6 +382,8 @@ const Sidebar = () => {
       </Modal>
 
       </div>
+
+      
     </div>
   );
 };
