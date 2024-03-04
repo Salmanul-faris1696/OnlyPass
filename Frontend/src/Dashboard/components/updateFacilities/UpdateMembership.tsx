@@ -14,8 +14,7 @@ interface CheckedState {
 }
 export const UpdateMembership = (props: any) => {
   const [form] = Form.useForm();
-    const dispatch = useAppDispatch()
-
+  const dispatch = useAppDispatch();
 
   const handleUpdate = async () => {
     try {
@@ -26,8 +25,7 @@ export const UpdateMembership = (props: any) => {
       await ApiClientPrivate.put(`facilities/update/${id}`, values);
       // You may want to handle success, close modal, or update the Redux state accordingly
       props.cancel();
-            dispatch(setMembershipUpdateBtn(true))
-
+      dispatch(setMembershipUpdateBtn(true));
     } catch (error) {
       console.error('Error updating facility:', error);
       // Handle error appropriately
@@ -36,7 +34,7 @@ export const UpdateMembership = (props: any) => {
 
   const [checkedState, setCheckedState] = useState<CheckedState>({
     admission_fee: props.facilityData.admission_fee !== 0 || null ? true : false,
-    daily_pass: props.facilityData.daily_pass !== 0 || null ?  true : false,
+    daily_pass: props.facilityData.daily_pass !== 0 || null ? true : false,
     monthly_pass: props.facilityData.monthly_pass !== 0 || null ? true : false,
     threeMonth_pass: props.facilityData.threeMonth_pass !== 0 || null ? true : false,
     sixMonth_pass: props.facilityData.sixMonth_pass !== 0 || null ? true : false,

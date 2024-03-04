@@ -1,12 +1,12 @@
-import { Button, Form, Input, Radio, Space, Upload } from 'antd';
+import { Button, Form, Input, Radio, Upload } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import TextArea from 'antd/es/input/TextArea';
 
-const AddMembershipPlans = () => {
+const AddPlans = () => {
   return (
     <div className=" ">
       <div className="text-[24px]  mb-10  w-full mt-2">
-        <h1 className="font-medium text-[24px] ">Add a Membership Package</h1>
+        <h1 className="font-medium text-[24px] ">Add a Plan</h1>
       </div>
       <Form
         // form={form}
@@ -22,45 +22,73 @@ const AddMembershipPlans = () => {
             </div>
 
             <div className="font-medium">
-              <div className="category">
+              <div className="Status">
                 <Form.Item
-                  label="Category"
+                  label="Status"
                   className=""
-                  name={'category'}
-                  rules={[{ required: true, message: 'Please Select your Category!' }]}
+                  name={'sts'}
+                  // rules={[{ required: true, message: 'Please Select your Category!' }]}
                 >
                   <Radio.Group name="" defaultValue="B2B">
-                    <Radio value="B2B"> B2B </Radio>
-                    <Radio value="In-App"> In-App </Radio>
+                    <Radio value="enable"> Enable </Radio>
+                    <Radio value="disable"> Disable </Radio>
                   </Radio.Group>
                 </Form.Item>
               </div>
-              <div className="packageName">
+              <div className="PlanName">
                 <Form.Item
-                  label="Package Name"
-                  name={'packageName'}
-                  className="text-left text-[14px]"
+                  label="Plan Name"
+                  name={'planName'}
+                  className="text-left"
                   rules={[{ required: true, message: 'Please Enter Plan Name' }]}
                 >
                   <Input
-                    name="packageName"
+                    name="planName"
                     //   value={reduxState.facilityName}
                     className="md:w-[350px]"
                     placeholder="Enter plan Name"
                   />
                 </Form.Item>
               </div>
-              <div className="slogan">
+              <div className="days">
                 <Form.Item
-                  label="Slogan"
-                  name={'slogan'}
+                  label="No.of Days"
+                  name={'days'}
                   // rules={[{ required: true, message: 'Please enter the slogan ' }]}
                   className="text-[14px]"
                 >
                   <Input
-                    name="slogan"
+                    name="days"
                     className="md:w-[350px]"
-                    placeholder="The text below the plan name"
+                    placeholder="Enter the validity of the package in days "
+                  />
+                </Form.Item>
+              </div>
+              <div className="Accesses">
+                <Form.Item
+                  label="No.of Accesses"
+                  name={'access'}
+                  // rules={[{ required: true, message: 'Please enter the slogan ' }]}
+                  className="text-[14px]"
+                >
+                  <Input
+                    name="access"
+                    className="md:w-[350px]"
+                    placeholder="Number of days x number access per day"
+                  />
+                </Form.Item>
+              </div>
+              <div className="AccessPerDay">
+                <Form.Item
+                  label="No.of Accesses per Day"
+                  name={'accessPerDay'}
+                  // rules={[{ required: true, message: 'Please enter the slogan ' }]}
+                  className="text-[14px]"
+                >
+                  <Input
+                    name="accessPerDay"
+                    className="md:w-[350px]"
+                    placeholder="Enter the validity of the package in days "
                   />
                 </Form.Item>
               </div>
@@ -79,79 +107,56 @@ const AddMembershipPlans = () => {
                   />
                 </Form.Item>
               </div>
-              <div className="Link_Text">
+              <div className="Features">
                 <Form.Item
-                  label="Link Text"
-                  name={'linkText'}
-                  // rules={[{ required: true, message: 'Label text for the link' }]}
-                  className="text-[14px]"
-                >
-                  <Input
-                    name="linktext"
-                    className="md:w-[350px]"
-                    placeholder="Label text for the link"
-                  />
-                </Form.Item>
-              </div>
-              <div className="Link_URL">
-                <Form.Item
-                  label="Link URL"
-                  name={'linkURL'}
-                  // rules={[{ required: true, message: 'Label text for the link' }]}
-                  className="text-[14px]"
-                >
-                  <Input
-                    name="linktext"
-                    className="md:w-[350px]"
-                    placeholder="Link to the particular filter or page"
-                  />
-                </Form.Item>
-              </div>
-              <div className="Tier">
-                <Form.Item
-                  label=" Tier"
+                  label=" Features"
                   className="text-start text-[14px]"
-                  name={'tier'}
-                  rules={[{ required: true, message: 'Please Select your Type!' }]}
+                  name={'features'}
+                  //   rules={[{ required: true, message: '!' }]}
                 >
                   <Radio.Group name="tier">
-                    <Radio value="silver"> Silver </Radio>
-                    <Radio value="gold"> Gold </Radio>
-                    <Radio value="platinum"> Platinum </Radio>
+                    <Radio value="hold"> Hold </Radio>
+                    <Radio value="upgrade"> Upgrade </Radio>
+                    <Radio value="payback"> Payback </Radio>
                   </Radio.Group>
                 </Form.Item>
               </div>
-              <div className="PriceTagText">
-                <Form.Item label="Price Tag Text" className="text-[14px]" name={'PriceTag'}>
-                  <Input name="PriceTag" className="md:w-[350px]" placeholder="Text above price" />
-                </Form.Item>
-              </div>
-              <div className="OriginalPrice">
+              <div className="Amount">
                 <Form.Item
-                  label="Original Price"
+                  label="Amount"
                   className="text-[14px]"
-                  name={'originalPrice'}
-                  rules={[{ required: true, message: 'enter the actual price' }]}
+                  name={'amount'}
+                  rules={[{ required: true, message: 'enter the actual Amount' }]}
                 >
                   <Input
-                    name="OriginalPrice"
+                    name="amount"
                     className="md:w-[350px]"
-                    placeholder="Enter the actual Price"
+                    placeholder="Enter the actual Amount"
                   />
                 </Form.Item>
               </div>
-              <div className="OfferPrice">
+              <div className="OfferAmount">
                 <Form.Item
-                  label="Offer Price"
+                  label="Offer Amount"
                   className="text-[14px]"
-                  name={'offerPrice'}
-                  rules={[{ required: true, message: 'Please enter the Offer Price!' }]}
+                  name={'offerAmount'}
+                  rules={[{ required: true, message: 'Enter Offer Amount' }]}
                 >
                   <Input
-                    name="offerPrice"
+                    name="offerAmount"
                     className="md:w-[350px]"
-                    placeholder="Enter the offer Price"
+                    placeholder="Enter the offer Amount"
                   />
+                </Form.Item>
+              </div>
+              <div className="HelpText">
+                <Form.Item
+                  label="Help Text"
+                  className="text-[14px]"
+                  name={'helpText'}
+                  //   rules={[{ required: true, message: 'Please enter the Offer Price!' }]}
+                >
+                  <Input name="offerPrice" className="md:w-[350px]" placeholder="Need any Help ?" />
                 </Form.Item>
               </div>
               <div className="backgroundImg">
@@ -199,4 +204,4 @@ const AddMembershipPlans = () => {
   );
 };
 
-export default AddMembershipPlans;
+export default AddPlans;

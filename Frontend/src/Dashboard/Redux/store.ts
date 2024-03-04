@@ -7,7 +7,7 @@ export const store = configureStore({
   reducer: {
     button: buttonReducer,
     facility: facilityReducer,
-    updateFacilities: updateBtnReducer 
+    updateFacilities: updateBtnReducer
   }
 });
 

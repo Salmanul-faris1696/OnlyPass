@@ -6,9 +6,7 @@ import { useAppDispatch } from '../../Redux/hooks';
 
 const UpdateLocation = (props: any) => {
   const [form] = Form.useForm();
-    const dispatch = useAppDispatch()
-
-
+  const dispatch = useAppDispatch();
 
   const handleUpdate = async () => {
     try {
@@ -19,8 +17,7 @@ const UpdateLocation = (props: any) => {
       await ApiClientPrivate.put(`facilities/update/${id}`, values);
       // You may want to handle success, close modal, or update the Redux state accordingly
       props.cancel();
-      dispatch(setLocationUpdateBtn(true))
-
+      dispatch(setLocationUpdateBtn(true));
     } catch (error) {
       console.error('Error updating facility:', error);
       // Handle error appropriately

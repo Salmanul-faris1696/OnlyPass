@@ -1,8 +1,6 @@
-:where(.css-dev-only-do-not-override-1qhpsh8).ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector{
-	background:#f2f2f2; 
-	border-radius: 0%;
-	outline: none;
-
+:where(.css-dev-only-do-not-override-1qhpsh8).ant-select-outlined:not(.ant-select-customize-input)
+  .ant-select-selector {
+  background: #f2f2f2;
+  border-radius: 0%;
+  outline: none;
 }
-
-

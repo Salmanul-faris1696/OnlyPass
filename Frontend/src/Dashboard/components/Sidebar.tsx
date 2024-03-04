@@ -170,8 +170,8 @@ const Sidebar = () => {
             />
           ),
           path: '/Form'
-        },
-        
+        }
+
         // Add more submenus as needed
       ]
     },
@@ -229,11 +229,8 @@ const Sidebar = () => {
         />
       ),
       MenuItem: 'Membership ',
-      path: '/MembershipPackages',
+      path: '/MembershipPackages'
     },
-
-
-
 
     {
       id: '8',
@@ -338,7 +335,11 @@ const Sidebar = () => {
                   //   </div>
                   // </NavLink>
                   <div
-                    onClick={()=> subMenuItem.name === 'Add Facility'? setIsModalOpen(true): setIsModalOpen(false) }
+                    onClick={() =>
+                      subMenuItem.name === 'Add Facility'
+                        ? setIsModalOpen(true)
+                        : setIsModalOpen(false)
+                    }
                     key={subMenuItem.id}
                     className={`bg-slate-100 p-3 mt-1 ml-10 font-name text-md  items-center  gap-3 rounded-md  ${
                       selectedItem.id === it.id && selectedItem.open === true ? 'flex ' : 'hidden '
@@ -349,9 +350,6 @@ const Sidebar = () => {
                       <h1>{subMenuItem.name}</h1>
                     </div>
                   </div>
-                  
-
-                  
                 ))}
             </div>
           ))}
@@ -373,14 +371,18 @@ const Sidebar = () => {
         </div>
       </div>
 
-      <div className='modalForForm  ]'>
-        <Modal title="Basic Modal"  className="" width={700} open={isModalOpen} onCancel={()=> setIsModalOpen(false)} footer = {false}>
-        <Form/>
-      </Modal>
-
+      <div className="modalForForm  ]">
+        <Modal
+          title="Basic Modal"
+          className=""
+          width={700}
+          open={isModalOpen}
+          onCancel={() => setIsModalOpen(false)}
+          footer={false}
+        >
+          <Form />
+        </Modal>
       </div>
-
-      
     </div>
   );
 };

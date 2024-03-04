@@ -14,8 +14,7 @@ interface Equipment {
 
 const UpdateEquipments = (props: any) => {
   const [equipmentsData, setEquipmentsData] = useState<Equipment[]>([]);
-    const dispatch = useAppDispatch()
-
+  const dispatch = useAppDispatch();
 
   const fetchData = async () => {
     try {
@@ -66,8 +65,7 @@ const UpdateEquipments = (props: any) => {
 
       // Dispatch action to update Redux state or perform other necessary operations
       props.cancel();
-         dispatch(setEquipmentUpdateBtn(true))
-
+      dispatch(setEquipmentUpdateBtn(true));
     } catch (error) {
       console.error('Error updating facility:', error);
       // Handle error appropriately

@@ -9,7 +9,7 @@ interface Amenity {
   key: string;
   name: string;
   _id: string;
-  icon:string
+  icon: string;
 }
 
 const UpdateAmenities = (props: any) => {
@@ -27,10 +27,8 @@ const UpdateAmenities = (props: any) => {
   });
 
   const [amentyData, setAmentyData] = useState<Amenity[]>([]);
-  const dispatch = useAppDispatch()
-  console.log(".." , amentyData);
-  
-
+  const dispatch = useAppDispatch();
+  console.log('..', amentyData);
 
   const fetchData = async () => {
     try {
@@ -66,27 +64,27 @@ const UpdateAmenities = (props: any) => {
   console.log('selected Type :', selectedTypes);
   console.log('amentyData :', amentyData);
 
-const handleUpdate = async () => {
-  try {
-    const id = props.facilityData._id;
-    const updates = amentyData
-      .filter((item) => selectedTypes.hasOwnProperty(item.name))
-      .map((item) => ({
-        amenities_name: item.name,
-        isPaid: selectedTypes[item.name],
-        iconUrl: item.icon,
-      }));
+  const handleUpdate = async () => {
+    try {
+      const id = props.facilityData._id;
+      const updates = amentyData
+        .filter((item) => selectedTypes.hasOwnProperty(item.name))
+        .map((item) => ({
+          amenities_name: item.name,
+          isPaid: selectedTypes[item.name],
+          iconUrl: item.icon
+        }));
 
-    await ApiClientPrivate.put(`facilities/update/${id}`, { amenities: updates });
+      await ApiClientPrivate.put(`facilities/update/${id}`, { amenities: updates });
 
-    // Dispatch action to update Redux state
-    props.cancel();
-    dispatch(setAmenitiesUpdateBtn(true));
-  } catch (error) {
-    console.error('Error updating facility:', error);
-    // Handle error appropriately
-  }
-};
+      // Dispatch action to update Redux state
+      props.cancel();
+      dispatch(setAmenitiesUpdateBtn(true));
+    } catch (error) {
+      console.error('Error updating facility:', error);
+      // Handle error appropriately
+    }
+  };
 
   return (
     <div className="">
@@ -98,7 +96,7 @@ const handleUpdate = async () => {
             className="amentiesCheckBox flex bg-white mb-3 rounded-md shadow-md p-4 justify-between hover:bg-slate-100"
           >
             <div className="w-[150px] md:w-[200px] flex items-center gap-3">
-              <img src={`${iconURL}/${item.icon }`} alt="" className="w-5" />
+              <img src={`${iconURL}/${item.icon}`} alt="" className="w-5" />
               {item.name}
             </div>
             <div className="flex items-center gap-3 ">

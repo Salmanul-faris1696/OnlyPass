@@ -36,7 +36,7 @@ export default function UpdateBasicInfo(props: any) {
       : []
   );
   const [form] = Form.useForm();
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   // console.log("fadRfdf:", );
   form.setFieldsValue({
@@ -64,7 +64,7 @@ export default function UpdateBasicInfo(props: any) {
       await ApiClientPrivate.put(`facilities/update/${id}`, values);
       // You may want to handle success, close modal, or update the Redux state accordingly
       props.cancel();
-      dispatch(setBasicUpdateBtn(true))
+      dispatch(setBasicUpdateBtn(true));
 
       // props.refetch();
     } catch (error) {

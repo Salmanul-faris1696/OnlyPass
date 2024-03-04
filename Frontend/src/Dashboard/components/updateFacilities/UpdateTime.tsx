@@ -28,10 +28,8 @@ const UpdateTime = (props: any) => {
       const id = props.facilityData._id;
       await ApiClientPrivate.put(`facilities/update/${id}`, { facilityTiming: facilityTiming });
       props.cancel();
-         dispatch(setTimeUpdatebtn(true))
-
+      dispatch(setTimeUpdatebtn(true));
     } catch (error) {
-      
       alert(error);
     }
   };

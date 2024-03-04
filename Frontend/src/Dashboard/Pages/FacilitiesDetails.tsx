@@ -10,10 +10,17 @@ import FDamenitiesInfo from '../components/FD data components/FDamenitiesInfo';
 import FDequipmentsInfo from '../components/FD data components/FDequipmentsInfo';
 import { ApiClientPrivate } from '../../utils/axios';
 import { useQuery } from 'react-query';
-import {  useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../Redux/hooks';
 import { useEffect } from 'react';
-import { setAmenitiesUpdateBtn, setBasicUpdateBtn, setEquipmentUpdateBtn, setLocationUpdateBtn, setMembershipUpdateBtn, setTimeUpdatebtn } from '../Redux/Features/updateFacilityBtn';
+import {
+  setAmenitiesUpdateBtn,
+  setBasicUpdateBtn,
+  setEquipmentUpdateBtn,
+  setLocationUpdateBtn,
+  setMembershipUpdateBtn,
+  setTimeUpdatebtn
+} from '../Redux/Features/updateFacilityBtn';
 
 const FacilitiesDetails: React.FC = () => {
   const details = [
@@ -37,12 +44,18 @@ const FacilitiesDetails: React.FC = () => {
     }
   ];
 
-  const dispatch = useAppDispatch()
-  
-  const { basicUpdateBtn, locationUpdateBtn, membershipUpdatebtn, timeUpdatebtn, amenitiesUpdateBtn, EquipmentUpdateBtn } = useAppSelector((state) => state.updateFacilities);
-  
-  console.log("redux>>>>>>>>:", basicUpdateBtn);
-  
+  const dispatch = useAppDispatch();
+
+  const {
+    basicUpdateBtn,
+    locationUpdateBtn,
+    membershipUpdatebtn,
+    timeUpdatebtn,
+    amenitiesUpdateBtn,
+    EquipmentUpdateBtn
+  } = useAppSelector((state) => state.updateFacilities);
+
+  console.log('redux>>>>>>>>:', basicUpdateBtn);
 
   const { id } = useParams();
   const fetchFacilityData = () => {
@@ -50,146 +63,148 @@ const FacilitiesDetails: React.FC = () => {
   };
 
   const { isLoading, data: mainData, refetch } = useQuery('fetchData', fetchFacilityData);
-  
+
   // console.log(">>>log1" ,mainData);
 
-useEffect(() => {
-  const fetchData = async () => {
-    if (basicUpdateBtn) {
-      await refetch();
-      dispatch(setBasicUpdateBtn(false));
-    }
-    
-    if (locationUpdateBtn) {
-      await refetch();
-      dispatch(setLocationUpdateBtn(false));
-    }
+  useEffect(() => {
+    const fetchData = async () => {
+      if (basicUpdateBtn) {
+        await refetch();
+        dispatch(setBasicUpdateBtn(false));
+      }
 
-    if (membershipUpdatebtn) {
-      await refetch();
-      dispatch(setMembershipUpdateBtn(false));
-    }
+      if (locationUpdateBtn) {
+        await refetch();
+        dispatch(setLocationUpdateBtn(false));
+      }
 
-    if (timeUpdatebtn) {
-      await refetch();
-      dispatch(setTimeUpdatebtn(false));
-    }
+      if (membershipUpdatebtn) {
+        await refetch();
+        dispatch(setMembershipUpdateBtn(false));
+      }
 
-    if (amenitiesUpdateBtn) {
-      await refetch();
-      dispatch(setAmenitiesUpdateBtn(false));
-    }
+      if (timeUpdatebtn) {
+        await refetch();
+        dispatch(setTimeUpdatebtn(false));
+      }
 
-    if (EquipmentUpdateBtn) {
-      await refetch();
-      dispatch(setEquipmentUpdateBtn(false));
-    }
-  };
+      if (amenitiesUpdateBtn) {
+        await refetch();
+        dispatch(setAmenitiesUpdateBtn(false));
+      }
 
-  fetchData();
-}, [basicUpdateBtn, locationUpdateBtn, membershipUpdatebtn, timeUpdatebtn, amenitiesUpdateBtn, EquipmentUpdateBtn, refetch, dispatch]);
+      if (EquipmentUpdateBtn) {
+        await refetch();
+        dispatch(setEquipmentUpdateBtn(false));
+      }
+    };
 
-  
+    fetchData();
+  }, [
+    basicUpdateBtn,
+    locationUpdateBtn,
+    membershipUpdatebtn,
+    timeUpdatebtn,
+    amenitiesUpdateBtn,
+    EquipmentUpdateBtn,
+    refetch,
+    dispatch
+  ]);
 
-  const data = !isLoading ? [
-    {
-      id: 1,
-      label: 'Facility Type ',
-      input: mainData?.data?.facility_type
-    },
-    {
-      id: 2,
-      label: ' Facility Gender ',
-      input: mainData?.data?.gender
-    },
+  const data = !isLoading
+    ? [
+        {
+          id: 1,
+          label: 'Facility Type ',
+          input: mainData?.data?.facility_type
+        },
+        {
+          id: 2,
+          label: ' Facility Gender ',
+          input: mainData?.data?.gender
+        },
 
-    {
-      id: 3,
-      label: 'Facility Name ',
-      input: mainData?.data?.facilityName
-    },
-    {
-      id: 4,
-      label: 'Contact Person',
-      input: mainData?.data?.contactPerson
-    },
-    {
-      id: 5,
-      label: 'Email Address',
-      input: mainData?.data?.emailAddress
-    },
-    {
-      id: 6,
-      label: 'Phone Number',
-      input: mainData?.data?.phoneNumber
-    },
-    {
-      id: 7,
-      label: 'Website URL',
-      input: mainData?.data?.websiteURL
-    }
-  ] : [];
+        {
+          id: 3,
+          label: 'Facility Name ',
+          input: mainData?.data?.facilityName
+        },
+        {
+          id: 4,
+          label: 'Contact Person',
+          input: mainData?.data?.contactPerson
+        },
+        {
+          id: 5,
+          label: 'Email Address',
+          input: mainData?.data?.emailAddress
+        },
+        {
+          id: 6,
+          label: 'Phone Number',
+          input: mainData?.data?.phoneNumber
+        },
+        {
+          id: 7,
+          label: 'Website URL',
+          input: mainData?.data?.websiteURL
+        }
+      ]
+    : [];
 
   const Links = [
     {
       id: 1,
       path: <a href="#basicInfo">Basic Information</a>
-      
     },
     {
       id: 2,
-      path:<a href="#location">Location Information</a>
-      
+      path: <a href="#location">Location Information</a>
     },
     {
       id: 3,
-      path:<a href="#membership">Membership Plans</a>
-      
+      path: <a href="#membership">Membership Plans</a>
     },
     {
       id: 4,
-      path:<a href="#time">Open Hours</a>
-      
+      path: <a href="#time">Open Hours</a>
     },
-     {
+    {
       id: 5,
-      path:<a href="#amenities">Amenities</a>
+      path: <a href="#amenities">Amenities</a>
     },
-     {
+    {
       id: 6,
-      path:<a href="#equipment">equipments</a>
-    },
-    
-
-
-  ]
+      path: <a href="#equipment">equipments</a>
+    }
+  ];
 
   // Location data
 
-   const data2 = [
-     {
-       id: 1,
-       label: 'Pincode',
-       input: mainData?.data?.pin_code
-     },
-     {
-       id: 2,
-       label: 'Country',
-       input: 'India'
-     },
-     {
-       id: 3,
-       label: 'state',
-       input: 'Kerala'
-     },
-     {
-       id: 4,
-       label: 'latitude_longitude',
-       input: mainData?.data?.latitude_longitude
-     }
-   ]; 
+  const data2 = [
+    {
+      id: 1,
+      label: 'Pincode',
+      input: mainData?.data?.pin_code
+    },
+    {
+      id: 2,
+      label: 'Country',
+      input: 'India'
+    },
+    {
+      id: 3,
+      label: 'state',
+      input: 'Kerala'
+    },
+    {
+      id: 4,
+      label: 'latitude_longitude',
+      input: mainData?.data?.latitude_longitude
+    }
+  ];
   return (
-    <div className=''>
+    <div className="">
       <div className=" bg-[#F2F2F2] px-2 sm:px-10 md:px-16 pb-10 ">
         <PageHeader details={details} name={mainData?.data.facilityName} searchHide={true} />
         {/* Table Section */}
@@ -215,61 +230,61 @@ useEffect(() => {
             </div>
           </div>
 
-          <div className='flex gap-5'>
+          <div className="flex gap-5">
             <div className="components_div w-full h-screen overflow-y-scroll ">
-              <div id='basicInfo' className='mb-5'> 
-                <FDbasicInfo data={data} mainData={mainData}
+              <div id="basicInfo" className="mb-5">
+                <FDbasicInfo
+                  data={data}
+                  mainData={mainData}
                   // refetch={refetch()}
                 />
               </div>
 
-              <div id='location'  className='mb-10'>
-                  <FDlocationInfo data={data2} mainData ={mainData} 
+              <div id="location" className="mb-10">
+                <FDlocationInfo
+                  data={data2}
+                  mainData={mainData}
                   // refetch={refetch()}
-                   />  
+                />
               </div>
 
-              <div id='membership' className='mb-10'>
-                <FDmembershipInfo mainData = {mainData} 
-                // refetch={refetch()}
-                 />
-              </div>
-
-              <div id='time' className='mb-10'>
-                 <FDtimeInfo mainData = {mainData} 
-                //  refetch={refetch()}
-                 />
-              </div>
-
-              <div id='amenities ' className='mb-10'>
-                  <FDamenitiesInfo mainData = {mainData} 
+              <div id="membership" className="mb-10">
+                <FDmembershipInfo
+                  mainData={mainData}
                   // refetch={refetch()}
-                   />
+                />
               </div>
 
-              <div id='equipment' className='mb-10'>
-                 <FDequipmentsInfo  mainData = {mainData} 
-                //  refetch={refetch()}
-                  />
+              <div id="time" className="mb-10">
+                <FDtimeInfo
+                  mainData={mainData}
+                  //  refetch={refetch()}
+                />
               </div>
 
+              <div id="amenities " className="mb-10">
+                <FDamenitiesInfo
+                  mainData={mainData}
+                  // refetch={refetch()}
+                />
+              </div>
 
+              <div id="equipment" className="mb-10">
+                <FDequipmentsInfo
+                  mainData={mainData}
+                  //  refetch={refetch()}
+                />
+              </div>
             </div>
-            
-            <div className='Links w-fit'>
-              {
-                Links.map((it) => (
-                  <div className='pl-5 w-[226px] h-[36px] flex items-center justify-start bg-[#F2F2F2] mb-3'>
-                    {it.path} 
-                  </div>
-                )
 
-                )
-              }
-             
+            <div className="Links w-fit">
+              {Links.map((it) => (
+                <div className="pl-5 w-[226px] h-[36px] flex items-center justify-start bg-[#F2F2F2] mb-3">
+                  {it.path}
+                </div>
+              ))}
             </div>
           </div>
-
         </div>
       </div>
     </div>
