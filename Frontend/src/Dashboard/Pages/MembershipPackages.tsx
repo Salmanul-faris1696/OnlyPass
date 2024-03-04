@@ -1,43 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import svg2 from '../../../public/svg2-onlypass.svg';
 import svg3 from '../../../public/svg3-onlypass.svg';
 import svg4 from '../../../public/svg4-onlypass.svg';
 import PageHeader from '../components/PageHeader';
-import { Select, Switch, Table, Tag, Form } from 'antd';
+import { Select, Switch, Table, Tag, Form, Modal } from 'antd';
+import { BiPlus } from "react-icons/bi";
 import '../../App.css'
+import AddMembershipPlans from '../components/AddMembershipPlans';
+import { Link } from 'react-router-dom';
 
-const MembershipPlans: React.FC = () => {
+const MembershipPackages: React.FC = () => {
+   const [isModalOpen, setIsModalOpen] = useState(false);
   const details = [
     {
       icon: svg4,
       head: 'Total Customer',
       value: '5,423',
-      percentage1: '16'
+      percentage: '16'
     },
     {
       icon: svg3,
       head: 'Membership Sold',
       value: '1893',
-      percentage1: '1'
+      percentage: '1'
     },
     {
       icon: svg2,
       head: 'Active Now',
       value: '189',
-      percentage1: '39'
+      percentage: '39'
     }
   ];
 
   const columns = [
     {
-      title: 'Date & Time',
-      dataIndex: 'dateAndTime',
-      key: 'dateAndTime'
+      title: 'Category',
+      dataIndex: 'category',
+      key: 'category'
     },
     {
-      title: 'Plans Name',
-      dataIndex: 'plansName',
-      key: 'plansName'
+      title: 'Package Name',
+      // dataIndex: 'PackageName',
+      key: 'packageName',
+       render: (record: any) => (
+        <Link to={`/Plans/${record._id}`}>{record.PackageName}</Link>
+      )
     },
     {
       title: 'Tier',
@@ -50,72 +57,71 @@ const MembershipPlans: React.FC = () => {
       key: 'description'
     },
     {
-      title: 'Packages',
-      dataIndex: 'packages',
-      key: 'packages'
+      title: 'Plans',
+      dataIndex: 'plans',
+      key: 'plans'
     },
-     {
-      title: 'Category',
-      dataIndex: 'category',
-      key: 'category'
-    },
+     
     {
       title: 'Status',
       key: 'sts',
        render: () => <Switch defaultChecked  className="" />
-    }
+    },
+    {
+      title: 'Congigure',
+      dataIndex: 'configure',
+      key: 'configure'
+    },
+
   ];
   const dummyCustomer = [
     {
       key: 1,
-      dateAndTime: '20/02/2024',
-      plansName: 'Platinum Pass',
+      category:"in-app",
+      PackageName: 'Platinum Pass',
       tier: 'Platinum',
       description: 'Payment received for Platinum  membership (1 month)',
-      packages: '4 Nos.',
-      category:"in-app",
-      // sts: ['Active']
-    },
+      plans: '4 Nos.',
+      // sts: ['Active'],
+     configure: <a href="" className='underline text-blue-500'>setup</a>    },
     {
       key: 2,
-      dateAndTime: '22/02/2024',
-      plansName: 'Gold Pass',
+      category:"in-app",
+      PackageName: 'Gold Pass',
       tier: 'Gold',
       description: 'Payment received for Gold  membership (1 month)',
-      packages: '5 Nos.',
-      category:"in-app",
-      // sts: ['Active']
+      plans: '5 Nos.',
+      // sts: ['Active'],
+      configure: <a href="" className='underline text-blue-500'>setup</a>      
     },
     {
       key: 3,
-      dateAndTime: '5/04/2024',
-      plansName: 'Silver Pass',
+      category:"in-app",
+      PackageName: 'Silver Pass',
       tier: 'silver',
       description: 'Payment received for silver  membership (1 month)',
-      packages: '10 Nos.',
-      category:"in-app",
+      plans: '10 Nos.',
       // sts: ['Active']
-    },
+      configure: <a href="" className='underline text-blue-500'>setup</a>    },
     {
       key: 4,
-      dateAndTime: '20/04/2024',
-      plansName: 'Platinum Pass',
+      category:"in-app",
+      PackageName: 'Platinum Pass',
       tier: 'Platinum',
       description: 'Payment received for Platinum  membership (1 month)',
-      packages: '5 Nos.',
-      category:"in-app",
+      plans: '5 Nos.',
       // sts: ['Active']
+       configure: <a href="" className='underline text-blue-500'>setup</a>
     },
     {
       key: 5,
-      dateAndTime: '17/02/2024',
-      plansName: 'silver Pass',
+      category:"in-app",
+      PackageName: 'silver Pass',
       tier: 'silver',
       description: 'Payment received for silver  membership (1 month)',
-      packages: '4 Nos.',
-      category:"in-app",
+      plans: '4 Nos.',
       // sts: ['Active']
-    },
+      configure: <a href="" className='underline text-blue-500'>setup</a>    },
   ];
   return (
     <div>
@@ -126,9 +132,14 @@ const MembershipPlans: React.FC = () => {
           
           <div className='flex items-center justify-between'>
 
-          <div className="font-bold pb-5 text-lg">
-            <h1>Membership Plans </h1>
-          </div>
+          <div className="font-bold pb-5  flex  items-center gap-5">
+            <h1 className='text-[22px]'>Membership Packages </h1>
+            <div className='bg-black text-white flex items-center gap-2 w-[94px] h-[28px] text-[12px]  justify-center font-normal rounded-sm shadow-lg ' onClick={()=> setIsModalOpen(true)}>
+              <p>Add New</p>
+              <BiPlus  />
+            </div>
+            </div>
+            
 
           <div className='' >
             <Form className='flex items-center gap-28'>
@@ -202,7 +213,10 @@ const MembershipPlans: React.FC = () => {
           </div>
         </div>
       </div>
+       <Modal  title=" " width={700} open={isModalOpen} onCancel={()=> setIsModalOpen(false)} footer = {false}>
+        <AddMembershipPlans/>
+      </Modal>
     </div>
   );
 };
-export default MembershipPlans;
+export default MembershipPackages;

@@ -14,7 +14,8 @@ import FacilitiesDetails from './Dashboard/Pages/FacilitiesDetails.tsx';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import Customer from './Dashboard/Pages/Customer.tsx';
 import Payment from './Dashboard/Pages/Payment.tsx';
-import MembershipPlans from './Dashboard/Pages/MembershipPlans.tsx';
+import MembershipPackages from './Dashboard/Pages/MembershipPackages.tsx';
+import Plans from './Dashboard/Pages/Plans.tsx';
 
 const router = createBrowserRouter([
   {
@@ -46,12 +47,16 @@ const router = createBrowserRouter([
         element: <Payment />
       },
       {
-        path: '/MembershipPlans',
-        element: <MembershipPlans />
+        path: '/MembershipPackages',
+        element: <MembershipPackages />
       },
       {
         path: '/FacilitiesDetails/:id',
         element: <FacilitiesDetails />
+      },
+      {
+        path: '/Plans/:id',
+        element: <Plans />
       }
     ]
   },

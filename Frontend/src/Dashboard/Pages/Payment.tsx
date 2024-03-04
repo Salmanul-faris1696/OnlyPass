@@ -103,19 +103,19 @@ const Payment: React.FC = () => {
       icon: svg4,
       head: 'Total Amount recieved',
       value: '53,423.00',
-      percentage1: '16'
+      percentage: '16'
     },
     {
       icon: svg3,
       head: 'Total Amount Paid',
       value: '18,950',
-      percentage1: '1'
+      percentage: '1'
     },
     {
       icon: svg2,
       head: 'Membership Sold',
       value: '117',
-      percentage1: '39'
+      percentage: '39'
     }
   ];
   return (

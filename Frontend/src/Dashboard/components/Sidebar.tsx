@@ -11,15 +11,12 @@ import image1 from '../../../public/javad.jpg';
 import { useEffect, useState } from 'react';
 import { TbHexagonPlus } from 'react-icons/tb';
 import { Modal } from 'antd';
-import { FaMoneyCheckDollar } from "react-icons/fa6";
 import Form from '../Pages/Form';
-import AddMembershipPlans from './AddMembershipPlans';
 
 const Sidebar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState({ id: '0', open: false });
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isMembershipModalOpen , setIsMembershipModalOpen] =useState(false)
 
   const openSubMenu = (id: string) => {
     setSelectedItem({
@@ -112,14 +109,14 @@ const Sidebar = () => {
       path: '/Equipments'
     },
     {
-      name: 'MembershipPlans',
+      name: 'Membership',
       icon: (
         <CiMoneyCheck1
           size={30}
           className="border-2 border-[#5C5C5C] rounded-md p-[3px] font-extrabold"
         />
       ),
-      path: '/Membershipplans'
+      path: '/MembershipPackages'
     },
     {
       name: 'facilitycategory',
@@ -231,8 +228,8 @@ const Sidebar = () => {
           className="border-2 border-[#5C5C5C] rounded-md p-[3px] font-extrabold"
         />
       ),
-      MenuItem: 'Membership Plans',
-      path: '/Membershipplans',
+      MenuItem: 'Membership ',
+      path: '/MembershipPackages',
     },
 
 

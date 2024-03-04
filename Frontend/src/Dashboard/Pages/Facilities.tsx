@@ -53,6 +53,7 @@ const Facilities: React.FC = () => {
       title: 'Facilities',
       key: 'facilityName',
       render: (record: any) => (
+    
         <Link to={`/FacilitiesDetails/${record._id}`}>{record.facilityName}</Link>
       )
     },
@@ -84,19 +85,19 @@ const Facilities: React.FC = () => {
       icon: svg1,
       head: 'Total no.of Facilities',
       value: '1,280',
-      percentage1: '16'
+      percentage: '16'
     },
     {
       icon: svg2,
       head: 'Live with Onlypass',
       value: '1,009',
-      percentage1: '1'
+      percentage: '1'
     },
     {
       icon: svg2,
       head: 'Coverage (kerala)',
       value: '91/1039',
-      percentage1: '39'
+      percentage: '39'
     }
   ];
   return (

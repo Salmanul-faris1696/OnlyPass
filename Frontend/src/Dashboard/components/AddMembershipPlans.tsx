@@ -1,115 +1,127 @@
 import { Button, Form, Input, Radio, Space, Upload } from 'antd';
-import React from 'react'
 import { UploadOutlined } from '@ant-design/icons';
 import TextArea from 'antd/es/input/TextArea';
 
 const AddMembershipPlans = () => {
   return (
- <div className="font-semibold  ">
+    <div className=" ">
+      <div className='text-[24px]  mb-10  w-full mt-2'>
+        <h1 className='font-medium text-[24px] '>Add a Membership Package</h1>
+      </div>
       <Form
         // form={form}
         // onFinish={handleNext}
         // onChange={handleInputChange}
         className=""
-        // labelCol={{ span: 7 }}
+        labelCol={{ span: 7 }}
       >
-        <div>
+        <div className='px-5'>
           <div className="text-start">
-            <div className="font-semibold text-center text-2xl mb-10">
+            <div className="font-semibold  text-[16px] ">
               <h1>Basic Information</h1>
             </div>
-            <Form.Item
-              label="Facility Type :"
-              className="text-left"
-              name={'facility_type'}
-              rules={[{ required: true, message: 'Please Select your Type!' }]}
-            >
-              <Radio.Group name="facility_type" defaultValue="access">
-                <Radio value="access"> Access </Radio>
-                <Radio value="pass"> Pass </Radio>
-              </Radio.Group>
-            </Form.Item>
-          </div>
 
-          <div className="">
-            <Form.Item
-              label="Gender :"
-              className="text-start"
-              name={'gender'}
-              rules={[{ required: true, message: 'Please Select your Type!' }]}
+            <div className='font-medium' >
+            <div className='category'>
+              <Form.Item
+                label="Category"
+                className=""
+                name={'category'}
+                rules={[{ required: true, message: 'Please Select your Category!' }]}
+              >
+                <Radio.Group name="" defaultValue="B2B">
+                  <Radio value="B2B"> B2B </Radio>
+                  <Radio value="In-App"> In-App </Radio>
+                </Radio.Group>
+              </Form.Item>
+            </div>
+            <div className='packageName'>
+              <Form.Item
+              label="Package Name"
+              name={'packageName'}
+              className="text-left text-[14px]"
+              rules={[{ required: true, message: 'Please Enter Plan Name' }]}
             >
-              <Radio.Group name="gender">
-                <Radio value="gents"> Gents </Radio>
-                <Radio value="ladies"> Ladies </Radio>
-                <Radio value="unisex"> Unisex (mixed) </Radio>
-              </Radio.Group>
-            </Form.Item>
-          </div>
-        </div>
-
-        <div>
-          <div>
-            <Form.Item
-              label="Facility Name"
-              name={'facilityName'}
-              className="text-left"
-              rules={[{ required: true, message: 'Please Enter Facilicty name' }]}
-            >
-              <Input name="facilityName" 
-			  
+              <Input name="packageName" 
 							//   value={reduxState.facilityName}
-							  className="md:w-[350px]" />
-            </Form.Item>
-            <Form.Item
-              label="Email"
-              name={'emailAddress'}
-              rules={[{ required: true, message: 'Please Enter Email Address' }]}
-              className=""
+                  className="md:w-[350px]" placeholder="Enter plan Name"/>
+              </Form.Item>
+            </div>
+            <div className='slogan'>
+              <Form.Item
+              label="Slogan"
+              name={'slogan'}
+              // rules={[{ required: true, message: 'Please enter the slogan ' }]}
+              className="text-[14px]"
             >
-              <Input name="emailAddress" className="md:w-[350px]" />
-            </Form.Item>
-            <Form.Item
-              label="Contact Person"
-              name={'contactPerson'}
-              rules={[{ required: true, message: 'Please Enter Contact person name' }]}
+              <Input name="slogan" className="md:w-[350px]" placeholder="The text below the plan name" />
+              </Form.Item>
+            </div>
+            <div className='Description'>
+              <Form.Item
+              label="Description"
+              name={'description'}
+              // rules={[{ min: 10, max: 100, message: 'Description must be at most 100 characters' }]}
             >
-              <Input name="contactPerson" className="md:w-[350px]" />
+              <TextArea name="description" rows={4} className="w-[350px] text-[14px]" maxLength={150} placeholder='Describe the facility in fewer than 100 characters'/>
             </Form.Item>
-            <Form.Item
-              label=" Phone No "
-              name={'phoneNumber'}
-              rules={[
-                { required: true, message: 'Please enter phone number' },
-                { pattern: /^[0-9]+$/, message: 'Please enter valid phone number' },
-                { min: 10, message: 'Phone number must be at least 10 digits' },
-                { max: 10, message: 'Phone number must be at most 10 digits' }
-              ]}
-              className="text-left"
+            </div>
+            <div className='Link_Text'>
+              <Form.Item
+              label="Link Text"
+              name={'linkText'}
+                // rules={[{ required: true, message: 'Label text for the link' }]}
+              className='text-[14px]'
             >
-              <Space.Compact className="md:w-[350px]">
-                <Input
-                  type="tel"
-                  name="phonCode"
-                  className="w-[15%]"
-                  defaultValue={'+91'}
-                  disabled
-                />
-                <Input
-                  type="tel"
-                  name="phoneNumber"
-                  className="w-[85%]"
-                //   value={reduxState.phoneNumber}
-                  maxLength={10}
-                />
-              </Space.Compact>
+              <Input name="linktext" className="md:w-[350px]"  placeholder ="Label text for the link"/>
             </Form.Item>
+            </div>
+            <div className='Link_URL'>
+              <Form.Item
+              label="Link URL"
+              name={'linkURL'}
+                // rules={[{ required: true, message: 'Label text for the link' }]}
+              className='text-[14px]'
+            >
+              <Input name="linktext" className="md:w-[350px]"  placeholder ="Link to the particular filter or page"/>
+            </Form.Item>
+            </div>
+            <div className='Tier'>
+              <Form.Item
+              label=" Tier"
+              className="text-start text-[14px]"
+              name={'tier'}
+              rules={[{ required: true, message: 'Please Select your Type!' }]}
+            >
+              <Radio.Group name="tier">
+                <Radio value="silver"> Silver </Radio>
+                <Radio value="gold"> Gold </Radio>
+                <Radio value="platinum"> Platinum </Radio>
+              </Radio.Group>
+            </Form.Item>
+            </div>
+            <div className='PriceTagText'>  
+              <Form.Item label="Price Tag Text" className="text-[14px]" name={'PriceTag'}>
+                <Input name="PriceTag" className="md:w-[350px]" placeholder ="Text above price"/>
+              </Form.Item>
+            </div>
+             <div className='OriginalPrice'>  
+              <Form.Item label="Original Price" className="text-[14px]" name={'originalPrice'}
+               rules={[{ required: true, message: 'enter the actual price' }]}>
+                <Input name="OriginalPrice" className="md:w-[350px]" placeholder ="Enter the actual Price"/>
+              </Form.Item>
+            </div>
+            <div className='OfferPrice'>
+              <Form.Item label="Offer Price" className="text-[14px]" name={'offerPrice'}
+               rules={[{ required: true, message: 'Please enter the Offer Price!' }]}>
+                <Input name="offerPrice" className="md:w-[350px]" placeholder ="Enter the offer Price"/>
+              </Form.Item>
 
-            <Form.Item label="Website url" className="" name={'websiteURL'}>
-              <Input name="websiteURL" className="md:w-[350px]" />
-            </Form.Item>
 
-            <Form.Item label="Logo" name={'logo'}>
-              <div className="w-[200px]">
+            </div>
+            <div className='backgroundImg'>
+              <Form.Item label="Background Images" name={'bgImg'} className='text-[14px]'>
+              <div className="">
                 <Upload
                   maxCount={1}
                   onChange={(e) => {
@@ -121,28 +133,33 @@ const AddMembershipPlans = () => {
                   // fileList={fileList}
 
                 //   defaultFileList={[...fileList]}
-                >
-								  <Button
+                  >
+                    <div className='flex items-center gap-3'>
+                      	  <Button
 									//   disabled={remove === true}
 									  icon={<UploadOutlined />}>
                     Upload
-                  </Button>
+                    </Button>
+                     <h1 className='text-[14px] font-normal text-[#7e7e7e]' >Accepted Formats - JPG , jpeg , png</h1>
+                    </div>
+							
                 </Upload>
               </div>
-            </Form.Item>
+              </Form.Item>
+            </div>
 
-            <Form.Item
-              label="Description"
-              name={'description'}
-              rules={[{ min: 10, max: 100, message: 'Description must be at most 100 characters' }]}
-            >
-              <TextArea name="description" rows={4} className="w-[350px]" maxLength={150} />
-            </Form.Item>
+            </div>
+
           </div>
+
         </div>
         <div className="flex gap-3 justify-center">
-          <Button type="primary" className="bg-blue-600 " htmlType="submit">
-            Next
+          <Button  className="bg-white border-black rounded-none" >
+            Cancel
+          </Button>
+
+           <Button type="primary" className="bg-black text-white  rounded-none" htmlType="submit">
+            Save
           </Button>
         </div>
       </Form>
