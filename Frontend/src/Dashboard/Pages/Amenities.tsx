@@ -1,4 +1,4 @@
-import { Button, Input, Modal, Switch, Table, Upload } from 'antd';
+import { Button, Form, Input, Modal, Switch, Table, Upload } from 'antd';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { PiPlusCircle } from 'react-icons/pi';
 import { ApiClientPrivate } from '../../utils/axios';
@@ -6,7 +6,14 @@ import { MdDeleteForever } from 'react-icons/md';
 import { UploadOutlined } from '@ant-design/icons';
 import { iconURL } from '../../utils/urls';
 import { RiSearchLine } from 'react-icons/ri';
-
+import PageHeader from '../components/PageHeader';
+import svg2 from '../../../public/svg2-onlypass.svg';
+import svg3 from '../../../public/svg3-onlypass.svg';
+import svg4 from '../../../public/svg4-onlypass.svg';
+import { BiPlus } from 'react-icons/bi';
+import AddAmenities from '../components/Addamenities';
+import { FaEdit } from 'react-icons/fa';
+import UpdateAmenities from '../components/UpdateAmenities';
 interface Amenity {
   key: string;
   name: string;
@@ -16,6 +23,7 @@ const Amenities: React.FC = () => {
   const [amentyData, setAmentyData] = useState<Amenity[]>([]);
   const [filteredData, setFilteredData] = useState<Amenity[]>([]);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [isUpdateModalOpen, setisUpdateModalOpen] = useState<boolean>(false);
   const [newAmenityName, setNewAmenityName] = useState<string>('');
   const [newAmenityIcon, setnewAmenityIcon] = useState<File | null>(null);
 
@@ -51,6 +59,27 @@ const Amenities: React.FC = () => {
     console.log(`switch to ${checked}`);
   };
 
+  const details = [
+    {
+      icon: svg4,
+      head: 'Total Customer',
+      value: '5,423',
+      percentage: '16'
+    },
+    {
+      icon: svg3,
+      head: 'Membership Sold',
+      value: '1893',
+      percentage: '1'
+    },
+    {
+      icon: svg2,
+      head: 'Active Now',
+      value: '189',
+      percentage: '39'
+    }
+  ];
+
   const columns = [
     {
       title: 's.No',
@@ -62,7 +91,7 @@ const Amenities: React.FC = () => {
       title: 'Name',
       // dataIndex: 'name',
       key: 'name',
-      // width: 250,
+      width: 200,
       render: (record: any) => (
         <div className="flex items-center gap-3">
           <img src={`${iconURL}/${record.icon} `} alt={record} style={{ width: '25px' }} />
@@ -71,12 +100,27 @@ const Amenities: React.FC = () => {
       )
     },
     {
-      title: 'Enable/ Disable',
+      title: 'Descriptions',
+      dataIndex: 'descriptions',
+      key: 'descriptions'
+    },
+    {
+      title: 'Status',
       width: 150,
       key: 'action',
       render: () => (
         <div className="flex items-center justify-center">
           <Switch size="small" defaultChecked onChange={onChange} />
+        </div>
+      )
+    },
+    {
+      title: 'Options',
+      width: 150,
+      key: 'action',
+      render: () => (
+        <div className="flex items-center gap-2 " onClick={() => setisUpdateModalOpen(true)}>
+          Edit <FaEdit />
         </div>
       )
     },
@@ -157,72 +201,65 @@ const Amenities: React.FC = () => {
 
   return (
     <div className="bg-[#F2F2F2] px-16 pb-10">
-      {/* header-Section */}
-      <div className="headerSection ">
-        <div className=" py-10 text-3xl font-semibold flex justify-between ">
-          <h1>Amenities</h1>
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search"
-              onChange={onChangeSearch}
-              className="lg:w-[500px] w-[250px] h-[40px] text-sm pl-8 outline-none"
-            />
-            <div className="absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none">
-              <RiSearchLine className="text-gray-500" size={18} />
+      <PageHeader details={details} name={'Amenities'} searchFunction={onChangeSearch} />
+      {/* table-Secion */}
+      <div className="bg-white">
+        <div className="section1 flex items-center gap-1 lg:gap-5 h-[70px] py-16 px-3   ">
+          <div className="heading font-bold  text-[20px] lg:text-[22px]">
+            <h1>Amenities List </h1>
+          </div>
+          <div className="buttonDev">
+            <div
+              className="bg-black text-white flex items-center gap-2 w-[94px] h-[28px] text-[12px]  justify-center font-normal rounded-sm shadow-lg "
+              onClick={showModal}
+            >
+              <p>Add New</p>
+              <BiPlus />
             </div>
           </div>
-          <div className="bg-black w-fit text-white text-sm flex p-2 rounded-lg hover:shadow-lg">
-            <button className="md:flex md:items-center gap-2 hidden " onClick={showModal}>
-              <PiPlusCircle size={20} /> New Amenities
-            </button>
-            <button className="items-center md:hidden " onClick={showModal}>
-              <PiPlusCircle size={20} />
-            </button>
-          </div>
         </div>
-      </div>
-      {/* table-Secion */}
-      <div>
         <Table
           columns={columns}
           dataSource={tableData} // Use filteredData instead of amentyData
           pagination={{ pageSize: 10 }}
-          className="m-3 p-2  shadow-lg "
+          className="  shadow-lg "
         />
       </div>
 
       <Modal
-        title="Add New Amenity"
+        title=""
         open={isModalVisible}
         onCancel={handleCancel}
         footer={[
-          <Button
+          <div>
+            {/* <Button 
             key="add"
-            type="primary"
-            onClick={handleAddAmenity}
-            disabled={!newAmenityName.trim()}
-            className="bg-blue-500"
-          >
-            Add
-          </Button>
+            onClick={handleCancel}
+          
+            className="bg-white text-balck  rounded-none"
+          >Cancel</Button> */}
+
+            <Button
+              key="cancel"
+              onClick={handleAddAmenity}
+              disabled={!newAmenityName.trim()}
+              className="bg-black  text-white rounded-none"
+            >
+              Add
+            </Button>
+          </div>
         ]}
       >
-        <Input
-          placeholder="Enter Amenity Name"
-          onChange={(e) => setNewAmenityName(e.target.value)}
-          value={newAmenityName}
-          className="mb-3"
+        <AddAmenities
+          newAmenityName={newAmenityName}
+          onAmenityChange={onAmenityChange}
+          setNewAmenityName={setNewAmenityName}
         />
+      </Modal>
 
-        <Upload
-          name="amenityicon"
-          showUploadList={false}
-          beforeUpload={() => false}
-          onChange={onAmenityChange}
-        >
-          <Button icon={<UploadOutlined />}>Upload Image</Button>
-        </Upload>
+      {/* edit modal */}
+      <Modal title="" open={isUpdateModalOpen} onCancel={handleCancel} footer={false}>
+        <UpdateAmenities />
       </Modal>
     </div>
   );

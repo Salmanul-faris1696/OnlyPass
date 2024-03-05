@@ -165,7 +165,7 @@ const BasicInfo = () => {
       >
         <div>
           <div className="text-start">
-            <div className="font-semibold text-center text-2xl mb-10">
+            <div className="font-semibold  text-xl mb-10">
               <h1>Basic Information</h1>
             </div>
             <Form.Item
@@ -174,7 +174,11 @@ const BasicInfo = () => {
               name={'facility_type'}
               rules={[{ required: true, message: 'Please Select your Type!' }]}
             >
-              <Radio.Group name="facility_type" defaultValue="access">
+              <Radio.Group
+                name="facility_type"
+                defaultValue="access"
+                className="custom-radio-group"
+              >
                 <Radio value="access"> Access </Radio>
                 <Radio value="pass"> Pass </Radio>
               </Radio.Group>
@@ -188,7 +192,7 @@ const BasicInfo = () => {
               name={'gender'}
               rules={[{ required: true, message: 'Please Select your Type!' }]}
             >
-              <Radio.Group name="gender">
+              <Radio.Group name="gender" className="custom-radio-group">
                 <Radio value="gents"> Gents </Radio>
                 <Radio value="ladies"> Ladies </Radio>
                 <Radio value="unisex"> Unisex (mixed) </Radio>
@@ -300,7 +304,7 @@ const BasicInfo = () => {
           </div>
         </div>
         <div className="flex gap-3 justify-center">
-          <Button type="primary" className="bg-blue-600 " htmlType="submit">
+          <Button className="bg-black text-white rounded-none" htmlType="submit">
             Next
           </Button>
         </div>

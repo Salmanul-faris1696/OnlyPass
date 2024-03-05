@@ -185,10 +185,10 @@ const Membership = () => {
           />
         </Form.Item>
         <div className="flex gap-3 justify-center ">
-          <Button type="primary" className="bg-blue-600 " htmlType="submit">
+          <Button className="bg-black rounded-none text-white " htmlType="submit">
             Next
           </Button>
-          <Button className="bg-white " onClick={handlePrevious}>
+          <Button className="bg-white rounded-none " onClick={handlePrevious}>
             Previous
           </Button>
         </div>

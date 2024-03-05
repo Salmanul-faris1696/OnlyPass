@@ -9,7 +9,7 @@ import Equipments from './Dashboard/Pages/Equipments.tsx';
 import Facilities from './Dashboard/Pages/Facilities.tsx';
 import { Provider } from 'react-redux';
 import { store } from './Dashboard/Redux/store.ts';
-import Form from './Dashboard/Pages/Form.tsx';
+import Form from './Dashboard/Pages/Forms.tsx';
 import FacilitiesDetails from './Dashboard/Pages/FacilitiesDetails.tsx';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import Customer from './Dashboard/Pages/Customer.tsx';

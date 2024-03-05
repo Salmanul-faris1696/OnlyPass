@@ -10,13 +10,14 @@ import { NavLink, useLocation } from 'react-router-dom';
 import image1 from '../../../public/javad.jpg';
 import { useEffect, useState } from 'react';
 import { TbHexagonPlus } from 'react-icons/tb';
+import { TbCategoryFilled } from 'react-icons/tb';
+import { SiNginxproxymanager } from 'react-icons/si';
 import { Modal } from 'antd';
-import Form from '../Pages/Form';
+import Form from '../Pages/Forms';
 
 const Sidebar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState({ id: '0', open: false });
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openSubMenu = (id: string) => {
     setSelectedItem({
@@ -162,14 +163,25 @@ const Sidebar = () => {
       subMenu: [
         {
           id: '2-1',
-          name: 'Add Facility',
+          name: 'Categories',
           subIcon: (
-            <TbHexagonPlus
-              size={25}
-              className="border-2 border-[#5C5C5C] rounded-md p-[3px] font-extrabold"
+            <TbCategoryFilled
+              size={22}
+              className="border-2 border-[#5C5C5C] rounded-md p-[2px] font-extrabold"
             />
           ),
-          path: '/Form'
+          path: '/facilityCategories' // want to create the page
+        },
+        {
+          id: '2-2',
+          name: 'Tier Management',
+          subIcon: (
+            <SiNginxproxymanager
+              size={22}
+              className="border-2 border-[#5C5C5C] rounded-md p-[2px] font-extrabold"
+            />
+          ),
+          path: '/TierManagement ' // want to create the page
         }
 
         // Add more submenus as needed
@@ -257,7 +269,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <div id="sidebar" className="flex gap-3 h-screen overflow-y-scroll ">
+    <div id="sidebar" className="flex gap-3">
       {/* <<<<<< SIDE MINIMIZE ICON >>>>>>> */}
       <div className={`${sidebarOpen === true ? 'hidden' : 'block'}`}>
         <div className="md:w-24 px-2 md:px-5">
@@ -322,24 +334,8 @@ const Sidebar = () => {
               {location.pathname.startsWith(it.path) &&
                 it.subMenu &&
                 it.subMenu.map((subMenuItem: any) => (
-                  // <NavLink
-                  //   to={subMenuItem.path}
-                  //   key={subMenuItem.id}
-                  //   className={`bg-slate-100 p-3 mt-1 ml-10 font-name text-md  items-center  gap-3 rounded-md  ${
-                  //     selectedItem.id === it.id && selectedItem.open === true ? 'flex ' : 'hidden '
-                  //   } `}
-                  // >
-                  //   <div className="flex gap-3 items-center">
-                  //     {subMenuItem.subIcon}
-                  //     <h1>{subMenuItem.name}</h1>
-                  //   </div>
-                  // </NavLink>
-                  <div
-                    onClick={() =>
-                      subMenuItem.name === 'Add Facility'
-                        ? setIsModalOpen(true)
-                        : setIsModalOpen(false)
-                    }
+                  <NavLink
+                    to={subMenuItem.path}
                     key={subMenuItem.id}
                     className={`bg-slate-100 p-3 mt-1 ml-10 font-name text-md  items-center  gap-3 rounded-md  ${
                       selectedItem.id === it.id && selectedItem.open === true ? 'flex ' : 'hidden '
@@ -349,7 +345,18 @@ const Sidebar = () => {
                       {subMenuItem.subIcon}
                       <h1>{subMenuItem.name}</h1>
                     </div>
-                  </div>
+                  </NavLink>
+                  // <div
+                  //   key={subMenuItem.id}
+                  //   className={`bg-slate-100 p-3 mt-1 ml-10 font-name text-md  items-center  gap-3 rounded-md  ${
+                  //     selectedItem.id === it.id && selectedItem.open === true ? 'flex ' : 'hidden '
+                  //   } `}
+                  // >
+                  //   <div className="flex gap-3 items-center">
+                  //     {subMenuItem.subIcon}
+                  //     <h1>{subMenuItem.name}</h1>
+                  //   </div>
+                  // </div>
                 ))}
             </div>
           ))}
@@ -369,19 +376,6 @@ const Sidebar = () => {
             </span>
           </div>
         </div>
-      </div>
-
-      <div className="modalForForm  ]">
-        <Modal
-          title="Basic Modal"
-          className=""
-          width={700}
-          open={isModalOpen}
-          onCancel={() => setIsModalOpen(false)}
-          footer={false}
-        >
-          <Form />
-        </Modal>
       </div>
     </div>
   );

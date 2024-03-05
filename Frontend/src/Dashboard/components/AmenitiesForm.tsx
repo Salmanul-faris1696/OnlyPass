@@ -103,10 +103,10 @@ const AmenitiesForm = () => {
         </div>
       ))}
       <div className="flex gap-3 justify-center">
-        <Button type="primary" className="bg-blue-600 " onClick={handleNext}>
+        <Button className="bg-black rounded-none text-white " onClick={handleNext}>
           Next
         </Button>
-        <Button className="bg-white " onClick={handlePrevious}>
+        <Button className="bg-white  rounded-none" onClick={handlePrevious}>
           Previous
         </Button>
       </div>

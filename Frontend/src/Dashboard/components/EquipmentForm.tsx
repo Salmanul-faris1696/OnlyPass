@@ -104,10 +104,10 @@ const EquipmentForm = () => {
         </div>
       </div>
       <div className="flex gap-3 justify-center">
-        <Button type="primary" className=" " onClick={handleDone}>
+        <Button type="primary" className="bg-black rounded-none text-white " onClick={handleDone}>
           Done
         </Button>
-        <Button className="bg-white " onClick={handlePrevious}>
+        <Button className="bg-white rounded-none " onClick={handlePrevious}>
           Previous
         </Button>
       </div>

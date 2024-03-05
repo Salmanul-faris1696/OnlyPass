@@ -28,19 +28,15 @@ const steps = [
     title: 'Equipments',
     content: <EquipmentForm />
   }
-  // {
-  //   title: 'Preview',
-  //   content: <Preview/>,
-  // },
 ];
-const Form = () => {
+const Forms = () => {
   const setCurrentStep = useSelector((state: any) => state.button?.currentStep || 0);
   // console.log('Current Step:', setCurrentStep);
   const items = steps.map((item) => ({ key: item.title, title: item.title }));
   return (
     <div className="">
       <div className="step-section ">
-        <Steps current={setCurrentStep} items={items} className="px-5 mt-2" />
+        <Steps current={setCurrentStep} items={items} className="pt-2 mt-2 b" />
         {/* <div className="p-4 m-1 -mt-4 md:m-2 flex  ">
           <Link to={'/Facilities'} className="flex items-center gap-4">
             <button className="p-3 bg-gray-100 text-balck   rounded-full md:rounded-md ">
@@ -50,7 +46,7 @@ const Form = () => {
           </Link>
         </div> */}
 
-        <div className="mx-auto w-[500px] m-7 md:w-[600px] bg-gray-100  p-5 rounded-lg ">
+        <div className="mx-auto w-[500px] m-7 md:w-[600px]     rounded-lg ">
           {steps[setCurrentStep].content}
         </div>
       </div>
@@ -58,4 +54,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default Forms;

@@ -176,6 +176,18 @@ const FacilitiesDetails: React.FC = () => {
     {
       id: 6,
       path: <a href="#equipment">equipments</a>
+    },
+    {
+      id: 7,
+      path: <a href="#members">Members</a>
+    },
+    {
+      id: 8,
+      path: <a href="#paymentLog">Payment Log</a>
+    },
+    {
+      id: 9,
+      path: <a href="#attendanceLog">Attendance Log</a>
     }
   ];
 
@@ -274,6 +286,15 @@ const FacilitiesDetails: React.FC = () => {
                   mainData={mainData}
                   //  refetch={refetch()}
                 />
+              </div>
+              <div id="members" className="mb-10">
+                members sections !!!!!!!
+              </div>
+              <div id="paymentLog" className="mb-10">
+                Payment log sections !!!!!!!!
+              </div>
+              <div id="attendanceLog" className="mb-10">
+                Attendance section !!!!!!
               </div>
             </div>
 

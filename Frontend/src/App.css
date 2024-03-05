@@ -4,3 +4,28 @@
   border-radius: 0%;
   outline: none;
 }
+
+.custom-radio-group .ant-radio-checked .ant-radio-inner {
+  background-color: black; /* Change this to the desired color */
+  border-color: black; /* Change this to the desired color */
+}
+
+:where(.css-dev-only-do-not-override-1qhpsh8).ant-steps
+  .ant-steps-item-process
+  .ant-steps-item-icon {
+  background-color: black;
+  border-color: black;
+}
+
+:where(.css-dev-only-do-not-override-1qhpsh8).ant-checkbox-checked .ant-checkbox-inner {
+  background-color: black;
+  border-color: black;
+}
+:where(.css-dev-only-do-not-override-1qhpsh8).ant-checkbox-wrapper:not(
+    .ant-checkbox-wrapper-disabled
+  ):hover
+  .ant-checkbox-checked:not(.ant-checkbox-disabled)
+  .ant-checkbox-inner {
+  background-color: black;
+  border-color: transparent;
+}
