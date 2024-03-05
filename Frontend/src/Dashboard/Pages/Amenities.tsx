@@ -1,19 +1,16 @@
-import { Button, Form, Input, Modal, Switch, Table, Upload } from 'antd';
+import { Button, Modal, Switch, Table } from 'antd';
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { PiPlusCircle } from 'react-icons/pi';
-import { ApiClientPrivate } from '../../utils/axios';
+import { BiPlus } from 'react-icons/bi';
+import { FaEdit } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
-import { UploadOutlined } from '@ant-design/icons';
-import { iconURL } from '../../utils/urls';
-import { RiSearchLine } from 'react-icons/ri';
-import PageHeader from '../components/PageHeader';
 import svg2 from '../../../public/svg2-onlypass.svg';
 import svg3 from '../../../public/svg3-onlypass.svg';
 import svg4 from '../../../public/svg4-onlypass.svg';
-import { BiPlus } from 'react-icons/bi';
-import AddAmenities from '../components/Addamenities';
-import { FaEdit } from 'react-icons/fa';
+import { ApiClientPrivate } from '../../utils/axios';
+import { iconURL } from '../../utils/urls';
+import PageHeader from '../components/PageHeader';
 import UpdateAmenities from '../components/UpdateAmenities';
+import AddAmenities from '../components/AddAmenities';
 interface Amenity {
   key: string;
   name: string;
