@@ -1,7 +1,7 @@
 import { Modal, Table, TableProps } from 'antd';
-import React, { useState } from 'react';
-import { UpdateMembership } from '../updateFacilities/UpdateMembership';
+import { useState } from 'react';
 import { FaEdit } from 'react-icons/fa';
+import { UpdateMembership } from '../updateFacilities/UpdateMembership';
 
 interface DataType {
   key: string;

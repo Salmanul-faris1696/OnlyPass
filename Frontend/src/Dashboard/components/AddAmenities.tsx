@@ -2,7 +2,12 @@ import { Button, Form, Input, Radio, Upload } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import TextArea from 'antd/es/input/TextArea';
 
-const AddAmenities = ({ newAmenityName, onAmenityChange, setNewAmenityName }: any) => {
+const AddAmenities = ({
+  newAmenityName,
+  onAmenityChange,
+  setNewAmenityName,
+  setNewAmenityDescription
+}: any) => {
   return (
     <div className=" ">
       <div className="text-[24px]  mb-10  w-full mt-2">
@@ -55,11 +60,13 @@ const AddAmenities = ({ newAmenityName, onAmenityChange, setNewAmenityName }: an
                 <Form.Item
                   label="Description"
                   name={'description'}
+
                   // rules={[{ min: 10, max: 100, message: 'Description must be at most 100 characters' }]}
                 >
                   <TextArea
                     name="description"
                     rows={4}
+                    onChange={(e) => setNewAmenityDescription(e.target.value)}
                     className="w-[300px] text-[14px]"
                     maxLength={150}
                     placeholder="Describe the facility in fewer than 100 characters"

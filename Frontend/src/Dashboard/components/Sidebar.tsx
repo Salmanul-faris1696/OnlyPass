@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { CiDiscount1, CiMoneyCheck1, CiWallet } from 'react-icons/ci';
 import { FaDumbbell } from 'react-icons/fa';
 import { FaRegUser } from 'react-icons/fa6';
@@ -5,15 +6,10 @@ import { IoIosArrowDown, IoIosArrowForward } from 'react-icons/io';
 import { IoNewspaperOutline } from 'react-icons/io5';
 import { LiaKeySolid } from 'react-icons/lia';
 import { LuBox } from 'react-icons/lu';
-import { TbCategoryPlus, TbSettings2 } from 'react-icons/tb';
+import { SiNginxproxymanager } from 'react-icons/si';
+import { TbCategoryFilled, TbSettings2 } from 'react-icons/tb';
 import { NavLink, useLocation } from 'react-router-dom';
 import image1 from '../../../public/javad.jpg';
-import { useEffect, useState } from 'react';
-import { TbHexagonPlus } from 'react-icons/tb';
-import { TbCategoryFilled } from 'react-icons/tb';
-import { SiNginxproxymanager } from 'react-icons/si';
-import { Modal } from 'antd';
-import Form from '../Pages/Forms';
 
 const Sidebar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -90,54 +86,14 @@ const Sidebar = () => {
       path: '/Payment'
     },
     {
-      name: 'Amenities',
+      name: 'Manages',
       icon: (
         <CiDiscount1
           size={30}
           className="border-2 border-[#5C5C5C] rounded-md p-[3px] font-extrabold"
         />
       ),
-      path: '/Amenities'
-    },
-    {
-      name: 'Equipments',
-      icon: (
-        <FaDumbbell
-          size={30}
-          className="border-2 border-[#5C5C5C] rounded-md p-[3px] font-extrabold"
-        />
-      ),
-      path: '/Equipments'
-    },
-    {
-      name: 'Membership',
-      icon: (
-        <CiMoneyCheck1
-          size={30}
-          className="border-2 border-[#5C5C5C] rounded-md p-[3px] font-extrabold"
-        />
-      ),
       path: '/MembershipPackages'
-    },
-    {
-      name: 'facilitycategory',
-      icon: (
-        <TbCategoryPlus
-          size={30}
-          className="border-2 border-[#5C5C5C] rounded-md p-[3px] font-extrabold"
-        />
-      ),
-      path: '/facilityCategories'
-    },
-    {
-      name: 'UserRoles',
-      icon: (
-        <IoNewspaperOutline
-          size={30}
-          className="border-2 border-[#5C5C5C] rounded-md p-[3px] font-extrabold"
-        />
-      ),
-      path: '/UserRoles'
     }
   ];
 
@@ -217,59 +173,63 @@ const Sidebar = () => {
           className="border-2 border-[#5C5C5C] rounded-md p-[3px] font-extrabold"
         />
       ),
-      MenuItem: 'Amenities',
-      path: '/Amenities'
-    },
-    {
-      id: '6',
-      icon: (
-        <FaDumbbell
-          size={30}
-          className="border-2 border-[#5C5C5C] rounded-md p-[3px] font-extrabold"
-        />
-      ),
-      MenuItem: 'Equipments',
-      path: '/Equipments'
-    },
-    ,
-    {
-      id: '7',
-      icon: (
-        <CiMoneyCheck1
-          size={30}
-          className="border-2 border-[#5C5C5C] rounded-md p-[3px] font-extrabold"
-        />
-      ),
-      MenuItem: 'Membership ',
-      path: '/MembershipPackages'
-    },
+      MenuItem: 'Manage',
+      path: '/MembershipPackages',
+      subMenu: [
+        {
+          id: '5-1',
+          subIcon: (
+            <CiMoneyCheck1
+              size={30}
+              className="border-2 border-[#5C5C5C] rounded-md p-[3px] font-extrabold"
+            />
+          ),
+          name: 'Membership ',
+          path: '/MembershipPackages'
+        },
+        {
+          id: '5-2',
+          subIcon: (
+            <CiDiscount1
+              size={30}
+              className="border-2 border-[#5C5C5C] rounded-md p-[3px] font-extrabold"
+            />
+          ),
+          name: 'Amenities',
+          path: '/Amenities'
+        },
 
-    {
-      id: '8',
-      icon: (
-        <TbCategoryPlus
-          size={30}
-          className="border-2 border-[#5C5C5C] rounded-md p-[3px] font-extrabold"
-        />
-      ),
-      MenuItem: 'Facility Categories',
-      path: '/facilityCategories'
-    },
-    {
-      id: '9',
-      icon: (
-        <IoNewspaperOutline
-          size={30}
-          className="border-2 border-[#5C5C5C] rounded-md p-[3px] font-extrabold"
-        />
-      ),
-      MenuItem: 'User Roles',
-      path: '/UserRoles'
+        {
+          id: '5-3',
+          subIcon: (
+            <FaDumbbell
+              size={30}
+              className="border-2 border-[#5C5C5C] rounded-md p-[3px] font-extrabold"
+            />
+          ),
+          name: 'Equipments',
+          path: '/Equipments'
+        },
+
+        {
+          id: '9',
+          subIcon: (
+            <IoNewspaperOutline
+              size={30}
+              className="border-2 border-[#5C5C5C] rounded-md p-[3px] font-extrabold"
+            />
+          ),
+          name: 'User Roles',
+          path: '/UserRoles'
+        }
+
+        // Add more submenus as needed
+      ]
     }
   ];
 
   return (
-    <div id="sidebar" className="flex gap-3">
+    <div id="sidebar" className="flex gap-3  ">
       {/* <<<<<< SIDE MINIMIZE ICON >>>>>>> */}
       <div className={`${sidebarOpen === true ? 'hidden' : 'block'}`}>
         <div className="md:w-24 px-2 md:px-5">
@@ -283,7 +243,7 @@ const Sidebar = () => {
                 key={ind}
                 className={({ isActive }) =>
                   `${
-                    isActive ? 'text-white bg-black' : 'hover:bg-slate-100'
+                    isActive ? 'text-white bg-black ' : 'hover:bg-slate-100'
                   } py-1 md:py-3 rounded-lg my-5 flex justify-center `
                 }
               >
@@ -362,7 +322,7 @@ const Sidebar = () => {
           ))}
         </div>
 
-        <div className="p-2 mt-5  bg-white rounded-lg  flex items-center gap-3 font-bold ">
+        <div className="profile p-2   bg-white rounded-lg  flex items-center gap-3 font-bold ">
           <div className=" rounded-full bg-slate-200 ">
             <img src={image1} alt="" className="h-12 w-12 rounded-full" />
           </div>

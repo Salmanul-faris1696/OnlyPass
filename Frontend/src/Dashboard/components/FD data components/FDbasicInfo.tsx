@@ -1,10 +1,10 @@
+import { Modal } from 'antd';
 import { useState } from 'react';
-import { dataImages, dataLogo } from '../../../utils/urls';
 import { FaEdit } from 'react-icons/fa';
-import { Modal, Input } from 'antd';
+import { dataImages, dataLogo } from '../../../utils/urls';
 import UpdateBasicInfo from '../updateFacilities/UpdateBasicInfo';
 
-const FDbasicInfo = ({ data, mainData, refetch }: any) => {
+const FDbasicInfo = ({ data, mainData,  }: any) => {
   const Facilityimages = mainData?.data.images;
   const [basicModalOpen, setBasicModalOpen] = useState(false);
 

@@ -1,5 +1,5 @@
 import { Modal, Table, TableProps } from 'antd';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FaEdit } from 'react-icons/fa';
 import { iconURL } from '../../../utils/urls';
 import UpdateAmenities from '../updateFacilities/UpdateAmenities';
@@ -28,7 +28,7 @@ const columns2: TableProps<amenityData>['columns'] = [
   }
 ];
 
-const FDamenitiesInfo = ({ mainData, refetch }: any) => {
+const FDamenitiesInfo = ({ mainData }: any) => {  //refetch removed
   const [amenitiesModalOpen, setAmenitiesModalOpen] = useState(false);
 
   const amenityTableData = mainData?.data?.amenities?.map((amenity: any) => ({

@@ -1,12 +1,10 @@
 import { Steps } from 'antd';
-import { BiArrowBack } from 'react-icons/bi';
-import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import AmenitiesForm from '../components/AmenitiesForm';
 import BasicInfo from '../components/BasicInfo';
 import EquipmentForm from '../components/EquipmentForm';
 import Location from '../components/Location';
 import Membership from '../components/Membership';
-import { useSelector } from 'react-redux';
 const steps = [
   {
     title: 'Basic Information',

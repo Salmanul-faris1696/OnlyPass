@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import { Form, Modal, Select, Switch, Table } from 'antd';
+import { useState } from 'react';
+import { BiPlus } from 'react-icons/bi';
 import svg2 from '../../../public/svg2-onlypass.svg';
 import svg3 from '../../../public/svg3-onlypass.svg';
 import svg4 from '../../../public/svg4-onlypass.svg';
-import PageHeader from '../components/PageHeader';
-import { Select, Switch, Table, Tag, Form, Modal } from 'antd';
-import { BiPlus } from 'react-icons/bi';
 import '../../App.css';
-import AddMembershipPlans from '../components/AddMembershipPlans';
 import AddPlans from '../components/AddPlans';
+import PageHeader from '../components/PageHeader';
 
 const Plans = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

@@ -1,10 +1,10 @@
 import { Modal } from 'antd';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FaEdit } from 'react-icons/fa';
 import { imaageURL } from '../../../utils/urls';
 import UpdateEquipments from '../updateFacilities/UpdateEquipments';
 
-const FDequipmentsInfo = ({ mainData, refetch }: any) => {
+const FDequipmentsInfo = ({ mainData }: any) => {
   const [equipmentsModalOpen, setEquipmentsModalOpen] = useState(false);
   return (
     <div>

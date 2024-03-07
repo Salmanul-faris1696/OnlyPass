@@ -3,8 +3,8 @@ import Sidebar from './Dashboard/components/Sidebar';
 
 function App() {
   return (
-    <div className="flex w-full h-screen ">
-      <div className=" ">
+    <div className="flex w-full h-screen   ">
+      <div className="h-screen ">
         <Sidebar />
       </div>
       <div className="flex-1 ml-3">

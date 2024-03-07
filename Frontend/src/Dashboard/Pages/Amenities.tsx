@@ -14,6 +14,7 @@ import AddAmenities from '../components/AddAmenities';
 interface Amenity {
   key: string;
   name: string;
+  description: string;
 }
 
 const Amenities: React.FC = () => {
@@ -22,7 +23,9 @@ const Amenities: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [isUpdateModalOpen, setisUpdateModalOpen] = useState<boolean>(false);
   const [newAmenityName, setNewAmenityName] = useState<string>('');
+  const [newAmenityDescription, setNewAmenityDescription] = useState<string>('');
   const [newAmenityIcon, setnewAmenityIcon] = useState<File | null>(null);
+  const [selectedAmenity, setSelectedAmenity] = useState<Amenity | null>(null);
 
   const fetchData = async () => {
     try {
@@ -38,6 +41,56 @@ const Amenities: React.FC = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const handleUpdateAmenity = async (updatedData: any) => {
+    console.log('aaaaaaaaaaaaaaaaaaaaaa', updatedData);
+
+    try {
+      // Make the API call to update the amenity
+
+      const formData = new FormData();
+      formData.append('name', updatedData.amenityName);
+      formData.append('description', updatedData.description);
+      formData.append(
+        'icon',
+        updatedData.icon.file?.originFileObj
+          ? updatedData.icon.file?.originFileObj
+          : (updatedData.icon as File)
+      );
+      const res = await ApiClientPrivate.put(
+        `/amenities/update-amenities/${updatedData.id}`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      );
+
+      if (res.status === 200) {
+        console.log('heello');
+
+        // Optionally, you can handle success, e.g., show a success message
+        console.log('Amenity updated successfully');
+        // Close the modal or perform any other action as needed
+        handleCancel();
+        window.location.reload();
+      } else {
+        // Optionally, handle the case where the update fails
+        console.error('Failed to update amenity');
+      }
+    } catch (error) {
+      console.log('hiiiiiiiii');
+
+      // Handle errors, e.g., show an error message
+      console.error('Error updating amenity:', error);
+    }
+  };
+
+  const handleEditClick = (amenity: Amenity) => {
+    setSelectedAmenity(amenity);
+    setisUpdateModalOpen(true);
+  };
 
   const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -88,7 +141,7 @@ const Amenities: React.FC = () => {
       title: 'Name',
       // dataIndex: 'name',
       key: 'name',
-      width: 200,
+      width: 300,
       render: (record: any) => (
         <div className="flex items-center gap-3">
           <img src={`${iconURL}/${record.icon} `} alt={record} style={{ width: '25px' }} />
@@ -98,8 +151,13 @@ const Amenities: React.FC = () => {
     },
     {
       title: 'Descriptions',
-      dataIndex: 'descriptions',
-      key: 'descriptions'
+      // dataIndex: 'descriptions',
+      key: 'descriptions',
+      render: (record: any) => (
+        <div className="flex items-start ">
+          <p>{record.description}</p>
+        </div>
+      )
     },
     {
       title: 'Status',
@@ -115,8 +173,8 @@ const Amenities: React.FC = () => {
       title: 'Options',
       width: 150,
       key: 'action',
-      render: () => (
-        <div className="flex items-center gap-2 " onClick={() => setisUpdateModalOpen(true)}>
+      render: (record: any) => (
+        <div className="flex items-center gap-2 " onClick={() => handleEditClick(record)}>
           Edit <FaEdit />
         </div>
       )
@@ -149,25 +207,34 @@ const Amenities: React.FC = () => {
   };
   const showModal = () => {
     setNewAmenityName('');
+    setNewAmenityDescription('');
     setIsModalVisible(true);
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
+    setisUpdateModalOpen(false);
     setNewAmenityName('');
+    setNewAmenityDescription('');
   };
   const handleAddAmenity = async () => {
     try {
       const newData = [
         ...amentyData,
-        { key: (amentyData.length + 1).toString(), name: newAmenityName }
+        {
+          key: (amentyData.length + 1).toString(),
+          name: newAmenityName,
+          description: newAmenityDescription
+        }
       ];
       console.log(newData);
       setIsModalVisible(false);
       setNewAmenityName('');
+      setNewAmenityDescription('');
 
       const formData = new FormData();
       formData.append('name', newAmenityName);
+      formData.append('description', newAmenityDescription);
       formData.append('icon', newAmenityIcon as File);
 
       await ApiClientPrivate.post('/amenities/create', formData, {
@@ -179,6 +246,7 @@ const Amenities: React.FC = () => {
       // Fetch updated data from the server after adding a new equipment
       fetchData();
       setNewAmenityName('');
+      setNewAmenityDescription('');
 
       // console.log('Equipment added:', newEquipmentName, newEquipmentImage);
       setIsModalVisible(false);
@@ -237,7 +305,7 @@ const Amenities: React.FC = () => {
           >Cancel</Button> */}
 
             <Button
-              key="cancel"
+              key="add"
               onClick={handleAddAmenity}
               disabled={!newAmenityName.trim()}
               className="bg-black  text-white rounded-none"
@@ -251,12 +319,34 @@ const Amenities: React.FC = () => {
           newAmenityName={newAmenityName}
           onAmenityChange={onAmenityChange}
           setNewAmenityName={setNewAmenityName}
+          setNewAmenityDescription={setNewAmenityDescription}
         />
       </Modal>
 
       {/* edit modal */}
-      <Modal title="" open={isUpdateModalOpen} onCancel={handleCancel} footer={false}>
-        <UpdateAmenities />
+      <Modal
+        title=""
+        open={isUpdateModalOpen}
+        onCancel={handleCancel}
+        // footer={[
+        //   <div>
+        //     <Button
+        //       key="Edit"
+        //             onClick={handleUpdateAmenity}
+        //       // disabled={!newAmenityName.trim()}
+        //       className="bg-black  text-white rounded-none"
+        //     >
+        //       Update
+        //     </Button>
+        //   </div>
+        // ]}
+        footer={false}
+      >
+        <UpdateAmenities
+          amenityData={selectedAmenity}
+          handleUpdateAmenity={handleUpdateAmenity}
+          onAmenityChange={onAmenityChange}
+        />
       </Modal>
     </div>
   );

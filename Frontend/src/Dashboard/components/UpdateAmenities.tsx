@@ -1,16 +1,52 @@
-import { Button, Form, Input, Radio, Upload } from 'antd';
+import { Button, Form, Input, Radio, Upload, UploadFile } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import TextArea from 'antd/es/input/TextArea';
+import { useEffect, useState } from 'react';
+import { iconURL } from '../../utils/urls';
 
-const UpdateAmenities = () => {
+const UpdateAmenities = ({
+  amenityData,
+  handleUpdateAmenity,
+  onAmenityChange
+}: {
+  amenityData: any;
+  handleUpdateAmenity: (updatedData: any) => void;
+  onAmenityChange: any;
+}) => {
+  const [form] = Form.useForm();
+  useEffect(() => {
+    form.setFieldsValue({
+      sts: amenityData.status, // Assuming there is a 'status' property in Amenity
+      amenityName: amenityData.name,
+      description: amenityData.description,
+      icon: amenityData.icon
+
+      // ... other fields
+    });
+  }, [amenityData, form]);
+
+  const [fileList] = useState<UploadFile[]>(
+    amenityData.icon
+      ? [
+          {
+            uid: '1',
+            name: amenityData.icon,
+            // status: 'done',
+            url: amenityData.icon ? `${iconURL}/${amenityData.icon}` : ''
+          }
+        ]
+      : []
+  );
+
   return (
     <div className=" ">
       <div className="text-[24px]  mb-10  w-full mt-2">
         <h1 className="font-medium text-[24px] "> Update Amenity</h1>
       </div>
       <Form
-        // form={form}
-        // onFinish={handleNext}
+        form={form}
+        onFinish={(values) => handleUpdateAmenity({ ...values, id: amenityData._id })}
+        // onFinish={ handleUpdateAmenity}
         // onChange={handleInputChange}
         className=""
         labelCol={{ span: 7 }}
@@ -68,39 +104,19 @@ const UpdateAmenities = () => {
                 <Form.Item label="Icon" name={'icon'} className="text-[14px]">
                   <Upload
                     maxCount={1}
-                    //   onChange={(e) => {
-                    //     // if (remove === false) debouncedNormFileLogo(e);
-                    //   }}
-                    action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                    onChange={onAmenityChange}
                     listType="picture"
-                    //   onRemove={handleLogoRemove}
-                    // fileList={fileList}
-
-                    //   defaultFileList={[...fileList]}
+                    defaultFileList={[...fileList]}
                   >
-                    <div className="flex items-center gap-3">
-                      <Button
-                        //   disabled={remove === true}
-                        icon={<UploadOutlined />}
-                      >
-                        Upload
-                      </Button>
-                      <h1 className="text-[14px] font-normal text-[#7e7e7e]">
-                        Accepted Formats - JPG , jpeg , png
-                      </h1>
-                    </div>
+                    <Button icon={<UploadOutlined />}>Upload</Button>
                   </Upload>
                 </Form.Item>
               </div>
+              <Form.Item>
+                <Button htmlType="submit">Update</Button>
+              </Form.Item>
             </div>
           </div>
-        </div>
-        <div className="flex gap-3 justify-center">
-          <Button className="bg-white border-black rounded-none">Cancel</Button>
-
-          <Button type="primary" className="bg-black text-white  rounded-none" htmlType="submit">
-            Save
-          </Button>
         </div>
       </Form>
     </div>

@@ -1,9 +1,9 @@
 import { Modal } from 'antd';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FaEdit } from 'react-icons/fa';
 import UpdateLocation from '../updateFacilities/UpdateLocation';
 
-const FDlocationInfo = ({ data, mainData, refetch }: any) => {
+const FDlocationInfo = ({ data, mainData,  }: any) => {
   const [locationModalOPen, setLocationModalOpen] = useState(false);
   return (
     <div>

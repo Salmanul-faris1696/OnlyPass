@@ -164,9 +164,9 @@ const AddPlans = () => {
                   <div className="">
                     <Upload
                       maxCount={1}
-                      onChange={(e) => {
-                        // if (remove === false) debouncedNormFileLogo(e);
-                      }}
+                      // onChange={(e) => {
+                      //   // if (remove === false) debouncedNormFileLogo(e);
+                      // }}
                       action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
                       listType="picture"
                       //   onRemove={handleLogoRemove}
