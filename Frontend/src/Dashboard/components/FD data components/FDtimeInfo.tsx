@@ -5,7 +5,7 @@ import UpdateTime from '../updateFacilities/UpdateTime';
 import { useAppDispatch } from './../../Redux/hooks';
 import { resetFacility } from '../../Redux/Features/FacilityFeature/FacilititySlice';
 
-const FDtimeInfo = ({ mainData, }: any) => {
+const FDtimeInfo = ({ mainData }: any) => {
   const [timeModalOpen, setTimeModalOpen] = useState(false);
   const timeData = mainData?.data?.facilityTiming;
   const dispatch = useAppDispatch();

@@ -28,7 +28,8 @@ const columns2: TableProps<amenityData>['columns'] = [
   }
 ];
 
-const FDamenitiesInfo = ({ mainData }: any) => {  //refetch removed
+const FDamenitiesInfo = ({ mainData }: any) => {
+  //refetch removed
   const [amenitiesModalOpen, setAmenitiesModalOpen] = useState(false);
 
   const amenityTableData = mainData?.data?.amenities?.map((amenity: any) => ({

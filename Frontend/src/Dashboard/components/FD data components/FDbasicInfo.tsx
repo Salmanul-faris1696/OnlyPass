@@ -4,7 +4,7 @@ import { FaEdit } from 'react-icons/fa';
 import { dataImages, dataLogo } from '../../../utils/urls';
 import UpdateBasicInfo from '../updateFacilities/UpdateBasicInfo';
 
-const FDbasicInfo = ({ data, mainData,  }: any) => {
+const FDbasicInfo = ({ data, mainData }: any) => {
   const Facilityimages = mainData?.data.images;
   const [basicModalOpen, setBasicModalOpen] = useState(false);
 
