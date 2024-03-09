@@ -1,11 +1,11 @@
 import { Button, Checkbox } from 'antd';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { ApiClientPrivate } from '../../utils/axios';
-import { nextButton, prevButton } from '../Redux/Features/ButtonSlice';
-import { setAmenties } from '../Redux/Features/FacilityFeature/FacilititySlice';
-import { useAppSelector } from '../Redux/hooks';
-import { iconURL } from '../../utils/urls';
+import { ApiClientPrivate } from '../../../../utils/axios';
+import { nextButton, prevButton } from '../../../Redux/Features/ButtonSlice';
+import { setAmenties } from '../../../Redux/Features/FacilityFeature/FacilititySlice';
+import { useAppSelector } from '../../../Redux/hooks';
+import { iconURL } from '../../../../utils/urls';
 
 interface Amenity {
   key: string;

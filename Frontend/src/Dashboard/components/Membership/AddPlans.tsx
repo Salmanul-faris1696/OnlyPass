@@ -1,8 +1,63 @@
 import { Button, Form, Input, Radio, Upload } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import TextArea from 'antd/es/input/TextArea';
+import { ApiClientPrivate } from '../../../utils/axios';
+import { useMutation } from 'react-query';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-const AddPlans = () => {
+const AddPlans = (props: any) => {
+  const { id } = useParams();
+
+  const [bgImage, setBgImage] = useState();
+  const createMembershipPlans = (formData: FormData) => {
+    return ApiClientPrivate.post(`/membership/membership-plans/create`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+  };
+
+  const mutation = useMutation((formData: any) => {
+    return createMembershipPlans(formData);
+  });
+
+  const onFinish = (values: any) => {
+    // Create a FormData object
+    const formData = new FormData();
+
+    // Append all form values to the FormData object
+    for (const key in values) {
+      if (values.hasOwnProperty(key)) {
+        formData.append(key, values[key]);
+      }
+    }
+    formData.append('membership_id', String(id));
+    // Append the file to the FormData object
+    // Assuming the file is stored in a variable called `file`
+    // You might need to adjust this based on how you're handling file uploads
+    if (bgImage) {
+      // console.log(">>>>>>",bgImage);
+
+      formData.append('bg_image', bgImage);
+    }
+
+    mutation.mutate(formData, {
+      onError(error) {
+        console.log(error);
+      },
+      onSuccess() {
+        props.save(false);
+      }
+    });
+  };
+
+  const uploadBgImg = (value: any) => {
+    const imgUrl = value.file.originFileObj;
+    setBgImage(imgUrl);
+    // console.log(imgUrl);
+  };
+
   return (
     <div className=" ">
       <div className="text-[24px]  mb-10  w-full mt-2">
@@ -10,7 +65,7 @@ const AddPlans = () => {
       </div>
       <Form
         // form={form}
-        // onFinish={handleNext}
+        onFinish={onFinish}
         // onChange={handleInputChange}
         className=""
         labelCol={{ span: 7 }}
@@ -26,7 +81,7 @@ const AddPlans = () => {
                 <Form.Item
                   label="Status"
                   className=""
-                  name={'sts'}
+                  name={'status'}
                   // rules={[{ required: true, message: 'Please Select your Category!' }]}
                 >
                   <Radio.Group name="" defaultValue="B2B">
@@ -38,7 +93,7 @@ const AddPlans = () => {
               <div className="PlanName">
                 <Form.Item
                   label="Plan Name"
-                  name={'planName'}
+                  name={'name'}
                   className="text-left"
                   rules={[{ required: true, message: 'Please Enter Plan Name' }]}
                 >
@@ -53,7 +108,7 @@ const AddPlans = () => {
               <div className="days">
                 <Form.Item
                   label="No.of Days"
-                  name={'days'}
+                  name={'no_of_days'}
                   // rules={[{ required: true, message: 'Please enter the slogan ' }]}
                   className="text-[14px]"
                 >
@@ -67,7 +122,7 @@ const AddPlans = () => {
               <div className="Accesses">
                 <Form.Item
                   label="No.of Accesses"
-                  name={'access'}
+                  name={'no_of_access'}
                   // rules={[{ required: true, message: 'Please enter the slogan ' }]}
                   className="text-[14px]"
                 >
@@ -81,7 +136,7 @@ const AddPlans = () => {
               <div className="AccessPerDay">
                 <Form.Item
                   label="No.of Accesses per Day"
-                  name={'accessPerDay'}
+                  name={'per_day_access'}
                   // rules={[{ required: true, message: 'Please enter the slogan ' }]}
                   className="text-[14px]"
                 >
@@ -111,10 +166,10 @@ const AddPlans = () => {
                 <Form.Item
                   label=" Features"
                   className="text-start text-[14px]"
-                  name={'features'}
+                  name={'feature'}
                   //   rules={[{ required: true, message: '!' }]}
                 >
-                  <Radio.Group name="tier">
+                  <Radio.Group name="feture">
                     <Radio value="hold"> Hold </Radio>
                     <Radio value="upgrade"> Upgrade </Radio>
                     <Radio value="payback"> Payback </Radio>
@@ -139,7 +194,7 @@ const AddPlans = () => {
                 <Form.Item
                   label="Offer Amount"
                   className="text-[14px]"
-                  name={'offerAmount'}
+                  name={'offer_amount'}
                   rules={[{ required: true, message: 'Enter Offer Amount' }]}
                 >
                   <Input
@@ -153,26 +208,22 @@ const AddPlans = () => {
                 <Form.Item
                   label="Help Text"
                   className="text-[14px]"
-                  name={'helpText'}
+                  name={'help_text'}
                   //   rules={[{ required: true, message: 'Please enter the Offer Price!' }]}
                 >
                   <Input name="offerPrice" className="md:w-[350px]" placeholder="Need any Help ?" />
                 </Form.Item>
               </div>
               <div className="backgroundImg">
-                <Form.Item label="Background Images" name={'bgImg'} className="text-[14px]">
+                <Form.Item label="Background Images" name={'bg_Image'} className="text-[14px]">
                   <div className="">
                     <Upload
                       maxCount={1}
-                      // onChange={(e) => {
-                      //   // if (remove === false) debouncedNormFileLogo(e);
-                      // }}
+                      onChange={(value: any) => {
+                        uploadBgImg(value);
+                      }}
                       action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
                       listType="picture"
-                      //   onRemove={handleLogoRemove}
-                      // fileList={fileList}
-
-                      //   defaultFileList={[...fileList]}
                     >
                       <div className="flex items-center gap-3">
                         <Button
@@ -193,7 +244,7 @@ const AddPlans = () => {
           </div>
         </div>
         <div className="flex gap-3 justify-center">
-          <Button className="bg-white border-black rounded-none">Cancel</Button>
+          {/* <Button className="bg-white border-black rounded-none">Cancel</Button> */}
 
           <Button type="primary" className="bg-black text-white  rounded-none" htmlType="submit">
             Save

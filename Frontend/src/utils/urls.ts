@@ -10,3 +10,6 @@ export const dataLogo = `${BASE_URL}/images/facility-logo`;
 
 export const dataImages = `${BASE_URL}/images/facility-images`;
 //// url for fetching image for facility images
+
+export const plansBgImage = `${BASE_URL}/membership/plans`;
+//// url for fetching image for plans images

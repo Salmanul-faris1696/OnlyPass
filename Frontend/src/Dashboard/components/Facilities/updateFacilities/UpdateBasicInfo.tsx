@@ -1,12 +1,12 @@
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Radio, Space, Upload, UploadFile, UploadProps } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
-import { ApiClientPrivate } from '../../../utils/axios';
+import { ApiClientPrivate } from '../../../../utils/axios';
 import { useState } from 'react';
-import { dataImages, dataLogo } from '../../../utils/urls';
-import { useDebounce } from '../../../Hook/CustomHook';
-import { useAppDispatch } from '../../Redux/hooks';
-import { setBasicUpdateBtn } from '../../Redux/Features/updateFacilityBtn';
+import { dataImages, dataLogo } from '../../../../utils/urls';
+import { useDebounce } from '../../../../Hook/CustomHook';
+import { useAppDispatch } from '../../../Redux/hooks';
+import { setBasicUpdateBtn } from '../../../Redux/Features/updateFacilityBtn';
 
 export default function UpdateBasicInfo(props: any) {
   const [facilityImages, setFacilityImages] = useState(props.facilityData.images);

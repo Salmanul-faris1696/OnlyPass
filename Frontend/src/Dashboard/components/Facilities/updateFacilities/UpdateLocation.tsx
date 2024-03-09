@@ -1,8 +1,8 @@
 import { Button, Form, Input } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
-import { ApiClientPrivate } from '../../../utils/axios';
-import { setLocationUpdateBtn } from '../../Redux/Features/updateFacilityBtn';
-import { useAppDispatch } from '../../Redux/hooks';
+import { ApiClientPrivate } from '../../../../utils/axios';
+import { setLocationUpdateBtn } from '../../../Redux/Features/updateFacilityBtn';
+import { useAppDispatch } from '../../../Redux/hooks';
 
 const UpdateLocation = (props: any) => {
   const [form] = Form.useForm();

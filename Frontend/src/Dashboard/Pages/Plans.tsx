@@ -1,15 +1,39 @@
 import { Form, Modal, Select, Switch, Table } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BiPlus } from 'react-icons/bi';
 import svg2 from '../../../public/svg2-onlypass.svg';
 import svg3 from '../../../public/svg3-onlypass.svg';
 import svg4 from '../../../public/svg4-onlypass.svg';
 import '../../App.css';
-import AddPlans from '../components/AddPlans';
-import PageHeader from '../components/PageHeader';
+import AddPlans from '../components/Membership/AddPlans';
+import PageHeader from '../components/common_components/PageHeader';
+import { useQuery } from 'react-query';
+import { ApiClientPrivate } from '../../utils/axios';
+import { useParams } from 'react-router-dom';
+import ShowModal from '../components/Membership/showModal';
 
 const Plans = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isShowModalOpen, setIsShowModalOpen] = useState(false);
+
+  const [selectedItem, setSelectedItem] = useState();
+  const { id } = useParams();
+
+  const fetchMembershipPlans = async () => {
+    const response = await ApiClientPrivate.get(`/membership/package/plans/${id}`);
+    return response.data;
+  };
+  const { data: mainData, refetch } = useQuery('fetchMembershipPlans', fetchMembershipPlans);
+
+  console.log('000', mainData);
+  // console.log("111",mainData.membership);
+
+  useEffect(() => {
+    if (isModalOpen === false) {
+      refetch();
+    }
+  }, [isModalOpen]);
+
   const details = [
     {
       icon: svg4,
@@ -34,17 +58,28 @@ const Plans = () => {
   const columns = [
     {
       title: 'Date & Time',
-      dataIndex: 'dateAndTime',
+      dataIndex: 'createdAt',
       key: 'dateAndTime'
     },
     {
       title: 'Plan Name',
-      dataIndex: 'planName',
-      key: 'planName'
+      // dataIndex: 'name',
+      key: 'planName',
+      render: (record: any) => (
+        <p
+          onClick={() => {
+            setIsShowModalOpen(true);
+            setSelectedItem(record);
+          }}
+          className=""
+        >
+          {record.name}
+        </p>
+      )
     },
     {
       title: 'No.of days',
-      dataIndex: 'days',
+      dataIndex: 'no_of_days',
       key: 'days'
     },
     {
@@ -68,48 +103,7 @@ const Plans = () => {
       render: () => <Switch defaultChecked className="" />
     }
   ];
-  const dummyCustomer = [
-    {
-      key: 1,
-      dateAndTime: '29/07/2024 11:30 PM',
-      planName: '1 Month',
-      days: '30',
-      description: 'Payment received for Gold  membership (1 month)',
-      pause: ['active'],
-      amount: '2,499.00',
-      sts: ['Active']
-    },
-    {
-      key: 2,
-      dateAndTime: '17/11/2024 12:00 PM',
-      planName: '3 Months ',
-      days: '90',
-      description: 'Payment settled foe access of Boby Alex 21/12/2024',
-      pause: ['active'],
-      amount: '5,299.00',
-      sts: ['Active']
-    },
-    {
-      key: 3,
-      dateAndTime: '09/11/2024 4:00 PM',
-      planName: '6 Months',
-      days: '180',
-      description: 'Payment Refund against cutsomer Request',
-      pause: ['active'],
-      amount: '9,999.00',
-      sts: ['Active']
-    },
-    {
-      key: 4,
-      dateAndTime: '17/09/2024 10:00 AM',
-      planName: '12 Months',
-      days: '365',
-      description: 'Payment received for silver  membership (1 year)',
-      pause: ['active'],
-      amount: '14,499.00',
-      sts: ['Active']
-    }
-  ];
+
   return (
     <div>
       <div className=" bg-[#F2F2F2] px-2 sm:px-10 md:px-16 pb-10 ">
@@ -129,7 +123,7 @@ const Plans = () => {
               </div>
             </div>
 
-            <div className="flex items-center  gap-5">
+            <div className="flex items-center  gap-3 mx-5">
               <div className="flex font-medium items-center gap-2">
                 <h1 className="text-[16px]">Original Price</h1>
                 <div className="bg-[#f2f2f2] shadow-sm rounded-sm flex items-center justify-center w-[96px] h-[38px]">
@@ -144,9 +138,9 @@ const Plans = () => {
                 </div>
               </div>
 
-              <div className="flex font-medium items-center rounded-sm gap-2 bg-[#19191966] h-[38px] w-[54px] justify-center ">
-                <h1 className="text-[12px] text-white">Save</h1>
-              </div>
+              {/* <div className="flex font-medium items-center rounded-sm gap-2 bg-[#19191966] h-[38px] w-[54px] justify-center ">
+                  <h1 className="text-[12px] text-white">Save</h1>
+                </div> */}
             </div>
 
             {/* </div> */}
@@ -187,7 +181,7 @@ const Plans = () => {
           <div>
             <Table
               columns={columns}
-              dataSource={dummyCustomer}
+              dataSource={mainData}
               //   dataSource={tableData}
               pagination={{ pageSize: 10 }}
               className=""
@@ -202,7 +196,17 @@ const Plans = () => {
         onCancel={() => setIsModalOpen(false)}
         footer={false}
       >
-        <AddPlans />
+        <AddPlans save={setIsModalOpen} data={selectedItem} />
+      </Modal>
+
+      <Modal
+        title=" "
+        width={700}
+        open={isShowModalOpen}
+        onCancel={() => setIsShowModalOpen(false)}
+        footer={false}
+      >
+        <ShowModal data={selectedItem} />
       </Modal>
     </div>
   );

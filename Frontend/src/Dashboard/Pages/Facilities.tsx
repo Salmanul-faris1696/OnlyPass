@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import svg1 from '../../../public/svg1-onlypass.svg';
 import svg2 from '../../../public/svg2-onlypass.svg';
 import { ApiClientPrivate } from '../../utils/axios';
-import PageHeader from '../components/PageHeader';
+import PageHeader from '../components/common_components/PageHeader';
 import { BiPlus } from 'react-icons/bi';
 import Forms from './Forms';
 

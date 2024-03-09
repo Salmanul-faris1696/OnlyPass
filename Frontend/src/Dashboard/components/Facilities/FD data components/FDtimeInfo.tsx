@@ -2,8 +2,8 @@ import { Modal } from 'antd';
 import { useState } from 'react';
 import { FaEdit } from 'react-icons/fa';
 import UpdateTime from '../updateFacilities/UpdateTime';
-import { useAppDispatch } from './../../Redux/hooks';
-import { resetFacility } from '../../Redux/Features/FacilityFeature/FacilititySlice';
+import { useAppDispatch } from '../../../Redux/hooks';
+import { resetFacility } from '../../../Redux/Features/FacilityFeature/FacilititySlice';
 
 const FDtimeInfo = ({ mainData }: any) => {
   const [timeModalOpen, setTimeModalOpen] = useState(false);

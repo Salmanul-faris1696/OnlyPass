@@ -1,7 +1,7 @@
 import { Modal } from 'antd';
 import { useState } from 'react';
 import { FaEdit } from 'react-icons/fa';
-import { imaageURL } from '../../../utils/urls';
+import { imaageURL } from '../../../../utils/urls';
 import UpdateEquipments from '../updateFacilities/UpdateEquipments';
 
 const FDequipmentsInfo = ({ mainData }: any) => {

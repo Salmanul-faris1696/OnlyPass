@@ -1,9 +1,9 @@
 import { Button, Checkbox, Form, Input, Select } from 'antd';
 import { useDispatch } from 'react-redux';
-import { nextButton, prevButton } from '../Redux/Features/ButtonSlice';
+import { nextButton, prevButton } from '../../../Redux/Features/ButtonSlice';
 import { useState } from 'react';
-import { addData, setTier } from '../Redux/Features/FacilityFeature/FacilititySlice';
-import { useAppSelector } from '../Redux/hooks';
+import { addData, setTier } from '../../../Redux/Features/FacilityFeature/FacilititySlice';
+import { useAppSelector } from '../../../Redux/hooks';
 
 // const { TextArea } = Input;
 interface CheckedState {

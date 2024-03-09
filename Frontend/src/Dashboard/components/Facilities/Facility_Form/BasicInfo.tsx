@@ -3,12 +3,12 @@ import type { UploadFile } from 'antd';
 import { Button, Form, Input, Radio, Space, Upload } from 'antd';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useDebounce } from '../../Hook/CustomHook';
-import { ApiClientPrivate } from '../../utils/axios';
-import { dataLogo } from '../../utils/urls';
-import { nextButton } from '../Redux/Features/ButtonSlice';
-import { addData } from '../Redux/Features/FacilityFeature/FacilititySlice';
-import { useAppSelector } from '../Redux/hooks';
+import { useDebounce } from '../../../../Hook/CustomHook';
+import { ApiClientPrivate } from '../../../../utils/axios';
+import { dataLogo } from '../../../../utils/urls';
+import { nextButton } from '../../../Redux/Features/ButtonSlice';
+import { addData } from '../../../Redux/Features/FacilityFeature/FacilititySlice';
+import { useAppSelector } from '../../../Redux/hooks';
 const { TextArea } = Input;
 
 const BasicInfo = () => {

@@ -8,9 +8,9 @@ import svg3 from '../../../public/svg3-onlypass.svg';
 import svg4 from '../../../public/svg4-onlypass.svg';
 import { ApiClientPrivate } from '../../utils/axios';
 import { iconURL } from '../../utils/urls';
-import PageHeader from '../components/PageHeader';
-import UpdateAmenities from '../components/UpdateAmenities';
-import AddAmenities from '../components/AddAmenities';
+import PageHeader from '../components/common_components/PageHeader';
+import UpdateAmenities from '../components/Amenities/UpdateAmenities';
+import AddAmenities from '../components/Amenities/AddAmenities';
 interface Amenity {
   key: string;
   name: string;

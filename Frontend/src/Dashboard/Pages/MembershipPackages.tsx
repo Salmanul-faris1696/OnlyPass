@@ -1,16 +1,37 @@
 import { Form, Modal, Select, Switch, Table } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BiPlus } from 'react-icons/bi';
+import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
 import svg2 from '../../../public/svg2-onlypass.svg';
 import svg3 from '../../../public/svg3-onlypass.svg';
 import svg4 from '../../../public/svg4-onlypass.svg';
 import '../../App.css';
-import AddMembershipPlans from '../components/AddMembershipPlans';
-import PageHeader from '../components/PageHeader';
+import { ApiClientPrivate } from '../../utils/axios';
+import AddMembershipPlans from '../components/Membership/AddMembershipPackages';
+import EditMembershipPackageModal from '../components/Membership/EditMembershipPackageModal';
+import PageHeader from '../components/common_components/PageHeader';
 
 const MembershipPackages: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState();
+
+  const fetchMembershipPackage = async () => {
+    const response = await ApiClientPrivate.get('/membership/package/all');
+    return response.data;
+  };
+  const { data: mainData, refetch } = useQuery('fetchMembershipPackage', fetchMembershipPackage);
+
+  console.log('000', mainData);
+  // console.log("111",mainData.membership);
+
+  useEffect(() => {
+    if (isModalOpen === false) {
+      refetch();
+    }
+  }, [isModalOpen]);
+
   const details = [
     {
       icon: svg4,
@@ -41,13 +62,15 @@ const MembershipPackages: React.FC = () => {
     {
       title: 'Package Name',
       // dataIndex: 'PackageName',
-      key: 'packageName',
-      render: (record: any) => <Link to={`/Plans/${record._id}`}>{record.PackageName}</Link>
+      key: 'name',
+      render: (record: any) => <Link to={`/Plans/${record._id}`}>{record.name}</Link>,
+      width: 200
     },
     {
       title: 'Tier',
-      dataIndex: 'tier',
-      key: 'tier'
+      dataIndex: 'tier_id',
+      key: 'tier_id',
+      width: 100
     },
     {
       title: 'Description',
@@ -56,93 +79,37 @@ const MembershipPackages: React.FC = () => {
     },
     {
       title: 'Plans',
-      dataIndex: 'plans',
-      key: 'plans'
+      key: 'plans',
+      render: (record: any) => (
+        <div>
+          {mainData?.Plans.filter((it: any) => it.membership_id === record._id).length} Nos.
+        </div>
+      ),
+      width: 100
     },
 
     {
       title: 'Status',
       key: 'sts',
-      render: () => <Switch defaultChecked className="" />
+      render: () => <Switch defaultChecked className="bg-red-500" />
     },
     {
       title: 'Congigure',
-      dataIndex: 'configure',
-      key: 'configure'
-    }
-  ];
-  const dummyCustomer = [
-    {
-      key: 1,
-      category: 'in-app',
-      PackageName: 'Platinum Pass',
-      tier: 'Platinum',
-      description: 'Payment received for Platinum  membership (1 month)',
-      plans: '4 Nos.',
-      // sts: ['Active'],
-      configure: (
-        <a href="" className="underline text-blue-500">
-          setup
-        </a>
-      )
-    },
-    {
-      key: 2,
-      category: 'in-app',
-      PackageName: 'Gold Pass',
-      tier: 'Gold',
-      description: 'Payment received for Gold  membership (1 month)',
-      plans: '5 Nos.',
-      // sts: ['Active'],
-      configure: (
-        <a href="" className="underline text-blue-500">
-          setup
-        </a>
-      )
-    },
-    {
-      key: 3,
-      category: 'in-app',
-      PackageName: 'Silver Pass',
-      tier: 'silver',
-      description: 'Payment received for silver  membership (1 month)',
-      plans: '10 Nos.',
-      // sts: ['Active']
-      configure: (
-        <a href="" className="underline text-blue-500">
-          setup
-        </a>
-      )
-    },
-    {
-      key: 4,
-      category: 'in-app',
-      PackageName: 'Platinum Pass',
-      tier: 'Platinum',
-      description: 'Payment received for Platinum  membership (1 month)',
-      plans: '5 Nos.',
-      // sts: ['Active']
-      configure: (
-        <a href="" className="underline text-blue-500">
-          setup
-        </a>
-      )
-    },
-    {
-      key: 5,
-      category: 'in-app',
-      PackageName: 'silver Pass',
-      tier: 'silver',
-      description: 'Payment received for silver  membership (1 month)',
-      plans: '4 Nos.',
-      // sts: ['Active']
-      configure: (
-        <a href="" className="underline text-blue-500">
-          setup
-        </a>
+      key: 'configure',
+      render: (record: any) => (
+        <p
+          onClick={() => {
+            setIsEditModalOpen(true);
+            setSelectedItem(record);
+          }}
+          className="text-blue-500 underline"
+        >
+          Set up
+        </p>
       )
     }
   ];
+
   return (
     <div>
       <div className=" bg-[#F2F2F2] px-2 sm:px-10 md:px-16 pb-10 ">
@@ -224,7 +191,7 @@ const MembershipPackages: React.FC = () => {
           <div>
             <Table
               columns={columns}
-              dataSource={dummyCustomer}
+              dataSource={mainData?.Membership || []}
               //   dataSource={tableData}
               pagination={{ pageSize: 10 }}
               className=""
@@ -236,10 +203,28 @@ const MembershipPackages: React.FC = () => {
         title=" "
         width={700}
         open={isModalOpen}
-        onCancel={() => setIsModalOpen(false)}
+        onCancel={() => {
+          setIsModalOpen(false);
+          refetch();
+        }}
         footer={false}
       >
-        <AddMembershipPlans />
+        <AddMembershipPlans save={setIsModalOpen} />
+      </Modal>
+
+      {/* edit modal */}
+
+      <Modal
+        title=" "
+        width={700}
+        open={isEditModalOpen}
+        onCancel={() => {
+          setIsEditModalOpen(false);
+          refetch();
+        }}
+        footer={false}
+      >
+        <EditMembershipPackageModal update={setIsEditModalOpen} data={selectedItem} />
       </Modal>
     </div>
   );

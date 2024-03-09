@@ -1,8 +1,8 @@
 import { Button, Form, Input } from 'antd';
 import { useDispatch } from 'react-redux';
-import { nextButton, prevButton } from '../Redux/Features/ButtonSlice';
-import { addData } from '../Redux/Features/FacilityFeature/FacilititySlice';
-import { useAppSelector } from '../Redux/hooks';
+import { nextButton, prevButton } from '../../../Redux/Features/ButtonSlice';
+import { addData } from '../../../Redux/Features/FacilityFeature/FacilititySlice';
+import { useAppSelector } from '../../../Redux/hooks';
 import TimeTable from './TimeTable';
 import './Location.css';
 import axios from 'axios';

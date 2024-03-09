@@ -2,13 +2,13 @@ import { Button, Tooltip } from 'antd';
 import {
   setAllTimingField,
   setfacilityTiming
-} from '../../Redux/Features/FacilityFeature/FacilititySlice';
-import { useAppDispatch, useAppSelector } from '../../Redux/hooks';
-import { SwitchHoliday, TimeEvening, TimeMorning } from '../TimeTable';
+} from '../../../Redux/Features/FacilityFeature/FacilititySlice';
+import { useAppDispatch, useAppSelector } from '../../../Redux/hooks';
+import { SwitchHoliday, TimeEvening, TimeMorning } from '../Facility_Form/TimeTable';
 import { IoMdColorFill } from 'react-icons/io';
-import { ApiClientPrivate } from '../../../utils/axios';
+import { ApiClientPrivate } from '../../../../utils/axios';
 import { useEffect } from 'react';
-import { setTimeUpdatebtn } from '../../Redux/Features/updateFacilityBtn';
+import { setTimeUpdatebtn } from '../../../Redux/Features/updateFacilityBtn';
 
 const UpdateTime = (props: any) => {
   const dispatch = useAppDispatch();

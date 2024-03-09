@@ -1,10 +1,10 @@
 import { Steps } from 'antd';
 import { useSelector } from 'react-redux';
-import AmenitiesForm from '../components/AmenitiesForm';
-import BasicInfo from '../components/BasicInfo';
-import EquipmentForm from '../components/EquipmentForm';
-import Location from '../components/Location';
-import Membership from '../components/Membership';
+import AmenitiesForm from '../components/Facilities/Facility_Form/AmenitiesForm';
+import BasicInfo from '../components/Facilities/Facility_Form/BasicInfo';
+import EquipmentForm from '../components/Facilities/Facility_Form/EquipmentForm';
+import Location from '../components/Facilities/Facility_Form/Location';
+import Membership from '../components/Facilities/Facility_Form/Membership';
 const steps = [
   {
     title: 'Basic Information',

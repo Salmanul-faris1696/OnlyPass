@@ -9,7 +9,7 @@ import { LuBox } from 'react-icons/lu';
 import { SiNginxproxymanager } from 'react-icons/si';
 import { TbCategoryFilled, TbSettings2 } from 'react-icons/tb';
 import { NavLink, useLocation } from 'react-router-dom';
-import image1 from '../../../public/javad.jpg';
+import image1 from '../../../../public/javad.jpg';
 
 const Sidebar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);

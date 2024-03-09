@@ -1,12 +1,12 @@
 import { Checkbox, message } from 'antd';
 import { useEffect, useState } from 'react';
-import { ApiClientPrivate } from '../../utils/axios';
-import { imaageURL } from '../../utils/urls';
+import { ApiClientPrivate } from '../../../../utils/axios';
+import { imaageURL } from '../../../../utils/urls';
 import { useDispatch } from 'react-redux';
-import { prevButton } from '../Redux/Features/ButtonSlice';
+import { prevButton } from '../../../Redux/Features/ButtonSlice';
 import { Button } from 'antd/es/radio';
-import { useAppSelector } from '../Redux/hooks';
-import { setEquipments } from '../Redux/Features/FacilityFeature/FacilititySlice';
+import { useAppSelector } from '../../../Redux/hooks';
+import { setEquipments } from '../../../Redux/Features/FacilityFeature/FacilititySlice';
 import { useNavigate } from 'react-router-dom';
 
 interface Equipment {

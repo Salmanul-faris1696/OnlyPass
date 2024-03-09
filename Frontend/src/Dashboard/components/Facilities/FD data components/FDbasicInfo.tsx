@@ -1,7 +1,7 @@
 import { Modal } from 'antd';
 import { useState } from 'react';
 import { FaEdit } from 'react-icons/fa';
-import { dataImages, dataLogo } from '../../../utils/urls';
+import { dataImages, dataLogo } from '../../../../utils/urls';
 import UpdateBasicInfo from '../updateFacilities/UpdateBasicInfo';
 
 const FDbasicInfo = ({ data, mainData }: any) => {

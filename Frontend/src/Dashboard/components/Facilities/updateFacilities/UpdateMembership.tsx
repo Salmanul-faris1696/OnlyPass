@@ -1,8 +1,8 @@
 import { Button, Checkbox, Form, Input, InputNumber, Select } from 'antd';
 import { useEffect, useState } from 'react';
-import { ApiClientPrivate } from '../../../utils/axios';
-import { setMembershipUpdateBtn } from '../../Redux/Features/updateFacilityBtn';
-import { useAppDispatch } from '../../Redux/hooks';
+import { ApiClientPrivate } from '../../../../utils/axios';
+import { setMembershipUpdateBtn } from '../../../Redux/Features/updateFacilityBtn';
+import { useAppDispatch } from '../../../Redux/hooks';
 
 interface CheckedState {
   admission_fee: boolean;

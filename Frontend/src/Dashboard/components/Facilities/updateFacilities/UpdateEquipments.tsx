@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { ApiClientPrivate } from '../../../utils/axios';
-import { imaageURL } from '../../../utils/urls';
+import { ApiClientPrivate } from '../../../../utils/axios';
+import { imaageURL } from '../../../../utils/urls';
 import { Button, Checkbox } from 'antd';
-import { setEquipmentUpdateBtn } from '../../Redux/Features/updateFacilityBtn';
-import { useAppDispatch } from '../../Redux/hooks';
+import { setEquipmentUpdateBtn } from '../../../Redux/Features/updateFacilityBtn';
+import { useAppDispatch } from '../../../Redux/hooks';
 
 interface Equipment {
   _id: string;

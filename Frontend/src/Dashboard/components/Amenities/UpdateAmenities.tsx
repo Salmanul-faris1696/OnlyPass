@@ -2,7 +2,7 @@ import { Button, Form, Input, Radio, Upload, UploadFile } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import TextArea from 'antd/es/input/TextArea';
 import { useEffect, useState } from 'react';
-import { iconURL } from '../../utils/urls';
+import { iconURL } from '../../../utils/urls';
 
 const UpdateAmenities = ({
   amenityData,

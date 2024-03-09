@@ -1,12 +1,12 @@
 import { Switch, Tooltip } from 'antd';
 import React, { useState } from 'react';
 import { IoTimeOutline } from 'react-icons/io5';
-import { useAppSelector } from '../Redux/hooks';
+import { useAppSelector } from '../../../Redux/hooks';
 import { useDispatch } from 'react-redux';
 import {
   setAllTimingField,
   setfacilityTiming
-} from '../Redux/Features/FacilityFeature/FacilititySlice';
+} from '../../../Redux/Features/FacilityFeature/FacilititySlice';
 import { IoMdColorFill } from 'react-icons/io';
 
 const TimeTable = () => {
