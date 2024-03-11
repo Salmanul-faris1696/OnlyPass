@@ -116,75 +116,86 @@ const MembershipPackages: React.FC = () => {
         <PageHeader details={details} name={'Membership'} />
         {/* Table Section */}
         <div className="w-fit sm:w-auto bg-white p-10 mb-8">
-          <div className="flex items-center justify-between">
-            <div className="font-bold pb-5  flex  items-center gap-5">
-              <h1 className="text-[22px]">Membership Packages </h1>
-              <div
-                className="bg-black text-white flex items-center gap-2 w-[94px] h-[28px] text-[12px]  justify-center font-normal rounded-sm shadow-lg "
-                onClick={() => setIsModalOpen(true)}
-              >
-                <p>Add New</p>
-                <BiPlus />
+          <div className="mainDev flex h-[100px] items-center justify-between ">
+            <div className="section1 flex items-center gap-1 lg:gap-5 h-[70px] px-3 ">
+              <div className="heading font-bold  text-[20px] lg:text-[22px]">
+                <h1>Membership Packages </h1>
+              </div>
+              <div className="buttonDev">
+                <div
+                  className="bg-black text-white flex items-center gap-2 w-[94px] h-[28px] text-[12px]  justify-center font-normal rounded-sm shadow-lg "
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  <p>Add New</p>
+                  <BiPlus />
+                </div>
               </div>
             </div>
 
-            <div className="">
-              <Form className="flex items-center gap-28">
-                <Form.Item label="" name="tier" className="text-start" labelCol={{ span: 7 }}>
-                  <Select
-                    style={{ width: 154, height: 38, color: 'black' }}
-                    defaultValue={{ value: '', label: 'Advance Filter' }}
-                    // onChange={handleChange}
+            <div className="section1 flex h-[70px]  ">
+              <div className="dropDown font-bold  text-lg flex items-center justify-between h-full w-full">
+                <Form className=" h-full flex  gap-5 lg:gap-10 justify-end w-full ">
+                  <Form.Item label="" name="filter" className="flex items-center  h-full ">
+                    <Select
+                      style={{ width: 154, height: 38, color: 'black' }}
+                      defaultValue={{ value: '', label: 'Advance Filter' }}
+                      // onChange={handleChange}
 
-                    options={[
-                      {
-                        value: 'Platinum',
-                        label: 'Platinum',
-                        name: 'platinum'
-                      },
-                      {
-                        value: 'Gold',
-                        label: 'Gold',
-                        name: 'gold'
-                      },
-                      {
-                        value: 'Silver',
-                        label: 'Silver',
-                        name: 'silver'
-                      }
-                    ]}
-                  />
-                </Form.Item>
+                      options={[
+                        {
+                          value: 'All',
+                          label: 'All',
+                          name: 'All'
+                        },
+                        {
+                          value: 'Onlypass',
+                          label: 'Onlypass',
+                          name: 'Onlypass'
+                        },
+                        {
+                          value: 'JustGym',
+                          label: 'JustGym',
+                          name: 'JustGym'
+                        }
+                      ]}
+                    />
+                  </Form.Item>
 
-                <Form.Item label="" name="tier" className="text-start" labelCol={{ span: 7 }}>
-                  <Select
-                    style={{ width: 154, height: 38, color: 'black' }}
-                    defaultValue={{
-                      value: '',
-                      label: ' Sort by:Default'
-                      // ${(<span className='font-bold'>Latest</span>)}
-                    }}
-                    // onChange={handleChange}
-                    options={[
-                      {
-                        value: 'Latest',
-                        label: 'latest',
-                        name: 'latest'
-                      },
-                      {
-                        value: 'Last month',
-                        label: 'lastMonth',
-                        name: 'lastMonth'
-                      },
-                      {
-                        value: 'Earliest',
-                        label: 'earliest',
-                        name: 'earliest'
-                      }
-                    ]}
-                  />
-                </Form.Item>
-              </Form>
+                  <Form.Item label="" name="sort" className="text-start h-full flex items-center">
+                    <Select
+                      style={{ width: 154, height: 38, color: 'black' }}
+                      defaultValue={{
+                        value: '',
+                        label: ' Sort by:Default'
+                        // ${(<span className='font-bold'>Latest</span>)}
+                      }}
+                      // onChange={handleChange}
+                      options={[
+                        {
+                          value: 'Popular',
+                          label: 'popular',
+                          name: 'popular'
+                        },
+                        {
+                          value: 'Latest',
+                          label: 'latest',
+                          name: 'latest'
+                        },
+                        {
+                          value: 'Last month',
+                          label: 'lastMonth',
+                          name: 'lastMonth'
+                        },
+                        {
+                          value: 'Earliest',
+                          label: 'earliest',
+                          name: 'earliest'
+                        }
+                      ]}
+                    />
+                  </Form.Item>
+                </Form>
+              </div>
             </div>
           </div>
 

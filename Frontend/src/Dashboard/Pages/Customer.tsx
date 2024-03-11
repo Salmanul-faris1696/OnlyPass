@@ -4,13 +4,14 @@ import svg2 from '../../../public/svg2-onlypass.svg';
 import svg3 from '../../../public/svg3-onlypass.svg';
 import svg4 from '../../../public/svg4-onlypass.svg';
 import PageHeader from '../components/common_components/PageHeader';
+import { Link } from 'react-router-dom';
 
 const Customer: React.FC = () => {
   const columns = [
     {
       title: 'Name',
-      dataIndex: 'name',
-      key: 'name'
+      key: 'name',
+      render: (record: any) => <Link to={`/CustomerDetails/${record._id}`}>{record.name}</Link>
     },
     {
       title: 'Gender',
@@ -94,7 +95,7 @@ const Customer: React.FC = () => {
   ];
   return (
     <div>
-      <div className=" bg-[#F2F2F2] px-2 sm:px-10 md:px-16 pb-10 ">
+      <div className=" bg-[#F2F2F2]  px-2 sm:px-10 md:px-16 pb-10  ">
         <PageHeader details={details} name={'Customer'} />
         {/* Table Section */}
         <div className="w-fit sm:w-auto bg-white p-10 mb-8">

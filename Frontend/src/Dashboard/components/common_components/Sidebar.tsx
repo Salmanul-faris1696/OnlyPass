@@ -12,7 +12,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import image1 from '../../../../public/javad.jpg';
 
 const Sidebar = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true); //true bcz client reques
   const [selectedItem, setSelectedItem] = useState({ id: '0', open: false });
 
   const openSubMenu = (id: string) => {
@@ -26,7 +26,7 @@ const Sidebar = () => {
     const handleOutsideClick = (event: any) => {
       const sidebar = document.getElementById('sidebar');
       if (sidebar && !sidebar.contains(event.target)) {
-        setSidebarOpen(false);
+        setSidebarOpen(true); // true bcz client request
       }
     };
 
@@ -229,7 +229,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <div id="sidebar" className="flex gap-3  ">
+    <div id="sidebar " className="flex flex-col   ">
       {/* <<<<<< SIDE MINIMIZE ICON >>>>>>> */}
       <div className={`${sidebarOpen === true ? 'hidden' : 'block'}`}>
         <div className="md:w-24 px-2 md:px-5">
@@ -259,7 +259,9 @@ const Sidebar = () => {
 
       {/* <<<<<<< SIDE BAR MENU >>>>>>>> */}
 
-      <div className={`pl-5 bg-white rounded-md  ${sidebarOpen === true ? 'block' : 'hidden'} `}>
+      <div
+        className={`pl-5 bg-white rounded-md h-screen overflow-y-scroll flex flex-col  ${sidebarOpen === true ? 'block' : 'hidden'} `}
+      >
         <div className="mb-10 pt-10 flex items-center">
           <TbSettings2 size={40} />
           <h1 className="font-bold text-xl">
@@ -267,73 +269,77 @@ const Sidebar = () => {
           </h1>
         </div>
 
-        <div className="mt-5 text-[#5C5C5C] ">
-          {sideBarItems.map((it: any) => (
-            <div className="mb-7">
-              <NavLink
-                to={it.path}
-                key={it.id}
-                onClick={() => openSubMenu(it.id)}
-                className={`${
-                  location.pathname === it.path ? 'text-white bg-black' : 'hover:bg-slate-100'
-                } p-3 font-semibold font-name text-md  flex items-center gap-3 rounded-md  `}
-              >
-                <div>{it.icon}</div>
+        <div className="common flex flex-col  flex-1 relative  ">
+          <div className=" text-[#5C5C5C] h-[500px] ">
+            {sideBarItems.map((it: any) => (
+              <div className="mb-7">
+                <NavLink
+                  to={it.path}
+                  key={it.id}
+                  onClick={() => openSubMenu(it.id)}
+                  className={`${
+                    location.pathname === it.path ? 'text-white bg-black' : 'hover:bg-slate-100'
+                  } p-3 font-semibold font-name text-md  flex items-center gap-3 rounded-md  `}
+                >
+                  <div>{it.icon}</div>
 
-                <div className="flex justify-between items-center w-52">
-                  <h1>{it.MenuItem}</h1>
-                  <span
-                    className={`${
-                      selectedItem.id === it.id && selectedItem.open === true ? 'rotate-90' : ''
-                    } duration-300`}
-                  >
-                    <IoIosArrowForward size={20} />
-                  </span>
-                </div>
-              </NavLink>
-              {location.pathname.startsWith(it.path) &&
-                it.subMenu &&
-                it.subMenu.map((subMenuItem: any) => (
-                  <NavLink
-                    to={subMenuItem.path}
-                    key={subMenuItem.id}
-                    className={`bg-slate-100 p-3 mt-1 ml-10 font-name text-md  items-center  gap-3 rounded-md  ${
-                      selectedItem.id === it.id && selectedItem.open === true ? 'flex ' : 'hidden '
-                    } `}
-                  >
-                    <div className="flex gap-3 items-center">
-                      {subMenuItem.subIcon}
-                      <h1>{subMenuItem.name}</h1>
-                    </div>
-                  </NavLink>
-                  // <div
-                  //   key={subMenuItem.id}
-                  //   className={`bg-slate-100 p-3 mt-1 ml-10 font-name text-md  items-center  gap-3 rounded-md  ${
-                  //     selectedItem.id === it.id && selectedItem.open === true ? 'flex ' : 'hidden '
-                  //   } `}
-                  // >
-                  //   <div className="flex gap-3 items-center">
-                  //     {subMenuItem.subIcon}
-                  //     <h1>{subMenuItem.name}</h1>
-                  //   </div>
-                  // </div>
-                ))}
-            </div>
-          ))}
-        </div>
-
-        <div className="profile p-2   bg-white rounded-lg  flex items-center gap-3 font-bold ">
-          <div className=" rounded-full bg-slate-200 ">
-            <img src={image1} alt="" className="h-12 w-12 rounded-full" />
+                  <div className="flex justify-between items-center w-52">
+                    <h1>{it.MenuItem}</h1>
+                    <span
+                      className={`${
+                        selectedItem.id === it.id && selectedItem.open === true ? 'rotate-90' : ''
+                      } duration-300`}
+                    >
+                      <IoIosArrowForward size={20} />
+                    </span>
+                  </div>
+                </NavLink>
+                {location.pathname.startsWith(it.path) &&
+                  it.subMenu &&
+                  it.subMenu.map((subMenuItem: any) => (
+                    <NavLink
+                      to={subMenuItem.path}
+                      key={subMenuItem.id}
+                      className={`bg-slate-100 p-3 mt-1 ml-10 font-name text-md  items-center  gap-3 rounded-md  ${
+                        selectedItem.id === it.id && selectedItem.open === true
+                          ? 'flex '
+                          : 'hidden '
+                      } `}
+                    >
+                      <div className="flex gap-3 items-center">
+                        {subMenuItem.subIcon}
+                        <h1>{subMenuItem.name}</h1>
+                      </div>
+                    </NavLink>
+                    // <div
+                    //   key={subMenuItem.id}
+                    //   className={`bg-slate-100 p-3 mt-1 ml-10 font-name text-md  items-center  gap-3 rounded-md  ${
+                    //     selectedItem.id === it.id && selectedItem.open === true ? 'flex ' : 'hidden '
+                    //   } `}
+                    // >
+                    //   <div className="flex gap-3 items-center">
+                    //     {subMenuItem.subIcon}
+                    //     <h1>{subMenuItem.name}</h1>
+                    //   </div>
+                    // </div>
+                  ))}
+              </div>
+            ))}
           </div>
-          <div className="flex justify-between items-center w-52">
-            <div>
-              <h1>Javad mohammed</h1>
-              <span className="text-xs text-slate-400 font-normal">Project Manager</span>
+
+          <div className="profile p-2  bg-white rounded-lg  flex mb-2  gap-3 font-bold ">
+            <div className=" rounded-full bg-slate-200 ">
+              <img src={image1} alt="" className="h-12 w-12 rounded-full" />
             </div>
-            <span>
-              <IoIosArrowDown size={20} />
-            </span>
+            <div className="flex justify-between items-center w-52">
+              <div>
+                <h1>Javad mohammed</h1>
+                <span className="text-xs text-slate-400 font-normal">Project Manager</span>
+              </div>
+              <span>
+                <IoIosArrowDown size={20} />
+              </span>
+            </div>
           </div>
         </div>
       </div>

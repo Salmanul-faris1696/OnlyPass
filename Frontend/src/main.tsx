@@ -16,6 +16,8 @@ import Customer from './Dashboard/Pages/Customer.tsx';
 import Payment from './Dashboard/Pages/Payment.tsx';
 import MembershipPackages from './Dashboard/Pages/MembershipPackages.tsx';
 import Plans from './Dashboard/Pages/Plans.tsx';
+import CustomerDeatils from './Dashboard/Pages/CustomerDetails';
+import TransactionDetails from './Dashboard/Pages/TransactionDetails.tsx';
 
 const router = createBrowserRouter([
   {
@@ -43,8 +45,16 @@ const router = createBrowserRouter([
         element: <Customer />
       },
       {
+        path: '/CustomerDetails/:id',
+        element: <CustomerDeatils />
+      },
+      {
         path: '/Payment',
         element: <Payment />
+      },
+      {
+        path: '/TransactionDetails/:id',
+        element: <TransactionDetails />
       },
       {
         path: '/MembershipPackages',

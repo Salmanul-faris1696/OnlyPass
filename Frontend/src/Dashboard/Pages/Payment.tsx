@@ -4,6 +4,7 @@ import svg2 from '../../../public/svg2-onlypass.svg';
 import svg3 from '../../../public/svg3-onlypass.svg';
 import svg4 from '../../../public/svg4-onlypass.svg';
 import PageHeader from '../components/common_components/PageHeader';
+import { Link } from 'react-router-dom';
 
 const Payment: React.FC = () => {
   const columns = [
@@ -14,8 +15,9 @@ const Payment: React.FC = () => {
     },
     {
       title: 'Transaction ID',
-      dataIndex: 'transactionId',
-      key: 'transactionId'
+      // dataIndex: 'transactionId',
+      key: 'transactionId',
+      render: (record: any) => <Link to={`/TransactionDetails/${record._id}`}>{record.name}</Link>
     },
     {
       title: 'Faciity / Customer Name',
